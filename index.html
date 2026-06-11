@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MatRef">
 <meta name="mobile-web-app-capable" content="yes">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <meta name="description" content="Materials Engineering Academy — Guida completa ai materiali da officina per ingegneri.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
@@ -51,25 +53,30 @@ input  { font-family:inherit; }
 .topbar {
   position:sticky; top:0; z-index:100;
   background:var(--bg2); border-bottom:1px solid var(--line2);
-  height:52px; display:flex; align-items:center;
-  padding:0 12px; gap:8px;
+  height:50px;
+  display:flex; align-items:center;
+  padding:0 14px;
+  white-space:nowrap;
   overflow:hidden;
 }
 .logo {
   font-family:var(--cond); font-size:20px; font-weight:800;
   letter-spacing:2px; color:var(--accent);
-  white-space:nowrap; flex-shrink:0;
+  white-space:nowrap;
 }
 .back-btn {
-  display:none; align-items:center; gap:5px;
-  background:transparent; border:1px solid var(--line2);
-  color:var(--muted); border-radius:6px;
-  font-family:var(--mono); font-size:11px; letter-spacing:0.5px;
-  padding:5px 10px; white-space:nowrap; flex-shrink:0;
+  display:none;
+  align-items:center; gap:6px;
+  background:transparent;
+  border:none;
+  color:var(--accent);
+  font-family:var(--cond); font-size:16px; font-weight:700;
+  white-space:nowrap;
+  padding:0;
 }
-.back-btn:active { background:var(--bg3); }
 .back-btn.show { display:flex; }
-.back-arrow { font-size:14px; }
+.back-arrow { font-size:20px; line-height:1; }
+#back-label { font-size:15px; }
 
 /* ── SCREENS ── */
 .screen { display:none; padding:16px 16px 40px; max-width:860px; margin:0 auto; }
@@ -361,7 +368,7 @@ input  { font-family:inherit; }
 <!-- TOPBAR -->
 <div class="topbar">
   <button class="back-btn" id="back-btn" onclick="goBack()">
-    <span class="back-arrow">←</span><span id="back-label">Indietro</span>
+    <span class="back-arrow">←</span>&nbsp;<span id="back-label">Indietro</span>
   </button>
   <div class="logo" id="logo-title">MatRef</div>
 </div>
@@ -1017,7 +1024,7 @@ function updateTopbar(id) {
     logo.style.display = 'none';   // nascondi logo quando c'è il tasto indietro
     const prev = history_stack[history_stack.length - 2];
     const labels = {
-      'scr-dashboard': '← Dashboard',
+      'scr-dashboard': '← Home',
       'scr-list':      '← Lista',
       'scr-detail':    '← Scheda',
       'scr-quiz':      '← Quiz',
