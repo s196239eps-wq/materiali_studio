@@ -970,8 +970,7 @@ const MATERIALS = [
     applications:['Rivestimento (cladding) barre combustibile (UO₂) in PWR e BWR','Tubi del reattore nucleare (pressure tubes in CANDU)','Componenti per impianti chimici in HNO₃ concentrato','Autoclave per sintesi chimica','Ceramiche ZrO₂ per utensili e protesi dentali (zirconia)'],
     creep:'Resistenza a creep del cladding critica per la sicurezza dei reattori. Irraggiamento neutronico causa crescita per radiazione (radiation growth) oltre al creep termico. T di servizio max ~350°C nei reattori.',
     weldability:'Saldabile TIG/EBW in atmosfera Ar ultra-puro o vuoto. L\'ossigeno è immediatamente assorbito a T>300°C → fragilizzazione. Saldatura in camera di guanti o EBW in vuoto per componenti nucleari.'
-  }
-];
+  },
 
   // ═══════ RAME E LEGHE — ESPANSIONE ═══════
   {
@@ -991,20 +990,20 @@ const MATERIALS = [
     id:'ottone-c360',name:'Ottone C360 (Free Cutting)',formula:'Cu-36Zn-3Pb',family:'Rame e Leghe',color:'#f0c060',
     hv:80,density:8.50,E:97,UTS:385,YS:310,elongation:26,melt:885,
     tags:['Tornitura auto','Massima lavorabilità','Pb','Raccorderia'],
-    summary:'L'ottone a tornitura automatica per eccellenza. Indice di lavorabilità 100 — è il riferimento assoluto per tutti i metalli. Il Pb (3%) forma inclusioni che rompono il truciolo e lubrificano il tagliente. Standard per raccorderia, valvole, componenti idraulici torniti in serie.',
+    summary:'L\'ottone a tornitura automatica per eccellenza. Indice di lavorabilità 100 — è il riferimento assoluto per tutti i metalli. Il Pb (3%) forma inclusioni che rompono il truciolo e lubrificano il tagliente. Standard per raccorderia, valvole, componenti idraulici torniti in serie.',
     chemistry:{structure:'Matrice bifasica α+β. Fase α (FCC, Cu-ricca) + fase β (BCC, Zn-ricca). Le inclusioni di Pb (>0.5 µm) sono insolubili nella matrice e agiscono come lubrificanti solidi durante il taglio.',bonding:'Cu-Zn soluzione solida. Zn >36% → formazione fase β → maggiore resistenza ma minore duttilità. Pb non si lega chimicamente — resta come fase separata.',composition:'Cu 60–63%, Zn 35.5–37.5%, Pb 2.5–3.7%, Fe ≤0.35%. Variante senza Pb: C385 (bismuito) per applicazioni potabilità.'},
     mechanical:[{l:'UTS',v:'385',u:'MPa'},{l:'YS 0.2%',v:'310',u:'MPa'},{l:'Allungamento',v:'26',u:'%'},{l:'Durezza',v:'~80',u:'HRB'},{l:'Indice lavorabilità',v:'100',u:'',n:'Riferimento assoluto = 100%'}],
     physical:[{l:'Densità',v:'8.50',u:'g/cm³'},{l:'T. Fusione',v:'885',u:'°C'},{l:'Cond. termica',v:'116',u:'W/m·K'},{l:'Coeff. dilat.',v:'20.5',u:'×10⁻⁶/K'},{l:'Cond. elettrica',v:'26',u:'% IACS'}],
     machinability:{rating:10,notes:'Lavorabilità perfetta — il riferimento assoluto (indice 100). Truciolo corto e secco, bassa forza di taglio, eccellente finitura superficiale anche ad alte velocità. Tornitori automatici multi-mandrino.',params:[{op:'Tornitura automatica',vc:'200–600 m/min',fz:'0.05–0.3 mm/giro',note:'A secco o MQL — massima velocità possibile'},{op:'Fresatura',vc:'150–400 m/min',fz:'0.05–0.2 mm/dente',note:'Utensili HSS o carburo'},{op:'Foratura',vc:'80–200 m/min',fz:'0.1–0.3 mm/giro',note:'A secco, truciolo si rompe da solo'}]},
     applications:['Raccorderia idraulica (corpi valvola, nipples)','Boccole e distanziali torniti','Connettori elettrici','Componenti pneumatici','Viti e dadi di precisione','Strumenti musicali (valvole ottoni)','Meccanismi orologi'],
-    creep:'Non adatto a carichi prolungati sopra 100°C. Il Pb riduce leggermente la resistenza a creep rispetto all'ottone senza Pb. Per T>150°C usare bronzo al berillio o acciaio inox.',
+    creep:'Non adatto a carichi prolungati sopra 100°C. Il Pb riduce leggermente la resistenza a creep rispetto all\'ottone senza Pb. Per T>150°C usare bronzo al berillio o acciaio inox.',
     weldability:'Sconsigliata — il Pb evapora durante la saldatura generando fumi altamente tossici. Giunzione meccanica (filettatura, pressatura, brasatura a bassa T) o brasatura con argento.'
   },
   {
     id:'bronzo-stagno',name:'Bronzo al Stagno (CuSn8)',formula:'Cu-8Sn-P',family:'Rame e Leghe',color:'#c87941',
     hv:130,density:8.80,E:105,UTS:420,YS:200,elongation:35,melt:1000,
     tags:['Bronzo','Cuscinetti','Antiffrizione','Classico'],
-    summary:'Bronzo al stagno classico con fosforo (bronzo fosforoso). Eccellente resistenza a usura e corrosione, basso coefficiente di attrito. Il materiale storico per cuscinetti, bronzine e ingranaggi. Autolubrificante in presenza di film d'olio.',
+    summary:'Bronzo al stagno classico con fosforo (bronzo fosforoso). Eccellente resistenza a usura e corrosione, basso coefficiente di attrito. Il materiale storico per cuscinetti, bronzine e ingranaggi. Autolubrificante in presenza di film d\'olio.',
     chemistry:{structure:'Soluzione solida α (FCC Cu-Sn) con fosfuri Cu₃P dispersi finemente. I fosfuri aumentano durezza superficiale e resistenza a usura. Struttura dendritica nei getti, più omogenea nei laminati.',bonding:'Cu-Sn soluzione solida fino a ~15% Sn. P come disossidante e per formazione fosfuri duri. Sn rallenta la diffusione → buona resistenza a corrosione.',composition:'Cu 91–93%, Sn 7–9%, P 0.03–0.35%. CuSn6: più duttile. CuSn10: più duro. CuSn12: massima resistenza a usura per ingranaggi.'},
     mechanical:[{l:'UTS',v:'420',u:'MPa'},{l:'YS 0.2%',v:'200',u:'MPa'},{l:'Allungamento',v:'35',u:'%'},{l:'Durezza',v:'~130',u:'HB'},{l:'Coeff. attrito',v:'basso',u:'',n:'Autolubrificante con olio'}],
     physical:[{l:'Densità',v:'8.80',u:'g/cm³'},{l:'T. Fusione',v:'975–1000',u:'°C'},{l:'Cond. termica',v:'50',u:'W/m·K'},{l:'Coeff. dilat.',v:'17.5',u:'×10⁻⁶/K'}],
@@ -1024,14 +1023,14 @@ const MATERIALS = [
     machinability:{rating:6,notes:'Lavorabilità moderata. Incrudimento significativo. Truciolo tenace. Utensili affilati, velocità moderate, refrigerante abbondante.',params:[{op:'Tornitura',vc:'60–120 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo M-grade'},{op:'Fresatura',vc:'50–100 m/min',fz:'0.04–0.12 mm/dente',note:'Geometria positiva'}]},
     applications:['Tubi condensatori navi e centrali elettriche','Scambiatori di calore offshore','Tubazioni piattaforme petrolifere','Rivestimenti scafi navi','Monete (50c, 1€, 2€ hanno anello CuNi)','Strumenti meteorologici marini'],
     creep:'Non ottimizzato per creep strutturale. T di servizio max ~300°C. La buona resistenza a corrosione in acqua calda lo rende ideale per scambiatori vapore-acqua marina.',
-    weldability:'Ottima saldabilità TIG/MIG con filo ERCuNi. No preriscaldo. Protezione Ar obbligatoria — sensibile all'ossidazione a caldo. Post-weld: ricottura 750°C per rimozione tensioni.'
+    weldability:'Ottima saldabilità TIG/MIG con filo ERCuNi. No preriscaldo. Protezione Ar obbligatoria — sensibile all\'ossidazione a caldo. Post-weld: ricottura 750°C per rimozione tensioni.'
   },
   {
     id:'bronzo-berillio',name:'Bronzo al Berillio (CuBe2)',formula:'Cu-2Be',family:'Rame e Leghe',color:'#e8a830',
     hv:380,density:8.26,E:128,UTS:1380,YS:1200,elongation:2,melt:1000,
     tags:['Alta resistenza','Molle','Utensili ATEX','Non scintillante'],
     summary:'La lega di rame più resistente. Precipitation hardening Cu-Be. Combinazione unica: resistenza acciaio + conduttività Cu + non magnetico + non scintillante (ATEX). Usato per molle di precisione, utensili antideflagranti e connettori di alto contatto.',
-    chemistry:{structure:'Matrice α-Cu FCC con precipitati γ' CuBe (tetragonali) finissimi dopo aging. Meccanismo identico al precipitation hardening Al. Solubilizzazione 800°C + quench + aging 300°C/2h.',bonding:'Be in soluzione solida fino a 2.7% → precipitati CuBe coerenti dopo aging. L'alta distorsione reticolare da CuBe blocca le dislocazioni → massima resistenza per una lega Cu.',composition:'Cu 97–98%, Be 1.8–2.0%, Ni/Co 0.2–0.6% (per raffinare grano). Grado C17200: massima resistenza. C17000 (1.7% Be): migliore duttilità.'},
+    chemistry:{structure:'Matrice α-Cu FCC con precipitati γ\' CuBe (tetragonali) finissimi dopo aging. Meccanismo identico al precipitation hardening Al. Solubilizzazione 800°C + quench + aging 300°C/2h.',bonding:'Be in soluzione solida fino a 2.7% → precipitati CuBe coerenti dopo aging. L\'alta distorsione reticolare da CuBe blocca le dislocazioni → massima resistenza per una lega Cu.',composition:'Cu 97–98%, Be 1.8–2.0%, Ni/Co 0.2–0.6% (per raffinare grano). Grado C17200: massima resistenza. C17000 (1.7% Be): migliore duttilità.'},
     mechanical:[{l:'UTS (aged)',v:'1380',u:'MPa'},{l:'YS 0.2%',v:'1200',u:'MPa'},{l:'Allungamento',v:'2',u:'%',n:'Bassa duttilità dopo aging'},{l:'Durezza',v:'~38',u:'HRC'},{l:'Cond. elettrica',v:'22',u:'% IACS',n:'Alta per Cu ad alta resistenza'}],
     physical:[{l:'Densità',v:'8.26',u:'g/cm³'},{l:'T. Fusione',v:'~1000',u:'°C'},{l:'Cond. termica',v:'105',u:'W/m·K'},{l:'Coeff. dilat.',v:'17.8',u:'×10⁻⁶/K'},{l:'Non magnetico',v:'Sì',u:'',n:'Paramagnetico'}],
     machinability:{rating:7,notes:'ATTENZIONE: lavorare allo stato solubilizzato (morbido) poi invecchiare. Polveri e fumi di Be sono ALTAMENTE TOSSICI — DPI obbligatori, aspirazione locale. Allo stato ricotto lavorabilità buona.',params:[{op:'Tornitura (ricotto)',vc:'100–200 m/min',fz:'0.1–0.3 mm/giro',note:'⚠ Aspirazione obbligatoria — Be tossico'},{op:'Fresatura (ricotto)',vc:'80–150 m/min',fz:'0.05–0.15 mm/dente',note:'Carburo K, mai a secco'}]},
@@ -1043,11 +1042,11 @@ const MATERIALS = [
     id:'ottone-navale',name:'Ottone Navale (CuZn36Sn)',formula:'Cu-36Zn-1Sn',family:'Rame e Leghe',color:'#e8b840',
     hv:140,density:8.44,E:100,UTS:460,YS:200,elongation:40,melt:900,
     tags:['Navale','Dezincificazione','Acqua marina','Tubazioni'],
-    summary:'Ottone speciale con aggiunta di Sn (1%) che inibisce la dezincificazione in acqua marina. L'ottone comune perde Zn in acqua salata (dezincificazione) diventando fragile e poroso — l'ottone navale risolve questo problema.',
-    chemistry:{structure:'Matrice α monofase (FCC, Zn<37%) con Sn in soluzione solida. La monofase α è molto più resistente alla corrosione dell'ottone α+β. Il Sn rallenta la diffusione dello Zn verso la superficie.',bonding:'Cu-Zn con Sn che si concentra preferenzialmente nella fase α aumentandone il potenziale elettrochimico. Meccanismo anti-dezincificazione: Sn compete con Zn per la dissoluzione selettiva.',composition:'Cu 62–64%, Zn 34–36%, Sn 0.8–1.2%, As 0.02–0.06% (inibisce dezincificazione). Anche noto come Admiralty Brass, Naval Brass, CW712R.'},
+    summary:'Ottone speciale con aggiunta di Sn (1%) che inibisce la dezincificazione in acqua marina. L\'ottone comune perde Zn in acqua salata (dezincificazione) diventando fragile e poroso — l\'ottone navale risolve questo problema.',
+    chemistry:{structure:'Matrice α monofase (FCC, Zn<37%) con Sn in soluzione solida. La monofase α è molto più resistente alla corrosione dell\'ottone α+β. Il Sn rallenta la diffusione dello Zn verso la superficie.',bonding:'Cu-Zn con Sn che si concentra preferenzialmente nella fase α aumentandone il potenziale elettrochimico. Meccanismo anti-dezincificazione: Sn compete con Zn per la dissoluzione selettiva.',composition:'Cu 62–64%, Zn 34–36%, Sn 0.8–1.2%, As 0.02–0.06% (inibisce dezincificazione). Anche noto come Admiralty Brass, Naval Brass, CW712R.'},
     mechanical:[{l:'UTS',v:'460',u:'MPa'},{l:'YS 0.2%',v:'200',u:'MPa'},{l:'Allungamento',v:'40',u:'%'},{l:'Durezza',v:'~140',u:'HB'}],
     physical:[{l:'Densità',v:'8.44',u:'g/cm³'},{l:'T. Fusione',v:'890–900',u:'°C'},{l:'Cond. termica',v:'108',u:'W/m·K'},{l:'Coeff. dilat.',v:'20.8',u:'×10⁻⁶/K'}],
-    machinability:{rating:8,notes:'Ottima lavorabilità. Simile all'ottone C360 ma leggermente più duttile per la fase α monofase.',params:[{op:'Tornitura',vc:'100–250 m/min',fz:'0.1–0.4 mm/giro',note:'HSS o carburo, buona finitura'},{op:'Fresatura',vc:'80–200 m/min',fz:'0.05–0.2 mm/dente',note:'Standard'}]},
+    machinability:{rating:8,notes:'Ottima lavorabilità. Simile all\'ottone C360 ma leggermente più duttile per la fase α monofase.',params:[{op:'Tornitura',vc:'100–250 m/min',fz:'0.1–0.4 mm/giro',note:'HSS o carburo, buona finitura'},{op:'Fresatura',vc:'80–200 m/min',fz:'0.05–0.2 mm/dente',note:'Standard'}]},
     applications:['Tubazioni acqua di mare','Condensatori navali (tubi)','Valvole e raccordi marini','Perni e bulloneria marina','Parti di pompe per acqua salata','Dissalatori termici'],
     creep:'Non indicato per carichi prolungati sopra 100°C. Eccellente resistenza a corrosione è la proprietà principale, non il creep.',
     weldability:'Saldabile TIG/MIG. Rischio evaporazione Zn — ventilazione. Brasatura con argento per raccorderia di precisione.'
@@ -1073,13 +1072,13 @@ const MATERIALS = [
     id:'babbitt',name:'Metallo Bianco (Babbitt / SnSb8Cu4)',formula:'Sn-Sb-Cu (Pb)',family:'Leghe da Cuscinetti',color:'#d8e0e8',
     hv:25,density:7.39,E:52,UTS:80,YS:42,elongation:12,melt:240,
     tags:['Cuscinetti','Antiffrizione','Albero','Turbine'],
-    summary:'Lega antifrizione a base Sn (o Pb) per rivestimento cuscinetti a strisciamento di grandi dimensioni. Eccellente compatibilità con gli alberi in acciaio — in caso di lubrificazione insufficiente si consume preferenzialmente proteggendo l'albero. Standard per turbine, compressori e motori navali.',
-    chemistry:{structure:'Matrice morbida β-Sn con cubetti duri SbSn (cubici) e aghi Cu₆Sn₅ dispersi. I duri SbSn forniscono la resistenza a usura, la matrice morbida garantisce l'adattamento all'albero.',bonding:'Sn base con Sb che forma SbSn (durezza ~400 HV) nella matrice. Cu forma Cu₆Sn₅ che agisce come scheletro di supporto. La bifasicità duro/morbido è il segreto del funzionamento.',composition:'Sn 84–89%, Sb 7–8%, Cu 3–4% (Babbitt al stagno, tipo WM80). Variante al Pb: Pb 75%, Sb 15%, Sn 10% (più economica, meno performante).'},
-    mechanical:[{l:'UTS',v:'80',u:'MPa'},{l:'YS 0.2%',v:'42',u:'MPa'},{l:'Allungamento',v:'12',u:'%'},{l:'Durezza',v:'~25',u:'HB',n:'Molto morbido — si adatta all'albero'},{l:'P max cuscinetto',v:'~15',u:'MPa',n:'Pressione ammissibile'}],
+    summary:'Lega antifrizione a base Sn (o Pb) per rivestimento cuscinetti a strisciamento di grandi dimensioni. Eccellente compatibilità con gli alberi in acciaio — in caso di lubrificazione insufficiente si consume preferenzialmente proteggendo l\'albero. Standard per turbine, compressori e motori navali.',
+    chemistry:{structure:'Matrice morbida β-Sn con cubetti duri SbSn (cubici) e aghi Cu₆Sn₅ dispersi. I duri SbSn forniscono la resistenza a usura, la matrice morbida garantisce l\'adattamento all\'albero.',bonding:'Sn base con Sb che forma SbSn (durezza ~400 HV) nella matrice. Cu forma Cu₆Sn₅ che agisce come scheletro di supporto. La bifasicità duro/morbido è il segreto del funzionamento.',composition:'Sn 84–89%, Sb 7–8%, Cu 3–4% (Babbitt al stagno, tipo WM80). Variante al Pb: Pb 75%, Sb 15%, Sn 10% (più economica, meno performante).'},
+    mechanical:[{l:'UTS',v:'80',u:'MPa'},{l:'YS 0.2%',v:'42',u:'MPa'},{l:'Allungamento',v:'12',u:'%'},{l:'Durezza',v:'~25',u:'HB',n:'Molto morbido — si adatta all\'albero'},{l:'P max cuscinetto',v:'~15',u:'MPa',n:'Pressione ammissibile'}],
     physical:[{l:'Densità',v:'7.39',u:'g/cm³'},{l:'T. Fusione',v:'240–370',u:'°C',n:'Basso — colato direttamente nel cuscinetto'},{l:'Cond. termica',v:'55',u:'W/m·K'},{l:'Coeff. attrito',v:'0.005–0.02',u:'',n:'Molto basso con olio'}],
     machinability:{rating:8,notes:'Lavorabilità eccellente per la morbidezza. Si raschia e si torna facilmente. Principalmente lavorato per barenatura di precisione dopo colata nel cuscinetto.',params:[{op:'Barenatura',vc:'30–80 m/min',fz:'0.02–0.05 mm/giro',note:'HSS affilato, tolleranze H7'},{op:'Raschiatura',vc:'-',fz:'-',note:'Raschiatura manuale per cuscinetti di alta precisione'}]},
     applications:['Cuscinetti principali turbine a vapore e gas','Cuscinetti di banco motori diesel navali','Riduttori industriali pesanti','Cuscinetti albero motori elettrici grandi','Compressori a pistoni industriali','Pompe centrifughe ad alta potenza'],
-    creep:'Creep significativo sopra 100°C — ma è intenzionale: il Babbitt si adatta geometricamente all'albero sotto carico (rodaggio). T di fusione bassa (240°C) è il limite assoluto di servizio.',
+    creep:'Creep significativo sopra 100°C — ma è intenzionale: il Babbitt si adatta geometricamente all\'albero sotto carico (rodaggio). T di fusione bassa (240°C) è il limite assoluto di servizio.',
     weldability:'Non saldabile. Si applica per colata nel guscio del cuscinetto (centrifuga o statica) oppure spruzzatura termica. Rifusione periodica per riparazione/rinnovo cuscinetti.'
   },
   {
@@ -1089,10 +1088,10 @@ const MATERIALS = [
     summary:'Bronzo poroso sinterizzato impregnato di olio. La struttura porosa (20–25% vol) funge da serbatoio di olio lubrificante che fuoriesce sotto carico e ritorna quando il carico cessa — autolubrificazione permanente senza manutenzione. Standard per elettrodomestici e piccoli motori.',
     chemistry:{structure:'Struttura porosa interconnessa (20–25% porosità) ottenuta per sinterizzazione polveri Cu-Sn a 820°C senza fusione completa. I pori sono impregnati di olio minerale. Microstruttura: α-Cu + δ-Cu₃₁Sn₈.',bonding:'Legame metallico Cu-Sn parziale (sinterizzazione subsolidus). La porosità controllata è il valore aggiunto — ottenuta calibrando pressione di compattazione e T di sinterizzazione.',composition:'Cu 88–92%, Sn 9–11%, grafite 0–2% (riduce attrito a secco). Impregnazione olio SAE 10-30 al 18–24% vol. Norma SAE 841 (standard USA), DIN 1494.'},
     mechanical:[{l:'UTS',v:'140',u:'MPa',n:'Ridotta per porosità'},{l:'Durezza',v:'~60',u:'HB'},{l:'Allungamento',v:'3',u:'%',n:'Fragile — no carichi dinamici alti'},{l:'Pmax',v:'~7',u:'MPa',n:'Pressione ammissibile cuscinetto'},{l:'Vmax',v:'6',u:'m/s',n:'Velocità periferica massima'}],
-    physical:[{l:'Densità',v:'6.4',u:'g/cm³',n:'Ridotta per porosità (teorica 8.8)'},{l:'Porosità',v:'20–25',u:'%'},{l:'Olio impregnato',v:'18–24',u:'% vol'},{l:'T. servizio max',v:'80',u:'°C',n:'Oltre l'olio evapora'}],
-    machinability:{rating:6,notes:'Lavorabile ma delicato — i pori si chiudono se si lavora con utensili non affilati o pressione eccessiva. Barenatura con diamante o CBN a velocità alta e bassa avanzamento. No refrigerante acquoso.',params:[{op:'Barenatura',vc:'100–200 m/min',fz:'0.01–0.03 mm/giro',note:'Diamante o CBN — non chiudere i pori'},{op:'Rettifica',vc:'Non consigliata',fz:'-',note:'Chiude i pori — compromette l'autolubrificazione'}]},
+    physical:[{l:'Densità',v:'6.4',u:'g/cm³',n:'Ridotta per porosità (teorica 8.8)'},{l:'Porosità',v:'20–25',u:'%'},{l:'Olio impregnato',v:'18–24',u:'% vol'},{l:'T. servizio max',v:'80',u:'°C',n:'Oltre l\'olio evapora'}],
+    machinability:{rating:6,notes:'Lavorabile ma delicato — i pori si chiudono se si lavora con utensili non affilati o pressione eccessiva. Barenatura con diamante o CBN a velocità alta e bassa avanzamento. No refrigerante acquoso.',params:[{op:'Barenatura',vc:'100–200 m/min',fz:'0.01–0.03 mm/giro',note:'Diamante o CBN — non chiudere i pori'},{op:'Rettifica',vc:'Non consigliata',fz:'-',note:'Chiude i pori — compromette l\'autolubrificazione'}]},
     applications:['Cuscinetti motori elettrici piccoli (ventilatori, elettrodomestici)','Motorini tergicristalli e alzacristalli auto','Stampanti e lettori CD/DVD','Giocattoli motorizzati','Pompe acquario e fontane','Piccoli riduttori senza manutenzione'],
-    creep:'Non pertinente — applicazione a bassa T (<80°C) e bassa velocità. La degradazione principale è il depletion dell'olio per evaporazione ad alta T.',
+    creep:'Non pertinente — applicazione a bassa T (<80°C) e bassa velocità. La degradazione principale è il depletion dell\'olio per evaporazione ad alta T.',
     weldability:'Non saldabile — i pori si riempiono di ossidi e metallo fuso incompatibile. Giunzione per pressatura nel supporto (interferenza H7/p6) o snap ring.'
   },
 
@@ -1115,7 +1114,7 @@ const MATERIALS = [
     hv:650,density:7.85,E:210,UTS:900,YS:700,elongation:14,melt:1440,
     tags:['Nitrurazione','Superficiale','Alberi','Ingranaggi'],
     summary:'Acciaio specifico per nitrurazione gassosa o ionica. Dopo nitrurazione ottiene strato superficiale durissimo (>900 HV, 0.2–0.5 mm) con nucleo tenace. Zero distorsioni (processo a 520°C vs 850°C per cementazione). Ideale per alberi, ingranaggi e stampi che richiedono alta durezza superficiale.',
-    chemistry:{structure:'Pre-bonificato: martensite rinvenuta. Dopo nitrurazione: strato bianco (ε Fe₂₋₃N + γ' Fe₄N) di 10–25 µm + zona di diffusione (nitruri CrN, MoN, AlN) di 200–500 µm.',bonding:'Al (1%) è il principale nitruro-former — AlN nucleato su dislocazioni. Cr e Mo formano Cr₂N e MoN supplementari. V per raffinamento grano e carburi MC resistenti.',composition:'C 0.28–0.35%, Cr 2.3–2.7%, Mo 0.15–0.25%, V 0.1–0.2%, Al 0.05–0.12%, Mn 0.4–0.7%, Fe resto.'},
+    chemistry:{structure:'Pre-bonificato: martensite rinvenuta. Dopo nitrurazione: strato bianco (ε Fe₂₋₃N + γ\' Fe₄N) di 10–25 µm + zona di diffusione (nitruri CrN, MoN, AlN) di 200–500 µm.',bonding:'Al (1%) è il principale nitruro-former — AlN nucleato su dislocazioni. Cr e Mo formano Cr₂N e MoN supplementari. V per raffinamento grano e carburi MC resistenti.',composition:'C 0.28–0.35%, Cr 2.3–2.7%, Mo 0.15–0.25%, V 0.1–0.2%, Al 0.05–0.12%, Mn 0.4–0.7%, Fe resto.'},
     mechanical:[{l:'Durezza nucleo',v:'~280',u:'HB'},{l:'Durezza superficie (nitrurata)',v:'>900',u:'HV'},{l:'Profondità strato',v:'0.2–0.5',u:'mm'},{l:'Distorsione dopo nitrurazione',v:'Minima',u:'',n:'vs cementazione'},{l:'Resistenza fatica',v:'+30–50',u:'%',n:'Tensioni compressive superficiali'}],
     physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1440',u:'°C'},{l:'Cond. termica',v:'38',u:'W/m·K'},{l:'T. nitrurazione',v:'490–530',u:'°C'}],
     machinability:{rating:7,notes:'Lavorabile allo stato pre-bonificato prima della nitrurazione. Dopo nitrurazione: solo rettifica con mole CBN (strato duro >900 HV).',params:[{op:'Fresatura (pre-nitrurazione)',vc:'100–160 m/min',fz:'0.05–0.15 mm/dente',note:'Carburo TiAlN'},{op:'Rettifica (post-nitrurazione)',vc:'20–28 m/s',fz:'0.005 mm/pass',note:'Mole CBN — rimuovere strato bianco fragile se necessario'}]},
@@ -1171,12 +1170,12 @@ const MATERIALS = [
     hv:18,density:1.14,E:3.0,UTS:85,YS:75,elongation:60,melt:265,
     tags:['Polimero','Ingranaggi','Boccole','Resistente'],
     summary:'Poliammide 66 — il polimero tecnico più usato in ingegneria meccanica. Eccellente combinazione di resistenza meccanica, tenacità e autolubrificazione. Sostituisce metalli per ingranaggi, boccole, camme in applicazioni a bassa T. Igroscopico — assorbe umidità che modifica le proprietà.',
-    chemistry:{structure:'Policondensazione di esametilendiammina + acido adipico. Catene semirigide con legami idrogeno N-H···O=C tra catene adiacenti → cristallinità 35–45%. Struttura α (stabile) con lamelle cristalline.',bonding:'Legami ammidici (-CO-NH-) con forti legami idrogeno intermolecolari. L'assorbimento di acqua rompe parzialmente i legami idrogeno → plastificazione e riduzione modulo.',composition:'PA66 pura. Gradi: PA66+GF30 (30% fibra vetro, E=10 GPa), PA66+MoS₂ (autolubrificante), PA66+CF (carbonio). Comparabile: PA6 (T fusione 220°C), PA12 (meno igroscopica).'},
+    chemistry:{structure:'Policondensazione di esametilendiammina + acido adipico. Catene semirigide con legami idrogeno N-H···O=C tra catene adiacenti → cristallinità 35–45%. Struttura α (stabile) con lamelle cristalline.',bonding:'Legami ammidici (-CO-NH-) con forti legami idrogeno intermolecolari. L\'assorbimento di acqua rompe parzialmente i legami idrogeno → plastificazione e riduzione modulo.',composition:'PA66 pura. Gradi: PA66+GF30 (30% fibra vetro, E=10 GPa), PA66+MoS₂ (autolubrificante), PA66+CF (carbonio). Comparabile: PA6 (T fusione 220°C), PA12 (meno igroscopica).'},
     mechanical:[{l:'UTS',v:'85',u:'MPa'},{l:'Modulo Young',v:'3.0',u:'GPa'},{l:'Allungamento',v:'60',u:'%',n:'Buona tenacità'},{l:'Durezza Shore D',v:'~80',u:''},{l:'PA66+GF30 UTS',v:'185',u:'MPa',n:'Con fibra vetro'}],
     physical:[{l:'Densità',v:'1.14',u:'g/cm³'},{l:'T. Fusione',v:'265',u:'°C'},{l:'T. servizio max (secco)',v:'130',u:'°C'},{l:'Cond. termica',v:'0.26',u:'W/m·K'},{l:'Assorbimento H₂O',v:'2.5',u:'%',n:'Modifica proprietà — considerare nel progetto'}],
     machinability:{rating:8,notes:'Buona lavorabilità con utensili affilati. Tendenza alla fusione se T sale — refrigerante ad aria o acqua. Serrare con attenzione per evitare deformazioni. Lavorare in condizioni di umidità stabile.',params:[{op:'Tornitura',vc:'100–300 m/min',fz:'0.1–0.3 mm/giro',note:'HSS affilato o carburo K'},{op:'Fresatura',vc:'80–250 m/min',fz:'0.05–0.15 mm/dente',note:'Refrigerante ad aria'},{op:'Foratura',vc:'50–150 m/min',fz:'0.1–0.3 mm/giro',note:'Punta elicoidale standard affilata'}]},
     applications:['Ingranaggi silenziosi (stampati o torniti)','Boccole e guide di scorrimento','Cerniere e leve meccaniche','Fascette e connettori strutturali','Profili per guide lineari','Serbatoi carburante (PA12)','Cinghie dentate'],
-    creep:'Creep moderato a T ambiente, significativo sopra 80°C. PA66+GF30 riduce fortemente il creep. L'umidità aumenta il creep per plastificazione delle catene.',
+    creep:'Creep moderato a T ambiente, significativo sopra 80°C. PA66+GF30 riduce fortemente il creep. L\'umidità aumenta il creep per plastificazione delle catene.',
     weldability:'Saldatura per ultrasuoni (standard industriale), vibrazione, elementi riscaldanti. Incollaggio con cianoacrilati o adesivi bicomponenti epossidici.'
   },
 
@@ -1198,16 +1197,15 @@ const MATERIALS = [
     id:'tantalio',name:'Tantalio (Ta)',formula:'Ta puro / Ta-2.5W',family:'Metalli Refrattari',color:'#8898b8',
     hv:100,density:16.60,E:186,UTS:200,YS:170,elongation:30,melt:3017,
     tags:['Refrattario','HF resistente','Chimicamente inerte','Condensatori'],
-    summary:'Metallo refrattario con resistenza chimica quasi assoluta. Resistente all'acido fluoridrico concentrato, acqua regia e praticamente ogni acido. T fusione 3017°C. Usato in chimici aggressivi dove nessun altro metallo regge. Essenziale per condensatori elettrolitici (tantalio capacitor) in elettronica.',
-    chemistry:{structure:'BCC cubica centrata nel corpo. a=0.330 nm. Stabile fino alla fusione. Strato ossido Ta₂O₅ spontaneo, denso e impermeabile — più stabile di TiO₂ e Al₂O₃.',bonding:'Legame metallico Ta con 5 elettroni d. Lo strato passivante Ta₂O₅ ha elevata resistività elettrica → condensatori. L'ossido è stabile in quasi tutti gli ambienti chimici incluso HF.',composition:'Ta puro >99.9%. Ta-2.5W: aggiunta 2.5% W per raddoppiare la resistenza meccanica. Ta-10W per applicazioni strutturali alta T.'},
+    summary:'Metallo refrattario con resistenza chimica quasi assoluta. Resistente all\'acido fluoridrico concentrato, acqua regia e praticamente ogni acido. T fusione 3017°C. Usato in chimici aggressivi dove nessun altro metallo regge. Essenziale per condensatori elettrolitici (tantalio capacitor) in elettronica.',
+    chemistry:{structure:'BCC cubica centrata nel corpo. a=0.330 nm. Stabile fino alla fusione. Strato ossido Ta₂O₅ spontaneo, denso e impermeabile — più stabile di TiO₂ e Al₂O₃.',bonding:'Legame metallico Ta con 5 elettroni d. Lo strato passivante Ta₂O₅ ha elevata resistività elettrica → condensatori. L\'ossido è stabile in quasi tutti gli ambienti chimici incluso HF.',composition:'Ta puro >99.9%. Ta-2.5W: aggiunta 2.5% W per raddoppiare la resistenza meccanica. Ta-10W per applicazioni strutturali alta T.'},
     mechanical:[{l:'UTS',v:'200',u:'MPa'},{l:'YS 0.2%',v:'170',u:'MPa'},{l:'Allungamento',v:'30',u:'%'},{l:'Durezza',v:'~100',u:'HV',n:'Morbido e duttile'},{l:'Ta-2.5W UTS',v:'~400',u:'MPa',n:'Versione rinforzata'}],
     physical:[{l:'Densità',v:'16.60',u:'g/cm³'},{l:'T. Fusione',v:'3017',u:'°C'},{l:'Cond. termica',v:'57',u:'W/m·K'},{l:'Coeff. dilat.',v:'6.3',u:'×10⁻⁶/K'},{l:'T. ossidazione in aria',v:'>300',u:'°C'}],
-    machinability:{rating:6,notes:'Duttile e lavorabile (simile all'acciaio morbido per sensazione). Truciolo tenace e filoso. Utensili carburo K affilati. Refrigerante obbligatorio per evitare ossidazione. Lavori in atmosfera inerte per componenti critici.',params:[{op:'Tornitura',vc:'50–100 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo K affilato, refrigerante'},{op:'Fresatura',vc:'40–80 m/min',fz:'0.03–0.08 mm/dente',note:'Utensili affilati'},{op:'Foratura',vc:'20–50 m/min',fz:'0.05–0.15 mm/giro',note:'Peck drilling, refrigerante'}]},
+    machinability:{rating:6,notes:'Duttile e lavorabile (simile all\'acciaio morbido per sensazione). Truciolo tenace e filoso. Utensili carburo K affilati. Refrigerante obbligatorio per evitare ossidazione. Lavori in atmosfera inerte per componenti critici.',params:[{op:'Tornitura',vc:'50–100 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo K affilato, refrigerante'},{op:'Fresatura',vc:'40–80 m/min',fz:'0.03–0.08 mm/dente',note:'Utensili affilati'},{op:'Foratura',vc:'20–50 m/min',fz:'0.05–0.15 mm/giro',note:'Peck drilling, refrigerante'}]},
     applications:['Condensatori elettrolitici (smartphone, PC)','Reattori chimici per HF e acqua regia','Implantologie cranio-maxillo-facciale','Scudi antiproiettile (laminati)','Elettrodi per produzione cloro','Rivestimenti per impianti chimici','Componenti acceleratori di particelle'],
     creep:'Buona resistenza a creep fino a 1500°C (Ta-10W). Il Ta puro ricristallizza a ~1000°C. Impiegato in ambienti estremi dove anche le superleghe Ni cedono.',
-    weldability:'Saldabile EBW o TIG in vuoto/Ar ultra-puro. L'ossigeno e l'azoto anche in tracce fragilizzano completamente. Saldatura in camera di guanti con Ar 99.999%.'
-  }
-];
+    weldability:'Saldabile EBW o TIG in vuoto/Ar ultra-puro. L\'ossigeno e l\'azoto anche in tracce fragilizzano completamente. Saldatura in camera di guanti con Ar 99.999%.'
+  },
 
   // ═══ OTTONI AGGIUNTIVI ═══
   {
@@ -1425,8 +1423,7 @@ const MATERIALS = [
     applications:['Piastre di usura frantoi jaw crusher','Pale dredger (draghe)','Coclee per minerali abrasivi','Biglie e barre per mulini a sfere','Rivestimenti mulini a impatto','Rulli laminatoi (ghisa ad alto Cr)'],
     creep:'Non pertinente — applicazioni a T ambiente. La fragilità è il limite principale, non il creep.',
     weldability:'Praticamente non saldabile — criccatura certa. Riparazione per colata di inserti o sostituzione del componente intero.'
-  }
-];
+  },
 
   // ═══ ACCIAI DA UTENSILI AGGIUNTIVI ═══
   {
@@ -1700,8 +1697,7 @@ const MATERIALS = [
     applications:['Crogioli per crescita cristalli LiNbO₃, GGG, Ti:Sapphire','Punti accensione candele aeronautiche (durata 10000+ ore)','Penne stilografiche di alta gamma (punta Ir)','Standard kg internazionale storico (Pt-Ir 90/10)','Contatti elettrici per ambienti estremi','Componenti spaziali (Voyager, sonde)','Catalizzatori industria farmaceutica'],
     creep:'Eccellente resistenza fino a 2000°C — il metallo per crogioli di crescita cristalli ad altissima T.',
     weldability:'Saldatura solo EBW in vuoto o laser ad alta potenza. Brasatura con leghe Au-Pd per giunzione.'
-  }
-];
+  },
 
   // ═══ ALUMINIUM BRASS (CuZn20Al2) — il vero "Aluminium Brass" navale ═══
   {
