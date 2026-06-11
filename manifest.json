@@ -2,7 +2,8 @@
   "name": "MatRef — Materials Engineering Academy",
   "short_name": "MatRef",
   "description": "Guida completa ai materiali da officina per ingegneri: acciai, superleghe, titanio, alluminio, ceramici e molto altro.",
-  "start_url": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0b0c0f",
   "theme_color": "#0b0c0f",
@@ -13,15 +14,27 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "categories": ["education", "productivity"],
-  "screenshots": []
+  "prefer_related_applications": false
 }

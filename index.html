@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <title>MatRef — Materials Engineering Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,6 +64,8 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
+/* Prevent any text from overflowing its container */
+p, li, td, th, div, span { overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
 button { font-family: inherit; cursor: pointer; }
 input { font-family: inherit; }
 a { color: var(--accent); text-decoration: none; }
@@ -252,6 +254,7 @@ a { color: var(--accent); text-decoration: none; }
   overflow-y: auto;
   overflow-x: hidden;
   min-width: 0;
+  max-width: 100%;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -347,15 +350,15 @@ a { color: var(--accent); text-decoration: none; }
   display: flex; align-items: center; gap: 7px;
 }
 
-.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 7px; }
-.prop-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; }
+.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 7px; }
+.prop-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; min-width: 0; overflow: hidden; }
 .prop-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
-.prop-value { font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1; }
+.prop-value { font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .prop-unit { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: 2px; font-weight: 400; }
 .prop-note { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
 
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.content-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.content-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; overflow: hidden; }
 .content-card h4 { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
 .content-card p, .content-card li { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 5px; }
 .content-card li { list-style: none; padding-left: 12px; position: relative; }
@@ -588,7 +591,7 @@ a { color: var(--accent); text-decoration: none; }
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar" aria-label="Lista materiali">
     <div class="sidebar-header">
-      <div class="sidebar-header-label">Materiali — durezza ↓</div>
+      <div class="sidebar-header-label" id="sidebar-header-label">Materiali — durezza ↓</div>
       <input class="search-box" type="search" id="mat-search" placeholder="Cerca…" oninput="filterMaterials()" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
     <div class="category-filter" id="cat-filter"></div>
@@ -685,7 +688,7 @@ a { color: var(--accent); text-decoration: none; }
     <button class="bnav-btn" id="bnav-sidebar" onclick="toggleSidebar()">
       <span class="bnav-icon">📋</span>Materiali
     </button>
-    <button class="bnav-btn" id="bnav-material" onclick="switchView('material')">
+    <button class="bnav-btn" id="bnav-material" onclick="goToScheda()">
       <span class="bnav-icon">🔬</span>Scheda
     </button>
     <button class="bnav-btn" id="bnav-quiz" onclick="switchView('quiz')">
@@ -1239,14 +1242,42 @@ let quizMat = null, quizQs = [], quizIdx = 0, quizCorrect = 0;
 
 // ─── SIDEBAR MOBILE ──────────────────────────────────────────────────
 function toggleSidebar() {
-  sidebarOpen = !sidebarOpen;
-  document.getElementById('sidebar').classList.toggle('open', sidebarOpen);
-  document.getElementById('sidebar-overlay').classList.toggle('show', sidebarOpen);
+  if (sidebarOpen) {
+    closeSidebar();
+  } else {
+    sidebarOpen = true;
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebar-overlay').classList.add('show');
+    // highlight the Materiali button
+    document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('bnav-sidebar')?.classList.add('active');
+  }
 }
 function closeSidebar() {
   sidebarOpen = false;
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+// Tasto Scheda: se c'è un materiale selezionato vai alla scheda,
+// altrimenti apri la sidebar per scegliere
+function goToScheda() {
+  if (currentMat) {
+    switchView('material');
+  } else {
+    // nessun materiale ancora — apri la sidebar con un hint
+    toggleSidebar();
+    // mostra breve messaggio nella sidebar
+    const lbl = document.getElementById('sidebar-header-label');
+    if (lbl) {
+      lbl.textContent = '↑ Scegli un materiale';
+      lbl.style.color = 'var(--accent)';
+      setTimeout(() => {
+        lbl.textContent = 'Materiali — durezza ↓';
+        lbl.style.color = '';
+      }, 2000);
+    }
+  }
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────
@@ -1438,6 +1469,7 @@ function renderDetail() {
 
 // ─── VIEW SWITCHING ──────────────────────────────────────────────────
 function switchView(v) {
+  closeSidebar(); // sempre chiudi la sidebar quando cambi vista
   ['dashboard','material','quiz'].forEach(id => {
     document.getElementById('view-'+id).style.display = (id===v) ? 'block' : 'none';
   });
@@ -1446,7 +1478,6 @@ function switchView(v) {
   });
   updateBottomNav(v);
   if (v==='material' && !currentMat) switchView('dashboard');
-  // scroll to top
   document.getElementById('main-content').scrollTop = 0;
 }
 
@@ -1586,6 +1617,15 @@ function resetQuiz() {
   document.getElementById('quiz-playing').classList.remove('active');
   document.querySelectorAll('.mat-select-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('start-quiz-btn').disabled = true;
+}
+
+// ─── SERVICE WORKER REGISTRATION (PWA) ──────────────────────────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('SW registered:', r.scope))
+      .catch(e => console.warn('SW failed:', e));
+  });
 }
 
 // ─── START ───────────────────────────────────────────────────────────
