@@ -52,18 +52,24 @@ input  { font-family:inherit; }
   position:sticky; top:0; z-index:100;
   background:var(--bg2); border-bottom:1px solid var(--line2);
   height:52px; display:flex; align-items:center;
-  padding:0 16px; gap:10px;
+  padding:0 12px; gap:8px;
+  overflow:hidden;
 }
-.logo { font-family:var(--cond); font-size:22px; font-weight:800; letter-spacing:3px; color:var(--accent); }
+.logo {
+  font-family:var(--cond); font-size:20px; font-weight:800;
+  letter-spacing:2px; color:var(--accent);
+  white-space:nowrap; flex-shrink:0;
+}
 .back-btn {
-  display:none; align-items:center; gap:6px;
-  background:transparent; border:none; color:var(--muted);
-  font-family:var(--mono); font-size:11px; letter-spacing:1px;
-  padding:6px 10px; border-radius:5px;
+  display:none; align-items:center; gap:5px;
+  background:transparent; border:1px solid var(--line2);
+  color:var(--muted); border-radius:6px;
+  font-family:var(--mono); font-size:11px; letter-spacing:0.5px;
+  padding:5px 10px; white-space:nowrap; flex-shrink:0;
 }
 .back-btn:active { background:var(--bg3); }
 .back-btn.show { display:flex; }
-.back-arrow { font-size:16px; }
+.back-arrow { font-size:14px; }
 
 /* ── SCREENS ── */
 .screen { display:none; padding:16px 16px 40px; max-width:860px; margin:0 auto; }
@@ -1002,19 +1008,21 @@ function goBack() {
 
 function updateTopbar(id) {
   const backBtn = document.getElementById('back-btn');
-  const logoTitle = document.getElementById('logo-title');
+  const logo    = document.getElementById('logo-title');
   if (id === 'scr-dashboard') {
     backBtn.classList.remove('show');
-    logoTitle.style.marginLeft = '0';
+    logo.style.display = 'block';
   } else {
     backBtn.classList.add('show');
-    logoTitle.style.marginLeft = 'auto';
+    logo.style.display = 'none';   // nascondi logo quando c'è il tasto indietro
+    const prev = history_stack[history_stack.length - 2];
     const labels = {
-      'scr-list':   'Dashboard',
-      'scr-detail': document.getElementById('list-title')?.textContent || 'Lista',
-      'scr-quiz':   'Scheda'
+      'scr-dashboard': '← Dashboard',
+      'scr-list':      '← Lista',
+      'scr-detail':    '← Scheda',
+      'scr-quiz':      '← Quiz',
     };
-    document.getElementById('back-label').textContent = labels[id] || 'Indietro';
+    document.getElementById('back-label').textContent = labels[prev] || '← Indietro';
   }
 }
 
