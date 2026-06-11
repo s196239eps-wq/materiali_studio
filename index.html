@@ -8,11 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MatRef">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="Materials Engineering Academy — Guida completa ai materiali da officina per ingegneri. Acciai, superleghe, titanio, alluminio, ceramici e molto altro.">
-<meta name="keywords" content="ingegneria materiali, lavorabilità, titanio, Inconel, acciaio inox, officina meccanica, CNC">
-<meta property="og:title" content="MatRef — Materials Engineering Academy">
-<meta property="og:description" content="Guida interattiva ai materiali da officina: classifiche, proprietà, lavorabilità, quiz AI.">
-<meta property="og:type" content="website">
+<meta name="description" content="Materials Engineering Academy — Guida completa ai materiali da officina per ingegneri.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -21,686 +17,433 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Barlow:wght@300;400;600;700;800&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════════════════════════════ */
 :root {
-  --bg: #0b0c0f;
-  --bg2: #13151a;
-  --bg3: #1a1d24;
-  --bg4: #22262f;
-  --line: rgba(255,255,255,0.07);
-  --line2: rgba(255,255,255,0.12);
-  --text: #e8eaf0;
+  --bg:    #0b0c0f;
+  --bg2:   #13151a;
+  --bg3:   #1a1d24;
+  --bg4:   #22262f;
+  --line:  rgba(255,255,255,0.07);
+  --line2: rgba(255,255,255,0.13);
+  --text:  #e8eaf0;
   --muted: #7a7f8e;
-  --dim: #4a4f5c;
-  --accent: #e8c84a;
-  --accent2: #f0d97a;
-  --blue: #5b9cf6;
-  --teal: #3dd6c8;
-  --red: #f05a5a;
+  --dim:   #4a4f5c;
+  --accent:#e8c84a;
+  --blue:  #5b9cf6;
   --green: #4ecb8d;
-  --orange: #f07a3a;
-  --mono: 'IBM Plex Mono', monospace;
-  --sans: 'Barlow', sans-serif;
-  --cond: 'Barlow Condensed', sans-serif;
-  --topbar-h: 52px;
-  --bottomnav-h: 60px;
-  --sidebar-w: 268px;
+  --red:   #f05a5a;
+  --mono:  'IBM Plex Mono', monospace;
+  --sans:  'Barlow', sans-serif;
+  --cond:  'Barlow Condensed', sans-serif;
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { height: 100%; -webkit-text-size-adjust: 100%; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { height:100%; -webkit-text-size-adjust:100%; }
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
+  background:var(--bg); color:var(--text);
+  font-family:var(--sans);
+  min-height:100%; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
 }
-/* Prevent any text from overflowing its container */
-p, li, td, th, div, span { overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
-button { font-family: inherit; cursor: pointer; }
-input { font-family: inherit; }
-a { color: var(--accent); text-decoration: none; }
+p,li,td,th,span,div { overflow-wrap:break-word; word-break:break-word; }
+button { font-family:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+input  { font-family:inherit; }
 
-/* ═══════════════════════════════════════════════════════════════
-   SCROLLBARS
-═══════════════════════════════════════════════════════════════ */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 2px; }
-
-/* ═══════════════════════════════════════════════════════════════
-   TOP BAR  (desktop + tablet)
-═══════════════════════════════════════════════════════════════ */
+/* ── TOPBAR ── */
 .topbar {
-  height: var(--topbar-h);
-  min-height: var(--topbar-h);
-  background: var(--bg2);
-  border-bottom: 1px solid var(--line2);
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  gap: 12px;
-  flex-shrink: 0;
-  z-index: 200;
+  position:sticky; top:0; z-index:100;
+  background:var(--bg2); border-bottom:1px solid var(--line2);
+  height:52px; display:flex; align-items:center;
+  padding:0 16px; gap:10px;
 }
-.logo-mark {
-  font-family: var(--cond);
-  font-size: 20px; font-weight: 800;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--accent); white-space: nowrap;
+.logo { font-family:var(--cond); font-size:22px; font-weight:800; letter-spacing:3px; color:var(--accent); }
+.back-btn {
+  display:none; align-items:center; gap:6px;
+  background:transparent; border:none; color:var(--muted);
+  font-family:var(--mono); font-size:11px; letter-spacing:1px;
+  padding:6px 10px; border-radius:5px;
 }
-.logo-sub {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--muted); letter-spacing: 1px;
-  border-left: 1px solid var(--line2); padding-left: 10px;
-  white-space: nowrap;
-}
-.topbar-tabs {
-  margin-left: auto;
-  display: flex; gap: 4px;
-}
-.topbar-tab {
-  padding: 5px 13px;
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: 1px; text-transform: uppercase;
-  color: var(--muted); background: transparent;
-  border: 1px solid transparent; border-radius: 4px;
-  transition: all 0.15s; white-space: nowrap;
-}
-.topbar-tab:hover { color: var(--text); border-color: var(--line2); }
-.topbar-tab.active { color: var(--accent); border-color: rgba(232,200,74,0.35); background: rgba(232,200,74,0.07); }
+.back-btn:active { background:var(--bg3); }
+.back-btn.show { display:flex; }
+.back-arrow { font-size:16px; }
 
-/* ═══════════════════════════════════════════════════════════════
-   BOTTOM NAV  (mobile only — shown via media query)
-═══════════════════════════════════════════════════════════════ */
-.bottomnav {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: var(--bottomnav-h);
-  background: var(--bg2);
-  border-top: 1px solid var(--line2);
-  z-index: 300;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-.bottomnav-inner {
-  display: flex;
-  height: 60px;
-}
-.bnav-btn {
-  flex: 1;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 3px;
-  background: transparent; border: none;
-  color: var(--muted); transition: color 0.15s;
-  font-family: var(--mono); font-size: 9px;
-  letter-spacing: 1px; text-transform: uppercase;
-}
-.bnav-btn.active { color: var(--accent); }
-.bnav-icon { font-size: 18px; line-height: 1; }
+/* ── SCREENS ── */
+.screen { display:none; padding:16px 16px 40px; max-width:860px; margin:0 auto; }
+.screen.active { display:block; }
 
-/* ═══════════════════════════════════════════════════════════════
-   LAYOUT
-═══════════════════════════════════════════════════════════════ */
-.app-body {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-  min-height: 0;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   SIDEBAR
-═══════════════════════════════════════════════════════════════ */
-.sidebar {
-  width: var(--sidebar-w);
-  min-width: var(--sidebar-w);
-  background: var(--bg2);
-  border-right: 1px solid var(--line2);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-  z-index: 100;
-}
-.sidebar-header {
-  padding: 12px 14px 10px;
-  border-bottom: 1px solid var(--line);
-  flex-shrink: 0;
-}
-.sidebar-header-label {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--muted); letter-spacing: 2px;
-  text-transform: uppercase; margin-bottom: 7px;
-}
-.search-box {
-  width: 100%;
-  background: var(--bg3);
-  border: 1px solid var(--line2);
-  border-radius: 6px;
-  padding: 7px 10px;
-  font-family: var(--mono); font-size: 12px;
-  color: var(--text); outline: none;
-  -webkit-appearance: none;
-}
-.search-box::placeholder { color: var(--dim); }
-.search-box:focus { border-color: rgba(232,200,74,0.4); }
-
-.category-filter {
-  display: flex; flex-wrap: wrap; gap: 4px;
-  padding: 8px 14px 7px;
-  border-bottom: 1px solid var(--line);
-  flex-shrink: 0;
-  overflow-x: auto;
-}
-.category-filter::-webkit-scrollbar { height: 0; }
-.cat-btn {
-  padding: 3px 8px;
-  font-family: var(--mono); font-size: 9px;
-  letter-spacing: 1px; text-transform: uppercase;
-  border-radius: 3px; cursor: pointer;
-  border: 1px solid var(--line2);
-  color: var(--muted); background: transparent;
-  transition: all 0.15s; white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
-}
-.cat-btn:hover, .cat-btn:active { color: var(--text); }
-.cat-btn.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
-
-.mat-list { flex: 1; overflow-y: auto; padding: 6px 0; }
-.mat-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 9px 14px;
-  cursor: pointer;
-  border-left: 2px solid transparent;
-  transition: background 0.1s;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-.mat-item:hover, .mat-item:active { background: var(--bg3); }
-.mat-item.active { background: var(--bg3); border-left-color: var(--accent); }
-.mat-rank { font-family: var(--mono); font-size: 10px; color: var(--dim); min-width: 20px; text-align: right; }
-.mat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.mat-info { flex: 1; min-width: 0; }
-.mat-name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mat-family { font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 1px; }
-.mat-hv { font-family: var(--mono); font-size: 10px; color: var(--accent); min-width: 38px; text-align: right; }
-
-/* ═══════════════════════════════════════════════════════════════
-   SIDEBAR OVERLAY (mobile)
-═══════════════════════════════════════════════════════════════ */
-.sidebar-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 99;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   MAIN CONTENT
-═══════════════════════════════════════════════════════════════ */
-.main {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-width: 0;
-  max-width: 100%;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   DASHBOARD
-═══════════════════════════════════════════════════════════════ */
-.dashboard { padding: 20px 20px 32px; max-width: 860px; }
-.dash-hero { margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+/* ── DASHBOARD ── */
 .dash-title {
-  font-family: var(--cond);
-  font-size: 34px; font-weight: 800;
-  letter-spacing: 2px; text-transform: uppercase;
-  line-height: 1; margin-bottom: 5px;
+  font-family:var(--cond); font-size:32px; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase; line-height:1;
+  margin-bottom:4px;
 }
-.dash-title span { color: var(--accent); }
-.dash-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+.dash-title span { color:var(--accent); }
+.dash-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:18px; }
 
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-bottom: 20px; }
-.stat-card { background: var(--bg3); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
-.stat-val { font-family: var(--cond); font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
-.stat-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; }
-
-.ranking-label {
-  font-family: var(--mono); font-size: 10px; color: var(--muted);
-  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
-  display: flex; align-items: center; gap: 8px;
+.search-wrap { position:relative; margin-bottom:20px; }
+.search-input {
+  width:100%; padding:12px 14px 12px 40px;
+  background:var(--bg2); border:1px solid var(--line2);
+  border-radius:8px; color:var(--text);
+  font-size:15px; outline:none; -webkit-appearance:none;
 }
-.ranking-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.search-input:focus { border-color:var(--accent); }
+.search-input::placeholder { color:var(--dim); }
+.search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:16px; pointer-events:none; }
 
-.hardness-chart { margin-bottom: 24px; }
-.hc-row {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 4px; cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+/* search results */
+.search-results { display:none; }
+.search-results.show { display:block; }
+.search-result-item {
+  display:flex; align-items:center; gap:10px;
+  padding:11px 14px; background:var(--bg2);
+  border:1px solid var(--line); border-radius:8px;
+  margin-bottom:8px; cursor:pointer; transition:border-color .15s;
 }
-.hc-row:hover .hc-name, .hc-row:active .hc-name { color: var(--accent); }
-.hc-pos { font-family: var(--mono); font-size: 10px; color: var(--dim); min-width: 18px; text-align: right; }
-.hc-name { font-size: 11px; font-weight: 600; min-width: 140px; color: var(--text); transition: color 0.15s; }
-.hc-bar-wrap { flex: 1; height: 14px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
-.hc-bar {
-  height: 100%; border-radius: 2px;
-  display: flex; align-items: center; padding-left: 5px;
-  font-family: var(--mono); font-size: 8px; font-weight: 600; color: var(--bg);
-  white-space: nowrap;
-}
-.hc-val { font-family: var(--mono); font-size: 10px; color: var(--muted); min-width: 65px; text-align: right; }
+.search-result-item:active { border-color:var(--accent); background:var(--bg3); }
+.sr-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.sr-info { flex:1; min-width:0; }
+.sr-name { font-size:14px; font-weight:700; color:var(--text); }
+.sr-fam  { font-family:var(--mono); font-size:10px; color:var(--muted); }
+.sr-hv   { font-family:var(--mono); font-size:11px; color:var(--accent); }
 
-.family-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
-.family-card {
-  background: var(--bg3); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px;
-  cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent;
-}
-.family-card:hover, .family-card:active { border-color: var(--line2); background: var(--bg4); }
-.fc-header { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-.fc-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.fc-name { font-family: var(--cond); font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); }
-.fc-count { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: auto; }
-.fc-examples { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.5; }
+/* stats row */
+.stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:20px; }
+.stat-card { background:var(--bg2); border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+.stat-val  { font-family:var(--cond); font-size:26px; font-weight:800; color:var(--accent); line-height:1; }
+.stat-lbl  { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-top:3px; }
 
-/* ═══════════════════════════════════════════════════════════════
-   MATERIAL DETAIL
-═══════════════════════════════════════════════════════════════ */
+/* section label */
+.sec-label {
+  font-family:var(--mono); font-size:10px; color:var(--muted);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:10px; padding-bottom:6px;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:8px;
+}
+.sec-label::after { content:''; flex:1; height:1px; background:var(--line); }
+
+/* family grid */
+.fam-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; margin-bottom:24px; }
+.fam-card {
+  background:var(--bg2); border:1px solid var(--line);
+  border-radius:10px; padding:13px 14px;
+  cursor:pointer; transition:all .15s;
+}
+.fam-card:active { border-color:var(--accent); background:var(--bg3); transform:scale(.98); }
+.fam-header { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.fam-dot  { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.fam-name { font-family:var(--cond); font-size:14px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text); }
+.fam-count{ font-family:var(--mono); font-size:10px; color:var(--muted); margin-left:auto; }
+.fam-desc { font-family:var(--mono); font-size:10px; color:var(--muted); line-height:1.5; }
+
+/* hardness ranking */
+.hrank-row {
+  display:flex; align-items:center; gap:8px;
+  padding:5px 0; cursor:pointer;
+}
+.hrank-row:active .hrank-name { color:var(--accent); }
+.hrank-pos  { font-family:var(--mono); font-size:10px; color:var(--dim); min-width:20px; text-align:right; flex-shrink:0; }
+.hrank-dot  { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.hrank-name { font-size:12px; font-weight:600; color:var(--text); min-width:0; flex:0 0 140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hrank-bar-wrap { flex:1; height:13px; background:var(--bg3); border-radius:2px; overflow:hidden; min-width:0; }
+.hrank-bar  { height:100%; border-radius:2px; font-family:var(--mono); font-size:8px; color:var(--bg); font-weight:700; display:flex; align-items:center; padding-left:4px; white-space:nowrap; }
+.hrank-val  { font-family:var(--mono); font-size:10px; color:var(--muted); flex-shrink:0; min-width:62px; text-align:right; }
+
+/* ── MAT LIST SCREEN ── */
+.screen-title {
+  font-family:var(--cond); font-size:26px; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:4px; color:var(--text);
+}
+.screen-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; }
+
+.mat-list { display:flex; flex-direction:column; gap:8px; }
+.mat-item {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px; background:var(--bg2);
+  border:1px solid var(--line); border-radius:10px;
+  cursor:pointer; transition:all .15s;
+}
+.mat-item:active { border-color:var(--accent); background:var(--bg3); }
+.mi-dot   { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.mi-info  { flex:1; min-width:0; }
+.mi-name  { font-size:15px; font-weight:700; color:var(--text); }
+.mi-sub   { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:2px; }
+.mi-hv    { font-family:var(--mono); font-size:12px; color:var(--accent); flex-shrink:0; }
+.mi-arrow { color:var(--dim); font-size:16px; flex-shrink:0; }
+
+/* ── DETAIL SCREEN ── */
 .mat-hero {
-  padding: 18px 20px 16px;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-  display: flex; align-items: flex-start; gap: 12px;
+  padding:16px 0 14px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:18px;
 }
-.mat-hero-dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
-.mat-hero-main { flex: 1; min-width: 0; }
-.mat-hero-name {
-  font-family: var(--cond); font-size: 28px; font-weight: 800;
-  letter-spacing: 2px; text-transform: uppercase; line-height: 1;
-  word-break: break-word;
+.mat-hero-top { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+.mh-dot { width:12px; height:12px; border-radius:50%; margin-top:8px; flex-shrink:0; }
+.mh-main { flex:1; min-width:0; }
+.mh-rank { font-family:var(--mono); font-size:9px; color:var(--muted); margin-bottom:2px; }
+.mh-name {
+  font-family:var(--cond); font-size:28px; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase; line-height:1.1;
+  color:var(--text);
 }
-.mat-hero-formula { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
-.mat-hero-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
-.tag { padding: 3px 8px; border-radius: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
-.tag-hv { background: rgba(232,200,74,0.15); color: var(--accent); border: 1px solid rgba(232,200,74,0.3); }
-.tag-family { background: var(--bg3); color: var(--muted); border: 1px solid var(--line2); }
-.tag-use { background: rgba(91,156,246,0.12); color: var(--blue); border: 1px solid rgba(91,156,246,0.25); }
-.mat-hero-kpis { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
-.kpi-box { text-align: center; }
-.kpi-val { font-family: var(--cond); font-size: 20px; font-weight: 800; color: var(--accent); line-height: 1; }
-.kpi-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
-
-.detail-body { padding: 18px 20px; }
-.section-block { margin-bottom: 22px; }
-.section-heading {
-  font-family: var(--mono); font-size: 10px; color: var(--muted);
-  letter-spacing: 2px; text-transform: uppercase;
-  margin-bottom: 10px; padding-bottom: 6px;
-  border-bottom: 1px solid var(--line);
-  display: flex; align-items: center; gap: 7px;
+.mh-formula { font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:3px; }
+.mh-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.tag {
+  padding:3px 9px; border-radius:3px;
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:.5px; text-transform:uppercase;
 }
+.tag-hv  { background:rgba(232,200,74,.15); color:var(--accent); border:1px solid rgba(232,200,74,.3); }
+.tag-fam { background:var(--bg3); color:var(--muted); border:1px solid var(--line2); }
+.tag-use { background:rgba(91,156,246,.12); color:var(--blue); border:1px solid rgba(91,156,246,.25); }
+.mh-kpis { display:flex; gap:16px; flex-wrap:wrap; }
+.kpi { text-align:center; }
+.kpi-val { font-family:var(--cond); font-size:22px; font-weight:800; color:var(--accent); line-height:1; }
+.kpi-lbl { font-family:var(--mono); font-size:9px; color:var(--muted); text-transform:uppercase; margin-top:1px; }
 
-.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 7px; }
-.prop-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; min-width: 0; overflow: hidden; }
-.prop-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
-.prop-value { font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.prop-unit { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: 2px; font-weight: 400; }
-.prop-note { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
-
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.content-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; overflow: hidden; }
-.content-card h4 { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-.content-card p, .content-card li { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 5px; }
-.content-card li { list-style: none; padding-left: 12px; position: relative; }
-.content-card li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
-.content-card strong { color: var(--text); font-weight: 600; }
-
-.machin-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.machin-table th { font-family: var(--mono); font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 6px 8px; border-bottom: 1px solid var(--line2); text-align: left; }
-.machin-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); color: var(--text); }
-.machin-table tr:hover td { background: var(--bg3); }
-.hl { color: var(--accent) !important; font-weight: 600; }
-
-.rating-bar { display: flex; gap: 3px; align-items: center; }
-.rating-pip { width: 10px; height: 10px; border-radius: 2px; background: var(--bg4); }
-.rating-pip.filled { background: var(--accent); }
-.rating-pip.filled-b { background: var(--blue); }
-.rating-pip.filled-g { background: var(--green); }
-.rating-pip.filled-r { background: var(--red); }
-
-.info-banner { background: rgba(232,200,74,0.07); border: 1px solid rgba(232,200,74,0.2); border-radius: 6px; padding: 9px 13px; font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
-.info-banner strong { color: var(--accent); }
-.warn-banner { background: rgba(240,90,90,0.07); border: 1px solid rgba(240,90,90,0.2); border-radius: 6px; padding: 9px 13px; font-size: 12px; color: var(--muted); line-height: 1.6; }
-.warn-banner strong { color: var(--red); }
-
-/* ═══════════════════════════════════════════════════════════════
-   QUIZ
-═══════════════════════════════════════════════════════════════ */
-.quiz-view { padding: 20px 20px 80px; max-width: 720px; }
-.quiz-title { font-family: var(--cond); font-size: 26px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
-.quiz-title span { color: var(--accent); }
-.quiz-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 18px; }
-
-.mat-select-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 7px; margin-bottom: 18px; }
-.mat-select-btn {
-  padding: 8px 9px; background: var(--bg2); border: 1px solid var(--line2);
-  border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; gap: 3px;
-  transition: all 0.15s; -webkit-tap-highlight-color: transparent; text-align: left;
+/* detail sections */
+.dsec { margin-bottom:20px; }
+.dsec-title {
+  font-family:var(--mono); font-size:10px; color:var(--muted);
+  letter-spacing:2px; text-transform:uppercase;
+  border-bottom:1px solid var(--line);
+  padding-bottom:6px; margin-bottom:10px;
 }
-.mat-select-btn:hover, .mat-select-btn:active { border-color: rgba(232,200,74,0.3); }
-.mat-select-btn.selected { border-color: var(--accent); background: rgba(232,200,74,0.08); }
-.msb-dot { width: 7px; height: 7px; border-radius: 50%; }
-.msb-name { font-size: 12px; font-weight: 600; color: var(--text); }
-.msb-hv { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.prop-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:7px; }
+.prop-card { background:var(--bg2); border:1px solid var(--line); border-radius:6px; padding:9px 11px; min-width:0; }
+.prop-lbl  { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+.prop-val  { font-size:16px; font-weight:700; color:var(--accent); line-height:1; }
+.prop-unit { font-family:var(--mono); font-size:11px; color:var(--muted); margin-left:2px; font-weight:400; }
+.prop-note { font-size:11px; color:var(--muted); margin-top:2px; line-height:1.4; }
 
-.start-quiz-btn {
-  padding: 12px 24px; background: var(--accent); color: var(--bg);
-  font-family: var(--cond); font-size: 15px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  border: none; border-radius: 6px;
-  transition: all 0.15s; -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: none; touch-action: manipulation;
+.info-box {
+  background:rgba(232,200,74,.07); border:1px solid rgba(232,200,74,.2);
+  border-radius:8px; padding:11px 13px;
+  font-size:13px; color:var(--muted); line-height:1.65;
 }
-.start-quiz-btn:hover, .start-quiz-btn:active { background: var(--accent2); transform: translateY(-1px); }
-.start-quiz-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
-
-.quiz-progress-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-bottom: 18px; overflow: hidden; }
-.quiz-progress-fill { height: 100%; background: var(--accent); transition: width 0.4s; }
-.quiz-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-.quiz-q-counter { font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.quiz-score-live { font-family: var(--mono); font-size: 11px; color: var(--accent); }
-.quiz-material-tag { font-family: var(--mono); font-size: 10px; color: var(--blue); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
-.quiz-q-text { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 14px; }
-.quiz-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.quiz-opt {
-  padding: 13px 15px; background: var(--bg2); border: 1px solid var(--line2);
-  border-radius: 7px; font-size: 13px; color: var(--text);
-  text-align: left; transition: all 0.15s;
-  -webkit-tap-highlight-color: transparent; -webkit-appearance: none;
-  touch-action: manipulation; line-height: 1.4;
+.info-box strong { color:var(--text); font-weight:600; }
+.warn-box {
+  background:rgba(240,90,90,.07); border:1px solid rgba(240,90,90,.2);
+  border-radius:8px; padding:11px 13px;
+  font-size:13px; color:var(--muted); line-height:1.65;
 }
-.quiz-opt:hover:not(.disabled), .quiz-opt:active:not(.disabled) { border-color: rgba(232,200,74,0.35); background: var(--bg3); }
-.quiz-opt.correct { border-color: var(--green); background: rgba(78,203,141,0.1); color: var(--green); }
-.quiz-opt.wrong { border-color: var(--red); background: rgba(240,90,90,0.1); color: var(--red); }
-.quiz-opt.disabled { cursor: default; }
-.quiz-exp {
-  display: none; padding: 9px 13px; background: var(--bg2); border-left: 2px solid var(--accent);
-  border-radius: 0 6px 6px 0; font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px;
+.warn-box strong { color:var(--red); }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.card { background:var(--bg2); border:1px solid var(--line); border-radius:8px; padding:12px 14px; min-width:0; overflow:hidden; }
+.card h4 { font-family:var(--mono); font-size:10px; color:var(--accent); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.card p  { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:5px; }
+.card li { font-size:13px; color:var(--muted); line-height:1.65; list-style:none; padding-left:12px; position:relative; margin-bottom:3px; }
+.card li::before { content:'›'; position:absolute; left:0; color:var(--accent); }
+.card strong { color:var(--text); }
+
+.rating-bar { display:flex; gap:3px; margin-bottom:8px; }
+.pip { width:10px; height:10px; border-radius:2px; background:var(--bg4); }
+.pip.g { background:var(--green); }
+.pip.y { background:var(--accent); }
+.pip.b { background:var(--blue); }
+.pip.r { background:var(--red); }
+
+.tbl-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.tbl { width:100%; border-collapse:collapse; font-size:12px; min-width:380px; }
+.tbl th { font-family:var(--mono); font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; padding:6px 8px; border-bottom:1px solid var(--line2); text-align:left; }
+.tbl td { padding:7px 8px; border-bottom:1px solid var(--line); color:var(--text); }
+.tbl .hl { color:var(--accent); font-weight:700; }
+
+/* quiz btn at bottom of detail */
+.quiz-btn {
+  display:block; width:100%; margin-top:12px;
+  padding:13px; background:var(--accent); color:var(--bg);
+  font-family:var(--cond); font-size:15px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  border:none; border-radius:8px;
 }
-.quiz-exp.show { display: block; }
-.quiz-exp strong { color: var(--text); }
-.quiz-next-btn {
-  float: right; padding: 9px 20px; background: var(--accent); color: var(--bg);
-  font-family: var(--mono); font-size: 11px; font-weight: 600;
-  letter-spacing: 1px; text-transform: uppercase; border: none; border-radius: 5px;
-  -webkit-tap-highlight-color: transparent; -webkit-appearance: none; display: none;
+.quiz-btn:active { background:#f0d97a; }
+
+/* ── QUIZ SCREEN ── */
+.qpbar-wrap { height:3px; background:var(--bg4); border-radius:2px; margin-bottom:16px; overflow:hidden; }
+.qpbar { height:100%; background:var(--accent); transition:width .4s; }
+.qmeta { display:flex; justify-content:space-between; margin-bottom:4px; }
+.qctr  { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.qsc   { font-family:var(--mono); font-size:11px; color:var(--accent); }
+.qtag  { font-family:var(--mono); font-size:10px; color:var(--blue); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.qtxt  { font-size:18px; font-weight:700; color:var(--text); line-height:1.4; margin-bottom:14px; }
+.qopts { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+.qopt  {
+  padding:13px 15px; background:var(--bg2);
+  border:1px solid var(--line2); border-radius:8px;
+  font-size:14px; color:var(--text); text-align:left;
+  transition:all .15s; -webkit-appearance:none;
 }
-.quiz-next-btn.show { display: inline-block; }
-
-.quiz-result-card { background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 28px 20px; text-align: center; display: none; }
-.quiz-result-card.show { display: block; }
-.qr-score { font-family: var(--cond); font-size: 64px; font-weight: 800; color: var(--accent); line-height: 1; }
-.qr-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 14px; }
-.qr-msg { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 18px; }
-.qr-breakdown { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
-.qr-stat { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-.qr-stat span.ok { color: var(--green); font-weight: 700; }
-.qr-stat span.ko { color: var(--red); font-weight: 700; }
-.quiz-playing { display: none; }
-.quiz-playing.active { display: block; }
-.quiz-selector.hidden { display: none; }
-
-.ai-quiz-loading { display: none; text-align: center; padding: 40px 20px; }
-.ai-quiz-loading.show { display: block; }
-.ai-spinner { width: 32px; height: 32px; border: 2px solid var(--bg4); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.ai-loading-text { font-family: var(--mono); font-size: 11px; color: var(--muted); }
-
-/* ═══════════════════════════════════════════════════════════════
-   MOBILE SIDEBAR TOGGLE
-═══════════════════════════════════════════════════════════════ */
-.sidebar-toggle-btn {
-  display: none;
-  background: transparent; border: none;
-  color: var(--muted); padding: 4px;
-  font-size: 22px; line-height: 1;
-  -webkit-tap-highlight-color: transparent;
+.qopt:active:not(.dis) { border-color:var(--accent); background:var(--bg3); }
+.qopt.ok  { border-color:var(--green); background:rgba(78,203,141,.1); color:var(--green); }
+.qopt.ko  { border-color:var(--red); background:rgba(240,90,90,.1); color:var(--red); }
+.qopt.dis { cursor:default; pointer-events:none; }
+.qexp {
+  display:none; padding:10px 13px;
+  background:var(--bg2); border-left:2px solid var(--accent);
+  border-radius:0 6px 6px 0; font-size:13px; color:var(--muted);
+  line-height:1.6; margin-bottom:12px;
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE — TABLET  (≤900px)
-═══════════════════════════════════════════════════════════════ */
-@media (max-width: 900px) {
-  :root { --sidebar-w: 240px; }
-  .logo-sub { display: none; }
-  .hc-name { min-width: 110px; }
+.qexp.show { display:block; }
+.qexp strong { color:var(--text); }
+.qnext {
+  float:right; padding:10px 22px;
+  background:var(--accent); color:var(--bg);
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  border:none; border-radius:6px; display:none;
 }
+.qnext.show { display:inline-block; }
+.qresult { text-align:center; padding:24px 0; }
+.qr-score { font-family:var(--cond); font-size:72px; font-weight:800; color:var(--accent); line-height:1; }
+.qr-lbl   { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:2px; margin-bottom:12px; }
+.qr-msg   { font-size:16px; font-weight:600; color:var(--text); margin-bottom:20px; }
+.qr-row   { display:flex; justify-content:center; gap:20px; margin-bottom:24px; }
+.qr-stat  { font-family:var(--mono); font-size:12px; color:var(--muted); }
+.qr-stat .ok { color:var(--green); font-weight:700; }
+.qr-stat .ko { color:var(--red); font-weight:700; }
+.qr-btns  { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
 
-/* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE — MOBILE  (≤640px)
-═══════════════════════════════════════════════════════════════ */
-@media (max-width: 640px) {
-  /* Hide desktop topbar tabs, show bottom nav */
-  .topbar-tabs { display: none; }
-  .bottomnav { display: block; }
-  .sidebar-toggle-btn { display: block; }
+.ai-load { text-align:center; padding:40px 0; display:none; }
+.ai-load.show { display:block; }
+.spinner { width:32px; height:32px; border:2px solid var(--bg4); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.ai-txt { font-family:var(--mono); font-size:11px; color:var(--muted); }
 
-  /* Sidebar becomes a full-height drawer over content */
-  .sidebar {
-    position: fixed;
-    top: var(--topbar-h);
-    left: 0;
-    bottom: 0;
-    height: calc(100% - var(--topbar-h));
-    transform: translateX(-100%);
-    z-index: 200;
-    width: min(85vw, 300px);
-    min-width: unset;
-  }
-  .sidebar.open { transform: translateX(0); }
-  .sidebar-overlay { display: block; }
-  .sidebar-overlay.show { pointer-events: auto; }
-  .sidebar-overlay:not(.show) { pointer-events: none; opacity: 0; }
-
-  /* Main takes full width, padded for bottom nav + safe area */
-  .main { width: 100%; }
-  .dashboard  { padding-bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 20px); }
-  .quiz-view  { padding-bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 20px); }
-  .detail-body{ padding-bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 20px); }
-
-  /* Dashboard title */
-  .dash-title { font-size: 26px; }
-
-  /* Hardness ranking — shrink labels */
-  .hc-name { min-width: 90px; font-size: 10px; }
-  .hc-val  { min-width: 52px; font-size: 9px; }
-  .hc-bar-wrap { min-width: 0; }
-
-  /* Family grid → 1 column on mobile, full-width cards */
-  .family-grid { grid-template-columns: 1fr; }
-
-  /* Material hero — NO sticky on mobile (was covering content) */
-  .mat-hero { flex-wrap: wrap; padding: 14px 16px; }
-  .mat-hero-kpis {
-    width: 100%; justify-content: flex-start;
-    padding-top: 10px; border-top: 1px solid var(--line); margin-top: 6px;
-  }
-  .mat-hero-name { font-size: 22px; }
-
-  /* Detail body padding */
-  .detail-body { padding: 14px 16px; }
-
-  /* Two columns → single column */
-  .two-col { grid-template-columns: 1fr; }
-  .prop-grid { grid-template-columns: repeat(2, 1fr); }
-
-  /* Table horizontal scroll */
-  .machin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .machin-table { min-width: 420px; }
-
-  /* Quiz */
-  .quiz-q-text { font-size: 15px; }
-  .quiz-opt { padding: 12px 13px; font-size: 13px; }
-  .mat-select-grid { grid-template-columns: repeat(2, 1fr); }
-  .quiz-view { padding-left: 14px; padding-right: 14px; }
+/* quiz mat selector */
+.qmat-sec-lbl { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.qmat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:7px; margin-bottom:18px; }
+.qmat-btn {
+  padding:9px 10px; background:var(--bg2);
+  border:1px solid var(--line2); border-radius:7px;
+  cursor:pointer; display:flex; flex-direction:column; gap:3px; text-align:left;
+  transition:all .15s;
 }
+.qmat-btn:active, .qmat-btn.sel { border-color:var(--accent); background:rgba(232,200,74,.08); }
+.qmb-dot  { width:7px; height:7px; border-radius:50%; }
+.qmb-name { font-size:12px; font-weight:700; color:var(--text); }
+.qmb-hv   { font-family:var(--mono); font-size:10px; color:var(--muted); }
+.gen-btn {
+  padding:12px 28px; background:var(--accent); color:var(--bg);
+  font-family:var(--cond); font-size:15px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  border:none; border-radius:7px;
+}
+.gen-btn:disabled { opacity:.4; }
+.gen-btn:active:not(:disabled) { background:#f0d97a; }
 
-/* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE — SMALL MOBILE  (≤400px)
-═══════════════════════════════════════════════════════════════ */
-@media (max-width: 400px) {
-  .dashboard, .detail-body, .quiz-view { padding-left: 12px; padding-right: 12px; }
-  .mat-hero { padding: 12px; }
-  .stat-val { font-size: 22px; }
-  .prop-grid { grid-template-columns: 1fr 1fr; }
-  .mat-select-grid { grid-template-columns: repeat(2, 1fr); }
-  .hc-name { min-width: 75px; font-size: 9px; }
-  .hc-pos { display: none; }
+/* scrollbar */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:2px; }
+
+/* responsive */
+@media (max-width:500px) {
+  .two-col { grid-template-columns:1fr; }
+  .stats-row { grid-template-columns:1fr 1fr; }
+  .hrank-name { flex-basis:80px; font-size:10px; }
+  .mh-name { font-size:22px; }
+}
+@media (max-width:360px) {
+  .hrank-name { flex-basis:65px; font-size:9px; }
+  .hrank-val  { min-width:50px; font-size:9px; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <button class="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Apri lista materiali">☰</button>
-  <div class="logo-mark">MatRef</div>
-  <div class="logo-sub">Officina · Aerospace · Engineering</div>
-  <div class="topbar-tabs">
-    <button class="topbar-tab active" onclick="switchView('dashboard')" aria-label="Dashboard">Dashboard</button>
-    <button class="topbar-tab" onclick="switchView('material')" aria-label="Scheda materiale">Materiale</button>
-    <button class="topbar-tab" onclick="switchView('quiz')" aria-label="Quiz AI">Quiz AI</button>
+  <button class="back-btn" id="back-btn" onclick="goBack()">
+    <span class="back-arrow">←</span><span id="back-label">Indietro</span>
+  </button>
+  <div class="logo" id="logo-title">MatRef</div>
+</div>
+
+<!-- SCREEN 1: DASHBOARD -->
+<div class="screen active" id="scr-dashboard">
+  <div class="dash-title">Materiali da <span>Officina</span></div>
+  <div class="dash-sub">// Ingegneria dei Materiali · Aerospazio · CNC</div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="search-input" type="search"
+      placeholder="Cerca materiale…" autocomplete="off" autocorrect="off"
+      spellcheck="false" oninput="onSearch(this.value)">
+  </div>
+
+  <div class="search-results" id="search-results"></div>
+
+  <div id="dashboard-main">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val" id="s-tot">0</div><div class="stat-lbl">Materiali</div></div>
+      <div class="stat-card"><div class="stat-val" id="s-fam">0</div><div class="stat-lbl">Famiglie</div></div>
+      <div class="stat-card"><div class="stat-val">10k+</div><div class="stat-lbl">HV Max</div></div>
+      <div class="stat-card"><div class="stat-val" id="s-quiz">Quiz</div><div class="stat-lbl">AI quiz</div></div>
+    </div>
+
+    <div class="sec-label">Famiglie di Materiali</div>
+    <div class="fam-grid" id="fam-grid"></div>
+
+    <div class="sec-label">Classifica Durezza Vickers</div>
+    <div id="hrank"></div>
   </div>
 </div>
 
-<!-- SIDEBAR OVERLAY (mobile) -->
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
-
-<div class="app-body">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar" aria-label="Lista materiali">
-    <div class="sidebar-header">
-      <div class="sidebar-header-label" id="sidebar-header-label">Materiali — durezza ↓</div>
-      <input class="search-box" type="search" id="mat-search" placeholder="Cerca…" oninput="filterMaterials()" autocomplete="off" autocorrect="off" spellcheck="false">
-    </div>
-    <div class="category-filter" id="cat-filter"></div>
-    <div class="mat-list" id="mat-list"></div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main" id="main-content" aria-live="polite">
-
-    <!-- DASHBOARD -->
-    <div id="view-dashboard" class="dashboard">
-      <div class="dash-hero">
-        <div class="dash-title">Materiali da <span>Officina</span></div>
-        <div class="dash-sub">// Classificati per durezza · Seleziona un materiale</div>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-val" id="s-total">0</div><div class="stat-label">Materiali</div></div>
-        <div class="stat-card"><div class="stat-val" id="s-fam">0</div><div class="stat-label">Famiglie</div></div>
-        <div class="stat-card"><div class="stat-val">10k+</div><div class="stat-label">HV Max</div></div>
-        <div class="stat-card"><div class="stat-val" id="s-cat">0</div><div class="stat-label">Categorie</div></div>
-      </div>
-      <div class="hardness-chart">
-        <div class="ranking-label">Classifica Durezza Vickers (HV)</div>
-        <div id="hardness-ranking"></div>
-      </div>
-      <div class="ranking-label">Famiglie di Materiali</div>
-      <div class="family-grid" id="family-grid"></div>
-    </div>
-
-    <!-- MATERIAL DETAIL -->
-    <div id="view-material" style="display:none">
-      <div id="mat-detail-content"></div>
-    </div>
-
-    <!-- QUIZ -->
-    <div id="view-quiz" style="display:none">
-      <div class="quiz-view">
-        <div class="quiz-title">Quiz <span>AI</span></div>
-        <div class="quiz-sub">// 10 domande generate dall'AI · Livello ingegnere</div>
-
-        <div class="quiz-selector" id="quiz-selector">
-          <div class="ranking-label">Scegli il materiale</div>
-          <div class="mat-select-grid" id="quiz-mat-grid"></div>
-          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
-            <button class="start-quiz-btn" id="start-quiz-btn" onclick="startAIQuiz()" disabled>Genera Quiz →</button>
-            <span style="font-family:var(--mono);font-size:10px;color:var(--muted)">10 domande AI ogni volta diverse</span>
-          </div>
-          <div class="warn-banner">
-            <strong>Nota:</strong> Il quiz è generato dinamicamente da Claude AI ad ogni sessione. Richiede connessione a Internet.
-          </div>
-        </div>
-
-        <div class="ai-quiz-loading" id="ai-loading">
-          <div class="ai-spinner"></div>
-          <div class="ai-loading-text">Generazione domande in corso…</div>
-        </div>
-
-        <div class="quiz-playing" id="quiz-playing">
-          <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qpf"></div></div>
-          <div class="quiz-meta-row">
-            <div class="quiz-q-counter" id="qcounter">1 / 10</div>
-            <div class="quiz-score-live" id="qscore">⭐ 0</div>
-          </div>
-          <div class="quiz-material-tag" id="qmattag"></div>
-          <div class="quiz-q-text" id="qtext"></div>
-          <div class="quiz-options" id="qoptions"></div>
-          <div class="quiz-exp" id="qexp"></div>
-          <button class="quiz-next-btn" id="qnext" onclick="quizNext()">Avanti →</button>
-          <div style="clear:both;height:8px"></div>
-        </div>
-
-        <div class="quiz-result-card" id="quiz-result">
-          <div class="qr-score" id="qr-score">0/10</div>
-          <div class="qr-label">PUNTEGGIO FINALE</div>
-          <div class="qr-msg" id="qr-msg"></div>
-          <div class="qr-breakdown" id="qr-break"></div>
-          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-            <button class="start-quiz-btn" onclick="resetQuiz()">🔄 Nuovo Quiz</button>
-            <button class="start-quiz-btn" onclick="switchView('material')" style="background:var(--bg3);color:var(--text);border:1px solid var(--line2)">📖 Studia</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
+<!-- SCREEN 2: MATERIAL LIST (per famiglia) -->
+<div class="screen" id="scr-list">
+  <div class="screen-title" id="list-title">Famiglia</div>
+  <div class="screen-sub" id="list-sub"></div>
+  <div class="mat-list" id="mat-list"></div>
 </div>
 
-<!-- BOTTOM NAV (mobile) -->
-<nav class="bottomnav" aria-label="Navigazione principale">
-  <div class="bottomnav-inner">
-    <button class="bnav-btn active" id="bnav-dashboard" onclick="switchView('dashboard')">
-      <span class="bnav-icon">📊</span>Dashboard
-    </button>
-    <button class="bnav-btn" id="bnav-sidebar" onclick="toggleSidebar()">
-      <span class="bnav-icon">📋</span>Materiali
-    </button>
-    <button class="bnav-btn" id="bnav-material" onclick="goToScheda()">
-      <span class="bnav-icon">🔬</span>Scheda
-    </button>
-    <button class="bnav-btn" id="bnav-quiz" onclick="switchView('quiz')">
-      <span class="bnav-icon">🎯</span>Quiz AI
-    </button>
+<!-- SCREEN 3: MATERIAL DETAIL -->
+<div class="screen" id="scr-detail">
+  <div id="detail-content"></div>
+</div>
+
+<!-- SCREEN 4: QUIZ -->
+<div class="screen" id="scr-quiz">
+  <div class="screen-title">Quiz <span style="color:var(--accent)">AI</span></div>
+  <div class="screen-sub">10 domande generate da AI — livello ingegnere</div>
+
+  <div id="quiz-selector">
+    <div class="qmat-sec-lbl">Scegli il materiale</div>
+    <div class="qmat-grid" id="qmat-grid"></div>
+    <button class="gen-btn" id="gen-btn" onclick="startQuiz()" disabled>Genera Quiz →</button>
+    <div style="margin-top:12px;padding:10px 13px;background:rgba(240,90,90,.07);border:1px solid rgba(240,90,90,.2);border-radius:7px;font-size:12px;color:var(--muted)">
+      <strong style="color:var(--red)">Nota:</strong> il quiz è generato dall'AI ad ogni sessione. Richiede connessione internet.
+    </div>
   </div>
-</nav>
+
+  <div class="ai-load" id="ai-load"><div class="spinner"></div><div class="ai-txt">Generazione domande…</div></div>
+
+  <div id="quiz-play" style="display:none">
+    <div class="qpbar-wrap"><div class="qpbar" id="qpbar"></div></div>
+    <div class="qmeta"><div class="qctr" id="qctr">1/10</div><div class="qsc" id="qsc">⭐ 0</div></div>
+    <div class="qtag" id="qtag"></div>
+    <div class="qtxt" id="qtxt"></div>
+    <div class="qopts" id="qopts"></div>
+    <div class="qexp" id="qexp"></div>
+    <button class="qnext" id="qnext" onclick="nextQ()">Avanti →</button>
+    <div style="clear:both;height:8px"></div>
+  </div>
+
+  <div id="quiz-result" style="display:none">
+    <div class="qresult">
+      <div class="qr-score" id="qr-score">0/10</div>
+      <div class="qr-lbl">PUNTEGGIO FINALE</div>
+      <div class="qr-msg" id="qr-msg"></div>
+      <div class="qr-row" id="qr-row"></div>
+      <div class="qr-btns">
+        <button class="gen-btn" onclick="resetQuiz()">🔄 Nuovo Quiz</button>
+        <button class="gen-btn" onclick="goTo('scr-detail')" style="background:var(--bg3);color:var(--text);border:1px solid var(--line2)">📖 Scheda</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// DATA — 39 MATERIALS
-// ═══════════════════════════════════════════════════════════════
 const MATERIALS = [
   {
     id:'diamante',name:'Diamante',formula:'C (cubico)',family:'Ceramici/Abrasivi',color:'#c0eeff',
@@ -1232,404 +975,395 @@ const FAMILIES = {
   'Metalli Refrattari': { color:'#9e9e9e', desc:'W, Zr, Mo, Ta — T fusione estrema' },
   'Leghe Speciali':     { color:'#7eb8c9', desc:'Invar, Kovar — proprietà fisiche speciali' },
 };
+</script>
 
-// ─── STATE ──────────────────────────────────────────────────────────
-const sorted = [...MATERIALS].sort((a,b) => b.hv - a.hv);
-let currentMat = null;
-let activeFilter = 'tutti';
-let sidebarOpen = false;
-let quizMat = null, quizQs = [], quizIdx = 0, quizCorrect = 0;
+<script>
+// ═══════════════════════════ NAVIGATION ════════════════════════════
+const screens = ['scr-dashboard','scr-list','scr-detail','scr-quiz'];
+let history_stack = ['scr-dashboard'];
 
-// ─── SIDEBAR MOBILE ──────────────────────────────────────────────────
-function toggleSidebar() {
-  if (sidebarOpen) {
-    closeSidebar();
-  } else {
-    sidebarOpen = true;
-    document.getElementById('sidebar').classList.add('open');
-    document.getElementById('sidebar-overlay').classList.add('show');
-    // highlight the Materiali button
-    document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('bnav-sidebar')?.classList.add('active');
+function goTo(id, pushHistory = true) {
+  screens.forEach(s => document.getElementById(s).classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (pushHistory) {
+    if (history_stack[history_stack.length-1] !== id) history_stack.push(id);
   }
-}
-function closeSidebar() {
-  sidebarOpen = false;
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('show');
+  updateTopbar(id);
 }
 
-// Tasto Scheda: se c'è un materiale selezionato vai alla scheda,
-// altrimenti apri la sidebar per scegliere
-function goToScheda() {
-  if (currentMat) {
-    switchView('material');
-  } else {
-    // nessun materiale ancora — apri la sidebar con un hint
-    toggleSidebar();
-    // mostra breve messaggio nella sidebar
-    const lbl = document.getElementById('sidebar-header-label');
-    if (lbl) {
-      lbl.textContent = '↑ Scegli un materiale';
-      lbl.style.color = 'var(--accent)';
-      setTimeout(() => {
-        lbl.textContent = 'Materiali — durezza ↓';
-        lbl.style.color = '';
-      }, 2000);
-    }
+function goBack() {
+  if (history_stack.length > 1) {
+    history_stack.pop();
+    const prev = history_stack[history_stack.length-1];
+    goTo(prev, false);
   }
 }
 
-// ─── INIT ────────────────────────────────────────────────────────────
-function init() {
-  document.getElementById('s-total').textContent = MATERIALS.length;
-  document.getElementById('s-fam').textContent = Object.keys(FAMILIES).length;
-  document.getElementById('s-cat').textContent = Object.keys(FAMILIES).length;
-  buildCategoryFilter();
-  buildSidebar(sorted);
-  buildHardnessRanking();
-  buildFamilyGrid();
-  buildQuizMatGrid();
+function updateTopbar(id) {
+  const backBtn = document.getElementById('back-btn');
+  const logoTitle = document.getElementById('logo-title');
+  if (id === 'scr-dashboard') {
+    backBtn.classList.remove('show');
+    logoTitle.style.marginLeft = '0';
+  } else {
+    backBtn.classList.add('show');
+    logoTitle.style.marginLeft = 'auto';
+    const labels = {
+      'scr-list':   'Dashboard',
+      'scr-detail': document.getElementById('list-title')?.textContent || 'Lista',
+      'scr-quiz':   'Scheda'
+    };
+    document.getElementById('back-label').textContent = labels[id] || 'Indietro';
+  }
 }
 
-function buildCategoryFilter() {
-  const el = document.getElementById('cat-filter');
-  const fams = ['tutti', ...Object.keys(FAMILIES)];
-  el.innerHTML = fams.map(f =>
-    `<button class="cat-btn${f==='tutti'?' active':''}" onclick="setFilter('${f}',this)">${f==='tutti'?'Tutti':f}</button>`
-  ).join('');
-}
-
-function setFilter(fam, btn) {
-  activeFilter = fam;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  buildSidebar(fam==='tutti' ? sorted : sorted.filter(m => m.family===fam));
-}
-
-function buildSidebar(list) {
-  document.getElementById('mat-list').innerHTML = list.map(m => `
-    <div class="mat-item${currentMat?.id===m.id?' active':''}" onclick="selectMat('${m.id}')">
-      <div class="mat-rank">${sorted.indexOf(m)+1}</div>
-      <div class="mat-dot" style="background:${m.color}"></div>
-      <div class="mat-info">
-        <div class="mat-name">${m.name}</div>
-        <div class="mat-family">${m.family}</div>
+// ═══════════════════════════ SEARCH ════════════════════════════════
+function onSearch(q) {
+  const wrap = document.getElementById('search-results');
+  const main = document.getElementById('dashboard-main');
+  q = q.trim().toLowerCase();
+  if (!q) {
+    wrap.classList.remove('show');
+    wrap.innerHTML = '';
+    main.style.display = '';
+    return;
+  }
+  main.style.display = 'none';
+  wrap.classList.add('show');
+  const hits = sorted.filter(m =>
+    m.name.toLowerCase().includes(q) ||
+    m.family.toLowerCase().includes(q) ||
+    m.tags.some(t => t.toLowerCase().includes(q)) ||
+    m.formula.toLowerCase().includes(q)
+  );
+  if (!hits.length) {
+    wrap.innerHTML = '<div style="font-family:var(--mono);font-size:12px;color:var(--muted);padding:12px 0">Nessun risultato</div>';
+    return;
+  }
+  wrap.innerHTML = hits.map(m => `
+    <div class="search-result-item" onclick="openMat('${m.id}')">
+      <div class="sr-dot" style="background:${m.color}"></div>
+      <div class="sr-info">
+        <div class="sr-name">${m.name}</div>
+        <div class="sr-fam">${m.family}</div>
       </div>
-      <div class="mat-hv">${m.hv>=1000?(m.hv/1000).toFixed(0)+'k':m.hv}</div>
+      <div class="sr-hv">${m.hv >= 1000 ? (m.hv/1000).toFixed(0)+'k' : m.hv} HV</div>
     </div>
   `).join('');
 }
 
-function filterMaterials() {
-  const q = document.getElementById('mat-search').value.toLowerCase();
-  const base = activeFilter==='tutti' ? sorted : sorted.filter(m => m.family===activeFilter);
-  buildSidebar(q ? base.filter(m =>
-    m.name.toLowerCase().includes(q) || m.family.toLowerCase().includes(q) ||
-    m.tags.some(t => t.toLowerCase().includes(q))
-  ) : base);
-}
+// ═══════════════════════════ BUILD DASHBOARD ═══════════════════════
+const sorted = [...MATERIALS].sort((a,b) => b.hv - a.hv);
 
-function buildHardnessRanking() {
+function buildDashboard() {
+  document.getElementById('s-tot').textContent = MATERIALS.length;
+  document.getElementById('s-fam').textContent = Object.keys(FAMILIES).length;
+
+  // Family grid
+  document.getElementById('fam-grid').innerHTML = Object.entries(FAMILIES).map(([name, info]) => {
+    const count = MATERIALS.filter(m => m.family === name).length;
+    const ex = MATERIALS.filter(m => m.family === name).slice(0,2).map(m=>m.name).join(', ');
+    return `<div class="fam-card" onclick="openFamily('${name}')">
+      <div class="fam-header">
+        <div class="fam-dot" style="background:${info.color}"></div>
+        <div class="fam-name">${name}</div>
+        <div class="fam-count">${count}</div>
+      </div>
+      <div class="fam-desc">${info.desc}<br><span style="color:var(--dim)">${ex}…</span></div>
+    </div>`;
+  }).join('');
+
+  // Hardness ranking
   const maxHv = sorted[0].hv;
-  document.getElementById('hardness-ranking').innerHTML = sorted.map((m,i) => {
+  document.getElementById('hrank').innerHTML = sorted.map((m,i) => {
     const pct = Math.min((m.hv/maxHv)*100, 100);
     const col = FAMILIES[m.family]?.color || '#e8c84a';
-    return `<div class="hc-row" onclick="selectMat('${m.id}')">
-      <div class="hc-pos">${i+1}</div>
-      <div class="hc-name">${m.name}</div>
-      <div class="hc-bar-wrap">
-        <div class="hc-bar" style="width:${pct}%;background:${col}">${pct>12?m.family.split('/')[0]:''}</div>
+    return `<div class="hrank-row" onclick="openMat('${m.id}')">
+      <div class="hrank-pos">${i+1}</div>
+      <div class="hrank-dot" style="background:${col}"></div>
+      <div class="hrank-name">${m.name}</div>
+      <div class="hrank-bar-wrap">
+        <div class="hrank-bar" style="width:${pct}%;background:${col}">${pct>18?m.family.split('/')[0]:''}</div>
       </div>
-      <div class="hc-val">${m.hv>=1000?m.hv.toLocaleString()+' HV':m.hv+' HV'}</div>
+      <div class="hrank-val">${m.hv>=1000?m.hv.toLocaleString():m.hv} HV</div>
     </div>`;
   }).join('');
+
+  // Quiz mat grid
+  document.getElementById('qmat-grid').innerHTML = sorted.map(m => `
+    <div class="qmat-btn" id="qmb-${m.id}" onclick="selQuizMat('${m.id}')">
+      <div class="qmb-dot" style="background:${m.color}"></div>
+      <div class="qmb-name">${m.name}</div>
+      <div class="qmb-hv">${m.hv>=1000?(m.hv/1000).toFixed(0)+'k':m.hv} HV</div>
+    </div>
+  `).join('');
 }
 
-function buildFamilyGrid() {
-  document.getElementById('family-grid').innerHTML = Object.entries(FAMILIES).map(([name, info]) => {
-    const count = MATERIALS.filter(m => m.family===name).length;
-    const ex = MATERIALS.filter(m => m.family===name).slice(0,2).map(m => m.name).join(', ');
-    return `<div class="family-card" onclick="setFilterAndShow('${name}')">
-      <div class="fc-header">
-        <div class="fc-dot" style="background:${info.color}"></div>
-        <div class="fc-name">${name}</div>
-        <div class="fc-count">${count}</div>
+// ═══════════════════════════ FAMILY LIST ══════════════════════════
+function openFamily(name) {
+  const mats = sorted.filter(m => m.family === name);
+  const info = FAMILIES[name];
+  document.getElementById('list-title').textContent = name;
+  document.getElementById('list-sub').textContent = info?.desc || '';
+  document.getElementById('mat-list').innerHTML = mats.map(m => `
+    <div class="mat-item" onclick="openMat('${m.id}')">
+      <div class="mi-dot" style="background:${m.color}"></div>
+      <div class="mi-info">
+        <div class="mi-name">${m.name}</div>
+        <div class="mi-sub">${m.formula}</div>
       </div>
-      <div class="fc-examples">${info.desc}<br><span style="color:var(--dim)">${ex}…</span></div>
-    </div>`;
-  }).join('');
+      <div class="mi-hv">${m.hv>=1000?(m.hv/1000).toFixed(0)+'k':m.hv} HV</div>
+      <div class="mi-arrow">›</div>
+    </div>
+  `).join('');
+  goTo('scr-list');
 }
 
-function setFilterAndShow(fam) {
-  activeFilter = fam;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.textContent===fam));
-  buildSidebar(sorted.filter(m => m.family===fam));
-}
-
-// ─── SELECT MATERIAL ─────────────────────────────────────────────────
-function selectMat(id) {
-  currentMat = MATERIALS.find(m => m.id===id);
-  buildSidebar(activeFilter==='tutti' ? sorted : sorted.filter(m => m.family===activeFilter));
-  renderDetail();
-  switchView('material');
-  closeSidebar();
-  // Update bottom nav scheda button
-  updateBottomNav('material');
-}
-
-function renderDetail() {
-  const m = currentMat;
+// ═══════════════════════════ MAT DETAIL ══════════════════════════
+function openMat(id) {
+  const m = MATERIALS.find(x => x.id === id);
   if (!m) return;
+  currentQuizMat = m;
   const rank = sorted.indexOf(m)+1;
-  const ratingHtml = (r, cls='filled') => Array.from({length:10},(_,i) =>
-    `<div class="rating-pip${i<r?' '+cls:''}"></div>`
-  ).join('');
-  const mCls = m.machinability.rating>=8?'filled-g':m.machinability.rating>=5?'filled-b':m.machinability.rating>=3?'filled':'filled-r';
 
-  document.getElementById('mat-detail-content').innerHTML = `
-    <div>
-      <div class="mat-hero">
-        <div class="mat-hero-dot" style="background:${m.color}"></div>
-        <div class="mat-hero-main">
-          <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:2px">#${rank} per durezza · ${m.family}</div>
-          <div class="mat-hero-name">${m.name}</div>
-          <div class="mat-hero-formula">${m.formula}</div>
-          <div class="mat-hero-tags">
+  const rPips = (r) => {
+    const cls = r>=8?'g':r>=5?'y':r>=3?'b':'r';
+    return Array.from({length:10},(_,i)=>`<div class="pip${i<r?' '+cls:''}"></div>`).join('');
+  };
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="mat-hero">
+      <div class="mat-hero-top">
+        <div class="mh-dot" style="background:${m.color}"></div>
+        <div class="mh-main">
+          <div class="mh-rank">#${rank} per durezza · ${m.family}</div>
+          <div class="mh-name">${m.name}</div>
+          <div class="mh-formula">${m.formula}</div>
+          <div class="mh-tags">
             <span class="tag tag-hv">${m.hv.toLocaleString()} HV</span>
-            <span class="tag tag-family">${m.family}</span>
+            <span class="tag tag-fam">${m.family}</span>
             ${m.tags.map(t=>`<span class="tag tag-use">${t}</span>`).join('')}
           </div>
         </div>
-        <div class="mat-hero-kpis">
-          <div class="kpi-box"><div class="kpi-val">${m.density}</div><div class="kpi-label">g/cm³</div></div>
-          ${m.UTS?`<div class="kpi-box"><div class="kpi-val">${m.UTS}</div><div class="kpi-label">MPa UTS</div></div>`:''}
-          <div class="kpi-box"><div class="kpi-val">${m.E}</div><div class="kpi-label">GPa E</div></div>
-        </div>
       </div>
-      <div class="detail-body">
-        <div class="section-block">
-          <div class="section-heading">ℹ Sommario</div>
-          <div class="info-banner"><strong>${m.name}</strong> — ${m.summary}</div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">⚗ Chimica e Struttura</div>
-          <div class="two-col">
-            <div class="content-card"><h4>Struttura Cristallina</h4><p>${m.chemistry.structure}</p></div>
-            <div class="content-card"><h4>Legami e Composizione</h4><p><strong>Legame:</strong> ${m.chemistry.bonding}</p><p><strong>Composizione:</strong> ${m.chemistry.composition}</p></div>
-          </div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">⚙ Proprietà Meccaniche</div>
-          <div class="prop-grid">${m.mechanical.map(p=>`<div class="prop-card"><div class="prop-label">${p.l}</div><div class="prop-value">${p.v}<span class="prop-unit">${p.u}</span></div>${p.n?`<div class="prop-note">${p.n}</div>`:''}</div>`).join('')}</div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">🌡 Proprietà Fisiche</div>
-          <div class="prop-grid">${m.physical.map(p=>`<div class="prop-card"><div class="prop-label">${p.l}</div><div class="prop-value">${p.v}<span class="prop-unit">${p.u||''}</span></div>${p.n?`<div class="prop-note">${p.n}</div>`:''}</div>`).join('')}</div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">🔧 Lavorabilità</div>
-          <div class="two-col">
-            <div class="content-card">
-              <h4>Indice Lavorabilità (1=difficile · 10=eccellente)</h4>
-              <div class="rating-bar" style="margin-bottom:8px">${ratingHtml(m.machinability.rating, mCls)}</div>
-              <p>${m.machinability.notes}</p>
-            </div>
-            <div class="content-card">
-              <h4>Parametri di Taglio</h4>
-              <div class="machin-table-wrap">
-                <table class="machin-table">
-                  <thead><tr><th>Operazione</th><th>Vc</th><th>fz/fn</th><th>Note</th></tr></thead>
-                  <tbody>${m.machinability.params.map(p=>`<tr><td>${p.op}</td><td class="hl">${p.vc}</td><td>${p.fz}</td><td style="color:var(--muted);font-size:10px">${p.note}</td></tr>`).join('')}</tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">♨ Scorrimento Viscoso (Creep)</div>
-          <div class="content-card"><h4>Comportamento a Creep</h4><p>${m.creep}</p></div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">🔥 Saldabilità e Giunzione</div>
-          <div class="content-card"><h4>Processi di Giunzione</h4><p>${m.weldability}</p></div>
-        </div>
-        <div class="section-block">
-          <div class="section-heading">🚀 Applicazioni</div>
-          <div class="content-card"><h4>Principali Applicazioni</h4>${m.applications.map(a=>`<li>${a}</li>`).join('')}</div>
-        </div>
-        <div style="padding-bottom:1rem">
-          <button onclick="quizForMat('${m.id}')" style="padding:11px 20px;background:var(--accent);color:var(--bg);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer;-webkit-appearance:none;touch-action:manipulation">
-            Quiz su ${m.name} →
-          </button>
-        </div>
+      <div class="mh-kpis">
+        <div class="kpi"><div class="kpi-val">${m.density}</div><div class="kpi-lbl">g/cm³</div></div>
+        ${m.UTS?`<div class="kpi"><div class="kpi-val">${m.UTS}</div><div class="kpi-lbl">MPa UTS</div></div>`:''}
+        <div class="kpi"><div class="kpi-val">${m.E}</div><div class="kpi-lbl">GPa E</div></div>
+        <div class="kpi"><div class="kpi-val">${m.melt}</div><div class="kpi-lbl">°C fus.</div></div>
       </div>
-    </div>`;
-}
-
-// ─── VIEW SWITCHING ──────────────────────────────────────────────────
-function switchView(v) {
-  closeSidebar(); // sempre chiudi la sidebar quando cambi vista
-  ['dashboard','material','quiz'].forEach(id => {
-    document.getElementById('view-'+id).style.display = (id===v) ? 'block' : 'none';
-  });
-  document.querySelectorAll('.topbar-tab').forEach((t,i) => {
-    t.classList.toggle('active', ['dashboard','material','quiz'][i]===v);
-  });
-  updateBottomNav(v);
-  if (v==='material' && !currentMat) switchView('dashboard');
-  document.getElementById('main-content').scrollTop = 0;
-}
-
-function updateBottomNav(v) {
-  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
-  const map = {dashboard:'bnav-dashboard', material:'bnav-material', quiz:'bnav-quiz'};
-  if (map[v]) document.getElementById(map[v])?.classList.add('active');
-}
-
-// ─── QUIZ AI ─────────────────────────────────────────────────────────
-function buildQuizMatGrid() {
-  document.getElementById('quiz-mat-grid').innerHTML = sorted.map(m => `
-    <div class="mat-select-btn" id="qmbtn-${m.id}" onclick="selectQuizMat('${m.id}')">
-      <div class="msb-dot" style="background:${m.color}"></div>
-      <div class="msb-name">${m.name}</div>
-      <div class="msb-hv">${m.hv.toLocaleString()} HV</div>
     </div>
-  `).join('');
+
+    <div class="dsec">
+      <div class="dsec-title">ℹ Sommario</div>
+      <div class="info-box"><strong>${m.name}</strong> — ${m.summary}</div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">⚗ Chimica e Struttura</div>
+      <div class="two-col">
+        <div class="card"><h4>Struttura Cristallina</h4><p>${m.chemistry.structure}</p></div>
+        <div class="card"><h4>Legami e Composizione</h4><p><strong>Legame:</strong> ${m.chemistry.bonding}</p><p><strong>Composizione:</strong> ${m.chemistry.composition}</p></div>
+      </div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">⚙ Proprietà Meccaniche</div>
+      <div class="prop-grid">${m.mechanical.map(p=>`
+        <div class="prop-card">
+          <div class="prop-lbl">${p.l}</div>
+          <div class="prop-val">${p.v}<span class="prop-unit">${p.u||''}</span></div>
+          ${p.n?`<div class="prop-note">${p.n}</div>`:''}
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">🌡 Proprietà Fisiche</div>
+      <div class="prop-grid">${m.physical.map(p=>`
+        <div class="prop-card">
+          <div class="prop-lbl">${p.l}</div>
+          <div class="prop-val">${p.v}<span class="prop-unit">${p.u||''}</span></div>
+          ${p.n?`<div class="prop-note">${p.n}</div>`:''}
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">🔧 Lavorabilità</div>
+      <div class="two-col">
+        <div class="card">
+          <h4>Indice (1=difficile · 10=ottimo)</h4>
+          <div class="rating-bar">${rPips(m.machinability.rating)}</div>
+          <p>${m.machinability.notes}</p>
+        </div>
+        <div class="card">
+          <h4>Parametri di Taglio</h4>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Operazione</th><th>Vc</th><th>fz/fn</th><th>Note</th></tr></thead>
+              <tbody>${m.machinability.params.map(p=>`
+                <tr><td>${p.op}</td><td class="hl">${p.vc}</td><td>${p.fz}</td><td style="color:var(--muted);font-size:10px">${p.note}</td></tr>
+              `).join('')}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">♨ Scorrimento Viscoso (Creep)</div>
+      <div class="card"><h4>Comportamento a Creep</h4><p>${m.creep}</p></div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">🔥 Saldabilità e Giunzione</div>
+      <div class="card"><h4>Processi di Giunzione</h4><p>${m.weldability}</p></div>
+    </div>
+
+    <div class="dsec">
+      <div class="dsec-title">🚀 Applicazioni</div>
+      <div class="card"><h4>Applicazioni Principali</h4><ul>${m.applications.map(a=>`<li>${a}</li>`).join('')}</ul></div>
+    </div>
+
+    <button class="quiz-btn" onclick="goQuizForMat('${m.id}')">🎯 Quiz su ${m.name} →</button>
+  `;
+  goTo('scr-detail');
 }
 
-function selectQuizMat(id) {
-  quizMat = MATERIALS.find(m => m.id===id);
-  document.querySelectorAll('.mat-select-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('qmbtn-'+id)?.classList.add('selected');
-  document.getElementById('start-quiz-btn').disabled = false;
+// ═══════════════════════════ QUIZ ════════════════════════════════
+let currentQuizMat = null, quizQs = [], quizIdx = 0, quizOk = 0;
+
+function selQuizMat(id) {
+  currentQuizMat = MATERIALS.find(m => m.id === id);
+  document.querySelectorAll('.qmat-btn').forEach(b => b.classList.remove('sel'));
+  document.getElementById('qmb-'+id)?.classList.add('sel');
+  document.getElementById('gen-btn').disabled = false;
 }
 
-function quizForMat(id) {
-  selectQuizMat(id);
-  switchView('quiz');
+function goQuizForMat(id) {
+  selQuizMat(id);
+  goTo('scr-quiz');
 }
 
-async function startAIQuiz() {
-  if (!quizMat) return;
-  quizQs=[]; quizIdx=0; quizCorrect=0;
-  document.getElementById('quiz-selector').classList.add('hidden');
-  document.getElementById('ai-loading').classList.add('show');
-  document.getElementById('quiz-playing').classList.remove('active');
-  document.getElementById('quiz-result').classList.remove('show');
+async function startQuiz() {
+  if (!currentQuizMat) return;
+  quizQs = []; quizIdx = 0; quizOk = 0;
+  document.getElementById('quiz-selector').style.display = 'none';
+  document.getElementById('ai-load').classList.add('show');
+  document.getElementById('quiz-play').style.display = 'none';
+  document.getElementById('quiz-result').style.display = 'none';
 
-  const m = quizMat;
-  const prompt = `Sei un professore universitario di ingegneria dei materiali che forma ingegneri meccanici/aerospaziali.
-Genera 10 domande a scelta multipla sul materiale: "${m.name}" (${m.formula}, famiglia: ${m.family}).
-
-Argomenti: struttura cristallina, chimica/composizione, proprietà meccaniche (durezza ${m.hv} HV, densità ${m.density} g/cm³, E=${m.E} GPa, UTS=${m.UTS||'N/A'} MPa), proprietà fisiche, lavorabilità e parametri di processo, applicazioni industriali, saldabilità, trattamenti termici, creep/alta temperatura.
-
-Le domande devono essere tecniche e precise — livello ingegnere, non banali.
-
-Rispondi SOLO con JSON valido, zero testo extra, zero markdown:
-{"questions":[{"q":"domanda","opts":["A","B","C","D"],"ans":0,"exp":"spiegazione tecnica"}]}
-"ans" è l'indice 0-based della risposta corretta.`;
-
+  const m = currentQuizMat;
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        messages:[{role:'user',content:prompt}]
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content:
+          `Sei un professore universitario di ingegneria dei materiali.\n` +
+          `Genera 10 domande a scelta multipla sul materiale: "${m.name}" (${m.formula}, famiglia: ${m.family}).\n` +
+          `Copri: struttura cristallina, composizione, proprietà meccaniche (HV=${m.hv}, ρ=${m.density} g/cm³, E=${m.E} GPa, UTS=${m.UTS||'N/A'} MPa), ` +
+          `proprietà fisiche, lavorabilità, applicazioni, saldabilità, creep.\n` +
+          `Le domande siano tecniche e precise — livello ingegnere, non banali.\n` +
+          `Rispondi SOLO con JSON valido, zero testo extra:\n` +
+          `{"questions":[{"q":"domanda","opts":["A","B","C","D"],"ans":0,"exp":"spiegazione"}]}\n` +
+          `"ans" è l'indice 0-based della risposta corretta.`
+        }]
       })
     });
-    const data = await resp.json();
+    const data = await res.json();
     const txt = data.content.map(b=>b.text||'').join('');
     quizQs = JSON.parse(txt.replace(/```json|```/g,'').trim()).questions;
   } catch(e) {
-    quizQs = fallbackQuiz(m);
+    quizQs = fallbackQ(m);
   }
 
-  document.getElementById('ai-loading').classList.remove('show');
-  document.getElementById('quiz-playing').classList.add('active');
+  document.getElementById('ai-load').classList.remove('show');
+  document.getElementById('quiz-play').style.display = 'block';
   renderQ();
 }
 
-function fallbackQuiz(m) {
+function fallbackQ(m) {
   return [
     {q:`Durezza Vickers di ${m.name}?`,opts:[`${m.hv} HV`,`${Math.round(m.hv*0.6)} HV`,`${Math.round(m.hv*1.5)} HV`,`${Math.round(m.hv*0.3)} HV`],ans:0,exp:`${m.name}: ${m.hv} HV`},
-    {q:`Densità di ${m.name}?`,opts:[`${m.density} g/cm³`,`${(m.density*1.5).toFixed(1)} g/cm³`,`${(m.density*0.5).toFixed(1)} g/cm³`,`${(m.density*2).toFixed(1)} g/cm³`],ans:0,exp:`Densità: ${m.density} g/cm³`},
-    {q:`Modulo di Young di ${m.name}?`,opts:[`${m.E} GPa`,`${Math.round(m.E*2)} GPa`,`${Math.round(m.E*0.4)} GPa`,`${Math.round(m.E*3)} GPa`],ans:0,exp:`E: ${m.E} GPa`},
+    {q:`Densità di ${m.name}?`,opts:[`${m.density} g/cm³`,`${(m.density*1.6).toFixed(1)} g/cm³`,`${(m.density*0.5).toFixed(1)} g/cm³`,`${(m.density*2.1).toFixed(1)} g/cm³`],ans:0,exp:`Densità: ${m.density} g/cm³`},
+    {q:`Modulo di Young di ${m.name}?`,opts:[`${m.E} GPa`,`${Math.round(m.E*2)} GPa`,`${Math.round(m.E*0.4)} GPa`,`${Math.round(m.E*3)} GPa`],ans:0,exp:`E = ${m.E} GPa`},
     {q:`Famiglia di ${m.name}?`,opts:[m.family,'Acciai','Ceramici','Alluminio'].filter((v,i,a)=>a.indexOf(v)===i).slice(0,4),ans:0,exp:`Famiglia: ${m.family}`},
-    {q:`Applicazione principale di ${m.name}?`,opts:[m.applications[0],'Calcestruzzo armato','Isolamento termico','Pneumatici'],ans:0,exp:m.applications[0]},
+    {q:`Applicazione principale di ${m.name}?`,opts:[m.applications[0]||'N/A','Calcestruzzo','Gomma','Vetro'],ans:0,exp:m.applications[0]||'N/A'},
   ];
 }
 
 function renderQ() {
   const q = quizQs[quizIdx];
-  document.getElementById('qcounter').textContent = `${quizIdx+1} / ${quizQs.length}`;
-  document.getElementById('qscore').textContent = `⭐ ${quizCorrect}`;
-  document.getElementById('qpf').style.width = `${(quizIdx/quizQs.length)*100}%`;
-  document.getElementById('qmattag').textContent = `▸ ${quizMat.name.toUpperCase()}`;
-  document.getElementById('qtext').textContent = q.q;
+  const tot = quizQs.length;
+  document.getElementById('qpbar').style.width = `${(quizIdx/tot)*100}%`;
+  document.getElementById('qctr').textContent = `${quizIdx+1} / ${tot}`;
+  document.getElementById('qsc').textContent = `⭐ ${quizOk}`;
+  document.getElementById('qtag').textContent = `▸ ${currentQuizMat.name.toUpperCase()}`;
+  document.getElementById('qtxt').textContent = q.q;
   document.getElementById('qexp').textContent = '';
   document.getElementById('qexp').classList.remove('show');
   document.getElementById('qnext').classList.remove('show');
-  document.getElementById('qoptions').innerHTML = q.opts.map((o,i) =>
-    `<button class="quiz-opt" onclick="answerQ(${i})">${o}</button>`
+  document.getElementById('qopts').innerHTML = q.opts.map((o,i) =>
+    `<button class="qopt" onclick="answerQ(${i})">${o}</button>`
   ).join('');
 }
 
 function answerQ(chosen) {
   const q = quizQs[quizIdx];
-  document.querySelectorAll('.quiz-opt').forEach((b,i) => {
-    b.classList.add('disabled');
-    if(i===q.ans) b.classList.add('correct');
-    else if(i===chosen && chosen!==q.ans) b.classList.add('wrong');
+  document.querySelectorAll('.qopt').forEach((b,i) => {
+    b.classList.add('dis');
+    if (i === q.ans) b.classList.add('ok');
+    else if (i === chosen && chosen !== q.ans) b.classList.add('ko');
   });
-  if(chosen===q.ans) quizCorrect++;
-  document.getElementById('qscore').textContent = `⭐ ${quizCorrect}`;
-  const e = document.getElementById('qexp');
-  e.innerHTML = `<strong>Spiegazione:</strong> ${q.exp}`;
-  e.classList.add('show');
+  if (chosen === q.ans) quizOk++;
+  document.getElementById('qsc').textContent = `⭐ ${quizOk}`;
+  const exp = document.getElementById('qexp');
+  exp.innerHTML = `<strong>Spiegazione:</strong> ${q.exp}`;
+  exp.classList.add('show');
   document.getElementById('qnext').classList.add('show');
 }
 
-function quizNext() {
-  if(++quizIdx >= quizQs.length) showQuizResult();
+function nextQ() {
+  quizIdx++;
+  if (quizIdx >= quizQs.length) showResult();
   else renderQ();
 }
 
-function showQuizResult() {
-  document.getElementById('quiz-playing').classList.remove('active');
-  const pct = Math.round((quizCorrect/quizQs.length)*100);
-  document.getElementById('qr-score').textContent = `${quizCorrect}/${quizQs.length}`;
-  const msgs = ['Ripassare — torna alla scheda!','Sufficiente — qualche lacuna.','Buono! Conoscenza solida.','Ottimo — da ingegnere!','Eccellente — livello esperto!'];
+function showResult() {
+  document.getElementById('quiz-play').style.display = 'none';
+  document.getElementById('quiz-result').style.display = 'block';
+  const tot = quizQs.length;
+  const pct = Math.round((quizOk/tot)*100);
+  document.getElementById('qr-score').textContent = `${quizOk}/${tot}`;
+  const msgs = ['Ripassare — torna alla scheda!','Sufficiente — qualche lacuna.','Buono! Conoscenza solida.','Ottimo — da ingegnere!','Eccellente — esperto!'];
   document.getElementById('qr-msg').textContent = msgs[Math.min(Math.floor(pct/25),4)];
-  document.getElementById('qr-break').innerHTML = `
-    <div class="qr-stat">Corrette: <span class="ok">${quizCorrect}</span></div>
-    <div class="qr-stat">Errate: <span class="ko">${quizQs.length-quizCorrect}</span></div>
+  document.getElementById('qr-row').innerHTML = `
+    <div class="qr-stat">Corrette: <span class="ok">${quizOk}</span></div>
+    <div class="qr-stat">Errate: <span class="ko">${tot-quizOk}</span></div>
     <div class="qr-stat" style="color:var(--accent)">${pct}%</div>`;
-  document.getElementById('quiz-result').classList.add('show');
 }
 
 function resetQuiz() {
-  quizMat=null; quizIdx=0; quizCorrect=0; quizQs=[];
-  document.getElementById('quiz-selector').classList.remove('hidden');
-  document.getElementById('quiz-result').classList.remove('show');
-  document.getElementById('quiz-playing').classList.remove('active');
-  document.querySelectorAll('.mat-select-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('start-quiz-btn').disabled = true;
+  currentQuizMat = null; quizQs = []; quizIdx = 0; quizOk = 0;
+  document.getElementById('quiz-selector').style.display = 'block';
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-play').style.display = 'none';
+  document.querySelectorAll('.qmat-btn').forEach(b => b.classList.remove('sel'));
+  document.getElementById('gen-btn').disabled = true;
 }
 
-// ─── SERVICE WORKER REGISTRATION (PWA) ──────────────────────────────
+// ═══════════════════════════ SERVICE WORKER ═══════════════════════
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(r => console.log('SW registered:', r.scope))
-      .catch(e => console.warn('SW failed:', e));
-  });
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
 
-// ─── START ───────────────────────────────────────────────────────────
-init();
+// ═══════════════════════════ START ═══════════════════════════════
+buildDashboard();
 </script>
 </body>
 </html>
