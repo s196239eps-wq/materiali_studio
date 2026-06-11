@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b0c0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MatRef">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Materials Engineering Academy — Guida completa ai materiali da officina per ingegneri. Acciai, superleghe, titanio, alluminio, ceramici e molto altro.">
+<meta name="keywords" content="ingegneria materiali, lavorabilità, titanio, Inconel, acciaio inox, officina meccanica, CNC">
+<meta property="og:title" content="MatRef — Materials Engineering Academy">
+<meta property="og:description" content="Guida interattiva ai materiali da officina: classifiche, proprietà, lavorabilità, quiz AI.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>MatRef — Materials Engineering Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Barlow:wght@300;400;600;700;800&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #0b0c0f;
+  --bg2: #13151a;
+  --bg3: #1a1d24;
+  --bg4: #22262f;
+  --line: rgba(255,255,255,0.07);
+  --line2: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --muted: #7a7f8e;
+  --dim: #4a4f5c;
+  --accent: #e8c84a;
+  --accent2: #f0d97a;
+  --blue: #5b9cf6;
+  --teal: #3dd6c8;
+  --red: #f05a5a;
+  --green: #4ecb8d;
+  --orange: #f07a3a;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Barlow', sans-serif;
+  --cond: 'Barlow Condensed', sans-serif;
+  --topbar-h: 52px;
+  --bottomnav-h: 60px;
+  --sidebar-w: 268px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; cursor: pointer; }
+input { font-family: inherit; }
+a { color: var(--accent); text-decoration: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBARS
+═══════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   TOP BAR  (desktop + tablet)
+═══════════════════════════════════════════════════════════════ */
+.topbar {
+  height: var(--topbar-h);
+  min-height: var(--topbar-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line2);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 200;
+}
+.logo-mark {
+  font-family: var(--cond);
+  font-size: 20px; font-weight: 800;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent); white-space: nowrap;
+}
+.logo-sub {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted); letter-spacing: 1px;
+  border-left: 1px solid var(--line2); padding-left: 10px;
+  white-space: nowrap;
+}
+.topbar-tabs {
+  margin-left: auto;
+  display: flex; gap: 4px;
+}
+.topbar-tab {
+  padding: 5px 13px;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted); background: transparent;
+  border: 1px solid transparent; border-radius: 4px;
+  transition: all 0.15s; white-space: nowrap;
+}
+.topbar-tab:hover { color: var(--text); border-color: var(--line2); }
+.topbar-tab.active { color: var(--accent); border-color: rgba(232,200,74,0.35); background: rgba(232,200,74,0.07); }
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTTOM NAV  (mobile only — shown via media query)
+═══════════════════════════════════════════════════════════════ */
+.bottomnav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--bottomnav-h);
+  background: var(--bg2);
+  border-top: 1px solid var(--line2);
+  z-index: 300;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottomnav-inner {
+  display: flex;
+  height: 60px;
+}
+.bnav-btn {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  background: transparent; border: none;
+  color: var(--muted); transition: color 0.15s;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.bnav-btn.active { color: var(--accent); }
+.bnav-icon { font-size: 18px; line-height: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════════════ */
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--line2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  z-index: 100;
+}
+.sidebar-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.sidebar-header-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 7px;
+}
+.search-box {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--line2);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text); outline: none;
+  -webkit-appearance: none;
+}
+.search-box::placeholder { color: var(--dim); }
+.search-box:focus { border-color: rgba(232,200,74,0.4); }
+
+.category-filter {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  padding: 8px 14px 7px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+.category-filter::-webkit-scrollbar { height: 0; }
+.cat-btn {
+  padding: 3px 8px;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 1px; text-transform: uppercase;
+  border-radius: 3px; cursor: pointer;
+  border: 1px solid var(--line2);
+  color: var(--muted); background: transparent;
+  transition: all 0.15s; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.cat-btn:hover, .cat-btn:active { color: var(--text); }
+.cat-btn.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+
+.mat-list { flex: 1; overflow-y: auto; padding: 6px 0; }
+.mat-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 14px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.mat-item:hover, .mat-item:active { background: var(--bg3); }
+.mat-item.active { background: var(--bg3); border-left-color: var(--accent); }
+.mat-rank { font-family: var(--mono); font-size: 10px; color: var(--dim); min-width: 20px; text-align: right; }
+.mat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.mat-info { flex: 1; min-width: 0; }
+.mat-name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mat-family { font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 1px; }
+.mat-hv { font-family: var(--mono); font-size: 10px; color: var(--accent); min-width: 38px; text-align: right; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR OVERLAY (mobile)
+═══════════════════════════════════════════════════════════════ */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 99;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════════════════════════════ */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════════════════════════════ */
+.dashboard { padding: 20px 20px 32px; max-width: 860px; }
+.dash-hero { margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.dash-title {
+  font-family: var(--cond);
+  font-size: 34px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  line-height: 1; margin-bottom: 5px;
+}
+.dash-title span { color: var(--accent); }
+.dash-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-bottom: 20px; }
+.stat-card { background: var(--bg3); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.stat-val { font-family: var(--cond); font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
+.stat-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; }
+
+.ranking-label {
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ranking-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+.hardness-chart { margin-bottom: 24px; }
+.hc-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hc-row:hover .hc-name, .hc-row:active .hc-name { color: var(--accent); }
+.hc-pos { font-family: var(--mono); font-size: 10px; color: var(--dim); min-width: 18px; text-align: right; }
+.hc-name { font-size: 11px; font-weight: 600; min-width: 140px; color: var(--text); transition: color 0.15s; }
+.hc-bar-wrap { flex: 1; height: 14px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+.hc-bar {
+  height: 100%; border-radius: 2px;
+  display: flex; align-items: center; padding-left: 5px;
+  font-family: var(--mono); font-size: 8px; font-weight: 600; color: var(--bg);
+  white-space: nowrap;
+}
+.hc-val { font-family: var(--mono); font-size: 10px; color: var(--muted); min-width: 65px; text-align: right; }
+
+.family-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.family-card {
+  background: var(--bg3); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px;
+  cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent;
+}
+.family-card:hover, .family-card:active { border-color: var(--line2); background: var(--bg4); }
+.fc-header { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+.fc-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.fc-name { font-family: var(--cond); font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); }
+.fc-count { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: auto; }
+.fc-examples { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MATERIAL DETAIL
+═══════════════════════════════════════════════════════════════ */
+.mat-hero {
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.mat-hero-dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+.mat-hero-main { flex: 1; min-width: 0; }
+.mat-hero-name {
+  font-family: var(--cond); font-size: 28px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase; line-height: 1;
+  word-break: break-word;
+}
+.mat-hero-formula { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
+.mat-hero-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.tag { padding: 3px 8px; border-radius: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+.tag-hv { background: rgba(232,200,74,0.15); color: var(--accent); border: 1px solid rgba(232,200,74,0.3); }
+.tag-family { background: var(--bg3); color: var(--muted); border: 1px solid var(--line2); }
+.tag-use { background: rgba(91,156,246,0.12); color: var(--blue); border: 1px solid rgba(91,156,246,0.25); }
+.mat-hero-kpis { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+.kpi-box { text-align: center; }
+.kpi-val { font-family: var(--cond); font-size: 20px; font-weight: 800; color: var(--accent); line-height: 1; }
+.kpi-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
+
+.detail-body { padding: 18px 20px; }
+.section-block { margin-bottom: 22px; }
+.section-heading {
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 7px;
+}
+
+.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 7px; }
+.prop-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; }
+.prop-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+.prop-value { font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1; }
+.prop-unit { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: 2px; font-weight: 400; }
+.prop-note { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.content-card { background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.content-card h4 { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.content-card p, .content-card li { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 5px; }
+.content-card li { list-style: none; padding-left: 12px; position: relative; }
+.content-card li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
+.content-card strong { color: var(--text); font-weight: 600; }
+
+.machin-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.machin-table th { font-family: var(--mono); font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 6px 8px; border-bottom: 1px solid var(--line2); text-align: left; }
+.machin-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); color: var(--text); }
+.machin-table tr:hover td { background: var(--bg3); }
+.hl { color: var(--accent) !important; font-weight: 600; }
+
+.rating-bar { display: flex; gap: 3px; align-items: center; }
+.rating-pip { width: 10px; height: 10px; border-radius: 2px; background: var(--bg4); }
+.rating-pip.filled { background: var(--accent); }
+.rating-pip.filled-b { background: var(--blue); }
+.rating-pip.filled-g { background: var(--green); }
+.rating-pip.filled-r { background: var(--red); }
+
+.info-banner { background: rgba(232,200,74,0.07); border: 1px solid rgba(232,200,74,0.2); border-radius: 6px; padding: 9px 13px; font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+.info-banner strong { color: var(--accent); }
+.warn-banner { background: rgba(240,90,90,0.07); border: 1px solid rgba(240,90,90,0.2); border-radius: 6px; padding: 9px 13px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.warn-banner strong { color: var(--red); }
+
+/* ═══════════════════════════════════════════════════════════════
+   QUIZ
+═══════════════════════════════════════════════════════════════ */
+.quiz-view { padding: 20px 20px 80px; max-width: 720px; }
+.quiz-title { font-family: var(--cond); font-size: 26px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
+.quiz-title span { color: var(--accent); }
+.quiz-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 18px; }
+
+.mat-select-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 7px; margin-bottom: 18px; }
+.mat-select-btn {
+  padding: 8px 9px; background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; gap: 3px;
+  transition: all 0.15s; -webkit-tap-highlight-color: transparent; text-align: left;
+}
+.mat-select-btn:hover, .mat-select-btn:active { border-color: rgba(232,200,74,0.3); }
+.mat-select-btn.selected { border-color: var(--accent); background: rgba(232,200,74,0.08); }
+.msb-dot { width: 7px; height: 7px; border-radius: 50%; }
+.msb-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.msb-hv { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+.start-quiz-btn {
+  padding: 12px 24px; background: var(--accent); color: var(--bg);
+  font-family: var(--cond); font-size: 15px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; border-radius: 6px;
+  transition: all 0.15s; -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none; touch-action: manipulation;
+}
+.start-quiz-btn:hover, .start-quiz-btn:active { background: var(--accent2); transform: translateY(-1px); }
+.start-quiz-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+.quiz-progress-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-bottom: 18px; overflow: hidden; }
+.quiz-progress-fill { height: 100%; background: var(--accent); transition: width 0.4s; }
+.quiz-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.quiz-q-counter { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.quiz-score-live { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+.quiz-material-tag { font-family: var(--mono); font-size: 10px; color: var(--blue); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
+.quiz-q-text { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 14px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.quiz-opt {
+  padding: 13px 15px; background: var(--bg2); border: 1px solid var(--line2);
+  border-radius: 7px; font-size: 13px; color: var(--text);
+  text-align: left; transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent; -webkit-appearance: none;
+  touch-action: manipulation; line-height: 1.4;
+}
+.quiz-opt:hover:not(.disabled), .quiz-opt:active:not(.disabled) { border-color: rgba(232,200,74,0.35); background: var(--bg3); }
+.quiz-opt.correct { border-color: var(--green); background: rgba(78,203,141,0.1); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: rgba(240,90,90,0.1); color: var(--red); }
+.quiz-opt.disabled { cursor: default; }
+.quiz-exp {
+  display: none; padding: 9px 13px; background: var(--bg2); border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0; font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px;
+}
+.quiz-exp.show { display: block; }
+.quiz-exp strong { color: var(--text); }
+.quiz-next-btn {
+  float: right; padding: 9px 20px; background: var(--accent); color: var(--bg);
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; border: none; border-radius: 5px;
+  -webkit-tap-highlight-color: transparent; -webkit-appearance: none; display: none;
+}
+.quiz-next-btn.show { display: inline-block; }
+
+.quiz-result-card { background: var(--bg2); border: 1px solid var(--line2); border-radius: 12px; padding: 28px 20px; text-align: center; display: none; }
+.quiz-result-card.show { display: block; }
+.qr-score { font-family: var(--cond); font-size: 64px; font-weight: 800; color: var(--accent); line-height: 1; }
+.qr-label { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 14px; }
+.qr-msg { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 18px; }
+.qr-breakdown { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
+.qr-stat { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.qr-stat span.ok { color: var(--green); font-weight: 700; }
+.qr-stat span.ko { color: var(--red); font-weight: 700; }
+.quiz-playing { display: none; }
+.quiz-playing.active { display: block; }
+.quiz-selector.hidden { display: none; }
+
+.ai-quiz-loading { display: none; text-align: center; padding: 40px 20px; }
+.ai-quiz-loading.show { display: block; }
+.ai-spinner { width: 32px; height: 32px; border: 2px solid var(--bg4); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ai-loading-text { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE SIDEBAR TOGGLE
+═══════════════════════════════════════════════════════════════ */
+.sidebar-toggle-btn {
+  display: none;
+  background: transparent; border: none;
+  color: var(--muted); padding: 4px;
+  font-size: 22px; line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤900px)
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root { --sidebar-w: 240px; }
+  .logo-sub { display: none; }
+  .hc-name { min-width: 110px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤640px)
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Hide desktop topbar tabs, show bottom nav */
+  .topbar-tabs { display: none; }
+  .bottomnav { display: block; }
+  .sidebar-toggle-btn { display: block; }
+
+  /* Sidebar becomes a full-height drawer over content */
+  .sidebar {
+    position: fixed;
+    top: var(--topbar-h);
+    left: 0;
+    bottom: 0;
+    height: calc(100% - var(--topbar-h));
+    transform: translateX(-100%);
+    z-index: 200;
+    width: min(85vw, 300px);
+    min-width: unset;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: block; }
+  .sidebar-overlay.show { pointer-events: auto; }
+  .sidebar-overlay:not(.show) { pointer-events: none; opacity: 0; }
+
+  /* Main takes full width, padded for bottom nav + safe area */
+  .main { width: 100%; }
+  .dashboard  { padding-bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 20px); }
+  .quiz-view  { padding-bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 20px); }
+  .detail-body{ padding-bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 20px); }
+
+  /* Dashboard title */
+  .dash-title { font-size: 26px; }
+
+  /* Hardness ranking — shrink labels */
+  .hc-name { min-width: 90px; font-size: 10px; }
+  .hc-val  { min-width: 52px; font-size: 9px; }
+  .hc-bar-wrap { min-width: 0; }
+
+  /* Family grid → 1 column on mobile, full-width cards */
+  .family-grid { grid-template-columns: 1fr; }
+
+  /* Material hero — NO sticky on mobile (was covering content) */
+  .mat-hero { flex-wrap: wrap; padding: 14px 16px; }
+  .mat-hero-kpis {
+    width: 100%; justify-content: flex-start;
+    padding-top: 10px; border-top: 1px solid var(--line); margin-top: 6px;
+  }
+  .mat-hero-name { font-size: 22px; }
+
+  /* Detail body padding */
+  .detail-body { padding: 14px 16px; }
+
+  /* Two columns → single column */
+  .two-col { grid-template-columns: 1fr; }
+  .prop-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Table horizontal scroll */
+  .machin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .machin-table { min-width: 420px; }
+
+  /* Quiz */
+  .quiz-q-text { font-size: 15px; }
+  .quiz-opt { padding: 12px 13px; font-size: 13px; }
+  .mat-select-grid { grid-template-columns: repeat(2, 1fr); }
+  .quiz-view { padding-left: 14px; padding-right: 14px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE  (≤400px)
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  .dashboard, .detail-body, .quiz-view { padding-left: 12px; padding-right: 12px; }
+  .mat-hero { padding: 12px; }
+  .stat-val { font-size: 22px; }
+  .prop-grid { grid-template-columns: 1fr 1fr; }
+  .mat-select-grid { grid-template-columns: repeat(2, 1fr); }
+  .hc-name { min-width: 75px; font-size: 9px; }
+  .hc-pos { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <button class="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Apri lista materiali">☰</button>
+  <div class="logo-mark">MatRef</div>
+  <div class="logo-sub">Officina · Aerospace · Engineering</div>
+  <div class="topbar-tabs">
+    <button class="topbar-tab active" onclick="switchView('dashboard')" aria-label="Dashboard">Dashboard</button>
+    <button class="topbar-tab" onclick="switchView('material')" aria-label="Scheda materiale">Materiale</button>
+    <button class="topbar-tab" onclick="switchView('quiz')" aria-label="Quiz AI">Quiz AI</button>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Lista materiali">
+    <div class="sidebar-header">
+      <div class="sidebar-header-label">Materiali — durezza ↓</div>
+      <input class="search-box" type="search" id="mat-search" placeholder="Cerca…" oninput="filterMaterials()" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+    <div class="category-filter" id="cat-filter"></div>
+    <div class="mat-list" id="mat-list"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main-content" aria-live="polite">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="dashboard">
+      <div class="dash-hero">
+        <div class="dash-title">Materiali da <span>Officina</span></div>
+        <div class="dash-sub">// Classificati per durezza · Seleziona un materiale</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-val" id="s-total">0</div><div class="stat-label">Materiali</div></div>
+        <div class="stat-card"><div class="stat-val" id="s-fam">0</div><div class="stat-label">Famiglie</div></div>
+        <div class="stat-card"><div class="stat-val">10k+</div><div class="stat-label">HV Max</div></div>
+        <div class="stat-card"><div class="stat-val" id="s-cat">0</div><div class="stat-label">Categorie</div></div>
+      </div>
+      <div class="hardness-chart">
+        <div class="ranking-label">Classifica Durezza Vickers (HV)</div>
+        <div id="hardness-ranking"></div>
+      </div>
+      <div class="ranking-label">Famiglie di Materiali</div>
+      <div class="family-grid" id="family-grid"></div>
+    </div>
+
+    <!-- MATERIAL DETAIL -->
+    <div id="view-material" style="display:none">
+      <div id="mat-detail-content"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="view-quiz" style="display:none">
+      <div class="quiz-view">
+        <div class="quiz-title">Quiz <span>AI</span></div>
+        <div class="quiz-sub">// 10 domande generate dall'AI · Livello ingegnere</div>
+
+        <div class="quiz-selector" id="quiz-selector">
+          <div class="ranking-label">Scegli il materiale</div>
+          <div class="mat-select-grid" id="quiz-mat-grid"></div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+            <button class="start-quiz-btn" id="start-quiz-btn" onclick="startAIQuiz()" disabled>Genera Quiz →</button>
+            <span style="font-family:var(--mono);font-size:10px;color:var(--muted)">10 domande AI ogni volta diverse</span>
+          </div>
+          <div class="warn-banner">
+            <strong>Nota:</strong> Il quiz è generato dinamicamente da Claude AI ad ogni sessione. Richiede connessione a Internet.
+          </div>
+        </div>
+
+        <div class="ai-quiz-loading" id="ai-loading">
+          <div class="ai-spinner"></div>
+          <div class="ai-loading-text">Generazione domande in corso…</div>
+        </div>
+
+        <div class="quiz-playing" id="quiz-playing">
+          <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qpf"></div></div>
+          <div class="quiz-meta-row">
+            <div class="quiz-q-counter" id="qcounter">1 / 10</div>
+            <div class="quiz-score-live" id="qscore">⭐ 0</div>
+          </div>
+          <div class="quiz-material-tag" id="qmattag"></div>
+          <div class="quiz-q-text" id="qtext"></div>
+          <div class="quiz-options" id="qoptions"></div>
+          <div class="quiz-exp" id="qexp"></div>
+          <button class="quiz-next-btn" id="qnext" onclick="quizNext()">Avanti →</button>
+          <div style="clear:both;height:8px"></div>
+        </div>
+
+        <div class="quiz-result-card" id="quiz-result">
+          <div class="qr-score" id="qr-score">0/10</div>
+          <div class="qr-label">PUNTEGGIO FINALE</div>
+          <div class="qr-msg" id="qr-msg"></div>
+          <div class="qr-breakdown" id="qr-break"></div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button class="start-quiz-btn" onclick="resetQuiz()">🔄 Nuovo Quiz</button>
+            <button class="start-quiz-btn" onclick="switchView('material')" style="background:var(--bg3);color:var(--text);border:1px solid var(--line2)">📖 Studia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottomnav" aria-label="Navigazione principale">
+  <div class="bottomnav-inner">
+    <button class="bnav-btn active" id="bnav-dashboard" onclick="switchView('dashboard')">
+      <span class="bnav-icon">📊</span>Dashboard
+    </button>
+    <button class="bnav-btn" id="bnav-sidebar" onclick="toggleSidebar()">
+      <span class="bnav-icon">📋</span>Materiali
+    </button>
+    <button class="bnav-btn" id="bnav-material" onclick="switchView('material')">
+      <span class="bnav-icon">🔬</span>Scheda
+    </button>
+    <button class="bnav-btn" id="bnav-quiz" onclick="switchView('quiz')">
+      <span class="bnav-icon">🎯</span>Quiz AI
+    </button>
+  </div>
+</nav>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA — 39 MATERIALS
+// ═══════════════════════════════════════════════════════════════
+const MATERIALS = [
+  {
+    id:'diamante',name:'Diamante',formula:'C (cubico)',family:'Ceramici/Abrasivi',color:'#c0eeff',
+    hv:10000,density:3.51,E:1220,UTS:null,YS:null,elongation:0,melt:3550,
+    tags:['Abrasivo','Utensile','CVD','PCD'],
+    summary:'La sostanza naturale più dura conosciuta. Usato come abrasivo e come rivestimento utensile (PCD, CVD). Anisotropo — durezza varia con il piano cristallografico.',
+    chemistry:{structure:'Cubica a facce centrate (FCC) con 2 atomi per cella — struttura "diamante". Ogni C è legato a 4 C vicini in geometria tetraedrica (sp³).',bonding:'Legame covalente C–C puro (sp³). Lunghezza legame 0.154 nm. Energia legame ~346 kJ/mol. Responsabile dell\'eccezionale durezza e rigidità.',composition:'100% Carbonio. Forma allotropica di C con ibridizzazione sp³. Grafite = sp², fullerene = sp², grafene = sp²'},
+    mechanical:[{l:'Durezza Vickers',v:'10000',u:'HV',n:'La più alta tra i materiali solidi'},{l:'Modulo Young',v:'1220',u:'GPa',n:'Il più alto tra i solidi (~6× acciaio)'},{l:'Coeff. Poisson',v:'0.07',u:'',n:'Quasi incomprimibile'},{l:'Tenacità a frattura',v:'3.4',u:'MPa√m',n:'Bassa — fragile'}],
+    physical:[{l:'Densità',v:'3.51',u:'g/cm³'},{l:'T. Fusione',v:'3550',u:'°C'},{l:'Cond. termica',v:'2200',u:'W/m·K',n:'La più alta di tutti i materiali'},{l:'Cond. elettrica',v:'~0',u:'S/m',n:'Isolante elettrico eccellente'},{l:'Espansione term.',v:'0.8',u:'×10⁻⁶/K'},{l:'T. combustione',v:'~720',u:'°C in O₂'}],
+    machinability:{rating:1,notes:'Non si lavora convenzionalmente — è l\'utensile. Taglio laser, EDM o lucidatura con pasta diamantata.',params:[{op:'Rettifica',vc:'-',fz:'-',note:'Solo con mole CBN o diamantine'},{op:'Taglio laser',vc:'ns pulse',fz:'-',note:'Ablazione laser per sagomatura PCD'}]},
+    applications:['Utensili di rettifica (mole)','Inserti PCD per Al, Cu, compositi','Rivestimenti CVD per frese (WC-Co)','Finestre ottiche UV/IR','Dissipatori termici ad alta potenza','Gioielleria'],
+    creep:'Praticamente assente. A T > 1000°C in O₂ si ossida a CO₂. Stabile in vuoto/inerte fino a ~2000°C.',
+    weldability:'Non saldabile. Brazing con leghe Ag-Cu-Ti attive per unire PCD a substrati WC.'
+  },
+  {
+    id:'cbn',name:'CBN / PCBN',formula:'c-BN (cubico)',family:'Ceramici/Abrasivi',color:'#a8e6cf',
+    hv:4500,density:3.48,E:680,UTS:null,YS:null,elongation:0,melt:2730,
+    tags:['Abrasivo','Utensile','PCBN','Duro'],
+    summary:'Nitruro di Boro Cubico. Il secondo materiale più duro dopo il diamante. Usato per lavorare acciai temprati e ghise — a differenza del diamante non reagisce col ferro ad alta T.',
+    chemistry:{structure:'Struttura di tipo wurtzite o sfalerite (cubica). Analoga al diamante ma con B e N alternati.',bonding:'Legame covalente B–N con parziale carattere ionico (~22%). Quasi equivalente al C–C del diamante.',composition:'50% Boro + 50% Azoto. Sintetico. Prodotto a pressioni >5 GPa e >1500°C.'},
+    mechanical:[{l:'Durezza Vickers',v:'4500',u:'HV',n:'Secondo solo al diamante'},{l:'Modulo Young',v:'680',u:'GPa'},{l:'Tenacità a frattura',v:'6–8',u:'MPa√m',n:'Migliore del diamante'}],
+    physical:[{l:'Densità',v:'3.48',u:'g/cm³'},{l:'T. Fusione',v:'2730',u:'°C'},{l:'Cond. termica',v:'740',u:'W/m·K'},{l:'T. ossidazione',v:'>1000',u:'°C'}],
+    machinability:{rating:1,notes:'Usato come utensile per tagliare acciai temprati (>60 HRC), ghise e superleghe Ni. Stabile chimicamente con Fe fino a 1300°C.',params:[{op:'Hard turning (acciaio)',vc:'100–200 m/min',fz:'0.05–0.15 mm/giro',note:'Sostituto della rettifica'}]},
+    applications:['Inserti PCBN per acciai temprati','Rettifica di riporti duri','Mole per superleghe Ni','Cuscinetti ad alta durezza'],
+    creep:'Eccellente resistenza fino a 1300°C.',
+    weldability:'Non saldabile. Sinterizzazione sotto pressione (SPS, HIP).'
+  },
+  {
+    id:'sic',name:'SiC — Carburo di Silicio',formula:'SiC',family:'Ceramici/Abrasivi',color:'#95a5a6',
+    hv:2800,density:3.21,E:410,UTS:400,YS:null,elongation:0,melt:2730,
+    tags:['Ceramico','Abrasivo','Alta T','SiC'],
+    summary:'Ceramico tecnico ad alte prestazioni. Usato come abrasivo, in compositi (C/SiC, SiCf/SiC) e come materiale strutturale ad alta temperatura.',
+    chemistry:{structure:'Politipi (3C-cubica, 4H, 6H-esagonale). Struttura wurtzite/sfalerite. Legame Si–C: 0.189 nm.',bonding:'88% covalente, 12% ionico. Tetraedrico. Altissima energia di legame.',composition:'50% Si + 50% C. Sintesi: processo Acheson, CVD, sinterizzazione polveri.'},
+    mechanical:[{l:'Durezza Vickers',v:'2800',u:'HV'},{l:'Modulo Young',v:'410',u:'GPa'},{l:'Resistenza flessione',v:'400',u:'MPa'},{l:'Tenacità a frattura',v:'3–5',u:'MPa√m'},{l:'Resistenza compressione',v:'3900',u:'MPa'}],
+    physical:[{l:'Densità',v:'3.21',u:'g/cm³'},{l:'T. Fusione',v:'2730',u:'°C'},{l:'Cond. termica',v:'120',u:'W/m·K',n:'Alta per un ceramico'},{l:'Coeff. dilat.',v:'4.0',u:'×10⁻⁶/K'}],
+    machinability:{rating:1,notes:'Difficilissimo da lavorare. Si usa come abrasivo. Rettifica con mole diamantate. EDM per forme complesse.',params:[{op:'Rettifica',vc:'20–30 m/s',fz:'0.01 mm/pass',note:'Mole diamantate di grana fine'}]},
+    applications:['Abrasivo (carte, paste, mole)','Freni in carboceramo (SiC-C)','Componenti motori ad alta T','Specchi per telescopi spaziali','Semiconduttori di potenza (SiC-MOSFET)'],
+    creep:'Praticamente assente sotto 1200°C. Scorrimento viscoso sopra 1400°C in policristallini.',
+    weldability:'Non saldabile convenzionalmente. Brasatura attiva o diffusion bonding.'
+  },
+  {
+    id:'wc-co',name:'Metallo Duro (WC-Co)',formula:'WC + Co binder',family:'Ceramici/Abrasivi',color:'#c8b9a0',
+    hv:1800,density:15.0,E:620,UTS:2400,YS:null,elongation:0.5,melt:2870,
+    tags:['Utensile','Sinterizzato','WC','Carburo'],
+    summary:'Carburo cementato WC-Co. Il materiale utensile più usato al mondo (80% degli inserti). Durezza altissima + tenacità grazie al legante Co.',
+    chemistry:{structure:'Cristalli WC esagonali (fase dura) immersi in legante Co FCC. Grain size: 0.5–10 µm.',bonding:'WC: legame covalente/metallico W–C. Co: legame metallico duttile. Interfaccia WC/Co per diffusione.',composition:'WC: 70–97%. Co: 3–30%. Additivi: TiC, TaC, NbC per alta T.'},
+    mechanical:[{l:'Durezza Vickers',v:'1800',u:'HV',n:'Da 800 a 2000+ HV per grado'},{l:'Modulo Young',v:'620',u:'GPa',n:'~3× acciaio'},{l:'Resist. Flessione',v:'2400',u:'MPa'},{l:'Tenacità Kic',v:'10–25',u:'MPa√m',n:'Alta per un ceramico'},{l:'Compressione',v:'5800',u:'MPa'}],
+    physical:[{l:'Densità',v:'15.0',u:'g/cm³',n:'Alta — contiene W (W=19.3)'},{l:'T. Fusione WC',v:'2870',u:'°C'},{l:'Cond. termica',v:'50–100',u:'W/m·K'},{l:'T. utile max',v:'1000',u:'°C',n:'Oltre ossidazione Co'}],
+    machinability:{rating:1,notes:'Rettifica con mole diamantate. EDM per forme complesse. Pre-sinter EDM prima della sinterizzazione.',params:[{op:'Rettifica',vc:'18–25 m/s',fz:'0.01 mm',note:'Mole diamantate vitreo/resinoso'}]},
+    applications:['Inserti per tornitura/fresatura/foratura','Frese integrali in carburo','Trafilatori, punzoni, matrici','Scudi anti-usura'],
+    creep:'Inizio creep a ~700°C (rammollimento Co). Gradi Ni-Co resistono a T più alte.',
+    weldability:'Brasatura con leghe Ag-Cu-Zn-Mn su acciaio. Giunzione meccanica tramite porta-inserti.'
+  },
+  {
+    id:'inconel718',name:'Inconel 718',formula:'Ni-Cr-Fe-Nb-Mo',family:'Superleghe Ni',color:'#f4a261',
+    hv:450,density:8.19,E:200,UTS:1380,YS:1185,elongation:12,melt:1336,
+    tags:['Alta T','Aerospazio','Ni-base','DFAM'],
+    summary:'La superlega Ni più usata al mondo. Eccellente resistenza a creep e ossidazione fino a 700°C. Difficile da lavorare. Usata in motori jet, razzi, applicazioni nucleari.',
+    chemistry:{structure:'Matrice γ (FCC Ni) con precipitati γ″ (Ni₃Nb, BCT) e γ\' (Ni₃Al, FCC) + carburi ai bordi grano. Precipitation hardening.',bonding:'Legame metallico con forti interazioni Ni-Cr-Fe. Il Nb forma Ni₃Nb (fase δ) in eccesso — indesiderata.',composition:'Ni 50–55%, Cr 17–21%, Fe 14–18%, Nb+Ta 4.75–5.5%, Mo 2.8–3.3%, Ti 0.65–1.15%, Al 0.2–0.8%'},
+    mechanical:[{l:'UTS (invecchiata)',v:'1380',u:'MPa'},{l:'Snervamento YS',v:'1185',u:'MPa'},{l:'Allungamento',v:'12',u:'%'},{l:'Durezza',v:'~420',u:'HV'},{l:'Tenacità Kic',v:'~100',u:'MPa√m'}],
+    physical:[{l:'Densità',v:'8.19',u:'g/cm³'},{l:'T. Fusione',v:'1260–1336',u:'°C'},{l:'Cond. termica',v:'11.4',u:'W/m·K',n:'Molto bassa'},{l:'Coeff. dilat.',v:'13',u:'×10⁻⁶/K'}],
+    machinability:{rating:2,notes:'Tra i materiali più difficili. Alta resistenza a caldo + bassa cond. termica + incrudimento rapido. TiAlN/AlCrN obbligatorio. Abbondante refrigerante.',params:[{op:'Tornitura',vc:'25–60 m/min',fz:'0.1–0.25 mm/giro',note:'Carburo P/M grado fine'},{op:'Fresatura',vc:'20–50 m/min',fz:'0.03–0.08 mm/dente',note:'Climb milling'},{op:'Foratura',vc:'15–30 m/min',fz:'0.05–0.12 mm/giro',note:'Peck obbligatorio L/D>3'}]},
+    applications:['Dischi e pale turbina jet','Serbatoi criogenici razzi','Reattori nucleari','Fasci motori Formula 1','Impianti chimici corrosivi'],
+    creep:'Progettata per creep fino a ~700°C. Sopra 650°C la fase γ″ → δ → perdita proprietà. Parametro Larson-Miller documentato.',
+    weldability:'Saldabile TIG/MIG in condizioni controllate. Rischio cracking per solidificazione (Nb segregazione). Post-saldatura: annealing + aging.'
+  },
+  {
+    id:'haynes282',name:'Haynes 282',formula:'Ni-Cr-Co-Mo-Ti-Al',family:'Superleghe Ni',color:'#e9b96e',
+    hv:380,density:8.27,E:213,UTS:1090,YS:760,elongation:25,melt:1320,
+    tags:['Alta T','Aerospazio','Saldabile','Ni-base'],
+    summary:'Superlega Ni di nuova generazione. Eccellente combinazione saldabilità + resistenza a creep. Usata nelle parti calde di turbine a gas di nuova generazione.',
+    chemistry:{structure:'Matrice γ (FCC) con fase γ\' Ni₃(Ti,Al) ~19% vol. Meno suscettibile a cracking per invecchiamento rispetto a IN718.',bonding:'Legame metallico rinforzato da precipitati γ\'.',composition:'Ni ~57%, Cr 20%, Co 10%, Mo 8.5%, Ti 2.1%, Al 1.5%, C 0.06%, B 0.005%'},
+    mechanical:[{l:'UTS',v:'1090',u:'MPa'},{l:'YS 0.2%',v:'760',u:'MPa'},{l:'Allungamento',v:'25',u:'%',n:'Eccellente duttilità'},{l:'Resistenza creep 788°C',v:'Alta',u:'',n:'Superiore a IN718'}],
+    physical:[{l:'Densità',v:'8.27',u:'g/cm³'},{l:'T. Fusione',v:'~1320',u:'°C'},{l:'Cond. termica (871°C)',v:'24',u:'W/m·K'}],
+    machinability:{rating:2,notes:'Simile a IN718 ma leggermente migliore.',params:[{op:'Tornitura',vc:'30–55 m/min',fz:'0.1–0.2 mm/giro',note:'Simile IN718'}]},
+    applications:['Anelli e dischi turbina a gas','Hot section motori civili'],
+    creep:'Creep rupture superiore a IN718 sopra 750°C. Fase γ\' stabile fino a ~900°C.',
+    weldability:'Eccellente — progettata per essere saldabile. TIG, EBW senza trattamento post-saldatura obbligatorio.'
+  },
+  {
+    id:'mar-m247',name:'MAR-M 247 (DS/SX)',formula:'Ni-Co-Cr-W-Ta-Al',family:'Superleghe Ni',color:'#d4a757',
+    hv:400,density:8.53,E:200,UTS:1000,YS:860,elongation:8,melt:1300,
+    tags:['Alta T','Aerospazio','SX','Turbina'],
+    summary:'Superlega per pale di turbina ad alta temperatura. Prodotta come cristallo singolo (SX) o solidificazione direzionale (DS) per massimizzare resistenza a creep.',
+    chemistry:{structure:'FCC Ni + γ\' cuboidale Ni₃(Al,Ta) ~65% vol. In forma SX: unico cristallo orientato lungo <001>. In DS: colonne di grano parallele.',bonding:'Alta coerenza γ/γ\'. Decomposizione termica γ\' → fase TCP è il limite di vita.',composition:'Ni ~60%, Co 10%, Cr 8.4%, W 10%, Ta 3%, Al 5.5%, Hf 1.5%, Ti 1%, C 0.15% (DS)'},
+    mechanical:[{l:'UTS a T ambiente',v:'1000',u:'MPa'},{l:'YS a T ambiente',v:'860',u:'MPa'},{l:'UTS a 900°C',v:'~750',u:'MPa'},{l:'Allungamento',v:'8',u:'%'}],
+    physical:[{l:'Densità',v:'8.53',u:'g/cm³'},{l:'T. Fusione',v:'~1300',u:'°C'},{l:'Cond. termica',v:'13',u:'W/m·K'}],
+    machinability:{rating:1,notes:'Estremamente difficile. EDM per fori di raffreddamento. Rettifica CBN/diamante.',params:[{op:'EDM foratura',vc:'-',fz:'-',note:'Fori di raffreddamento in pale turbina'}]},
+    applications:['Pale turbina HP motori jet (1ª e 2ª schiera)','Razzi lanciatori (SpaceX, Ariane)','Turbine a gas industriali heavy-duty'],
+    creep:'Design critico per creep fino a 1050°C. Assenza bordi di grano in SX rimuove scorrimento intergranulare. TIT fino a 1600°C con raffreddamento attivo.',
+    weldability:'Non saldabile con processi tradizionali — rischio cracking da solidificazione. Riparazione con laser cladding o brasatura specializzata.'
+  },
+  {
+    id:'ti6al4v',name:'Ti-6Al-4V',formula:'Ti α+β alloy',family:'Titanio',color:'#7ec8e3',
+    hv:340,density:4.43,E:114,UTS:950,YS:880,elongation:14,melt:1660,
+    tags:['Aerospazio','Biomedico','α+β','Lavorabile'],
+    summary:'La lega di titanio più usata al mondo (~50% del consumo). Eccellente rapporto resistenza/peso, resistenza a corrosione e biocompatibilità.',
+    chemistry:{structure:'Matrice α (HCP) con isole di fase β (BCC). Al: stabilizzatore α. V: stabilizzatore β. Temperatura transus β: ~995°C.',bonding:'Legame metallico Ti. Al rinforza α per soluzione solida. V stabilizza β a T ambiente.',composition:'6% Al, 4% V, resto Ti. O max 0.20%, N 0.05%, C 0.10%, H 0.015%, Fe 0.40%'},
+    mechanical:[{l:'UTS',v:'950',u:'MPa'},{l:'YS 0.2%',v:'880',u:'MPa'},{l:'Allungamento',v:'14',u:'%'},{l:'Modulo Young',v:'114',u:'GPa'},{l:'Durezza',v:'~340',u:'HV'},{l:'Tenacità Kic',v:'75',u:'MPa√m'}],
+    physical:[{l:'Densità',v:'4.43',u:'g/cm³',n:'Metà dell\'acciaio'},{l:'T. Fusione',v:'~1660',u:'°C'},{l:'Cond. termica',v:'6.7',u:'W/m·K',n:'Molto bassa'},{l:'Coeff. dilat.',v:'8.6',u:'×10⁻⁶/K'}],
+    machinability:{rating:3,notes:'Difficile. Bassa cond. termica concentra calore sul tagliente. Alta affinità chimica → BUE. Evitare TiN come rivestimento.',params:[{op:'Tornitura',vc:'40–70 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo non rivestito o TiAlN'},{op:'Fresatura',vc:'30–60 m/min',fz:'0.02–0.08 mm/dente',note:'Climb milling, trocoidale'},{op:'Foratura',vc:'20–40 m/min',fz:'0.03–0.1 mm/giro',note:'Peck, Through Spindle Coolant'}]},
+    applications:['Fusoliera Boeing 787 (15% peso)','Motori turbofan (fan, compressore)','Protesi ortopediche','Razzi (SpaceX, NASA)','Frame iPhone 15 Pro'],
+    creep:'Resistenza a creep fino a ~300°C. Sopra 500°C creep significativo. Dwell fatigue critico in dischi compressori.',
+    weldability:'Saldabile TIG con protezione Ar pura totale. EBW, LBW, FSW. Contaminazione da O/N fragilizza.'
+  },
+  {
+    id:'ti-cp',name:'Titanio cp (Gr.1-4)',formula:'Ti commercialmente puro',family:'Titanio',color:'#aed6f1',
+    hv:130,density:4.51,E:116,UTS:550,YS:480,elongation:20,melt:1668,
+    tags:['Corrosione','Biomedico','Saldabile','cp-Ti'],
+    summary:'Titanio commercialmente puro in 4 gradi. Eccellente resistenza a corrosione, biocompatibilità, saldabilità. Usato in chimica e medicina.',
+    chemistry:{structure:'Monofase α (HCP). Differenza tra gradi = contenuto di O e Fe.',bonding:'Legame metallico puro. Interstiziali O,N,C aumentano resistenza ma riducono duttilità.',composition:'Ti >99%. Gr1: O≤0.18%, Gr4: O≤0.40%'},
+    mechanical:[{l:'UTS Gr.4',v:'550',u:'MPa'},{l:'UTS Gr.1',v:'240',u:'MPa'},{l:'Allungamento',v:'20',u:'%'},{l:'Durezza Gr.4',v:'~200',u:'HV'}],
+    physical:[{l:'Densità',v:'4.51',u:'g/cm³'},{l:'T. Fusione',v:'1668',u:'°C'},{l:'Cond. termica',v:'21.9',u:'W/m·K'}],
+    machinability:{rating:5,notes:'Più lavorabile di Ti-6Al-4V. Velocità 60–90 m/min.',params:[{op:'Tornitura',vc:'60–90 m/min',fz:'0.1–0.3 mm/giro',note:'Più facile di Ti-6Al-4V'}]},
+    applications:['Impianti dentali (Gr.4)','Scambiatori industria chimica','Elettrolizzatori per idrogeno'],
+    creep:'Resistenza a creep moderata. Non indicato sopra 300°C strutturalmente.',
+    weldability:'Eccellente saldabilità TIG. Protezione Ar rigorosa.'
+  },
+  {
+    id:'acciaio-h13',name:'Acciaio Utensile H13',formula:'Fe-C-Cr-Mo-V-Si',family:'Acciai',color:'#a9cce3',
+    hv:580,density:7.80,E:210,UTS:1750,YS:1400,elongation:9,melt:1430,
+    tags:['Utensile','Stampi','Alta T','Hot Work'],
+    summary:'Acciaio per utensili a caldo (hot work) per eccellenza. Usato per stampi di pressofusione Al/Mg, forgiatura a caldo. Mantiene durezza fino a ~600°C.',
+    chemistry:{structure:'Martensite rinvenuta con carburi M₂₃C₆, MC dispersi. Struttura BCC/BCT dipende da C e T rinvenimento.',bonding:'Legame metallico Fe. Cr, Mo, V formano carburi che aumentano la resistenza a caldo.',composition:'C 0.32–0.45%, Cr 4.75–5.5%, Mo 1.1–1.75%, V 0.8–1.2%, Si 0.8–1.25%'},
+    mechanical:[{l:'Durezza (temprato)',v:'52–54',u:'HRC'},{l:'UTS',v:'1750',u:'MPa'},{l:'YS',v:'1400',u:'MPa'},{l:'Tenacità Charpy',v:'20–28',u:'J'}],
+    physical:[{l:'Densità',v:'7.80',u:'g/cm³'},{l:'T. Fusione',v:'~1430',u:'°C'},{l:'Cond. termica',v:'24',u:'W/m·K'}],
+    machinability:{rating:5,notes:'Facile da lavorare allo stato ricotto (~200 HB). EDM standard per forme dopo tempra.',params:[{op:'Fresatura (ricotto)',vc:'80–150 m/min',fz:'0.05–0.15 mm/dente',note:'Carburo TiAlN'},{op:'EDM (temprato)',vc:'-',fz:'-',note:'Standard per forme precise'}]},
+    applications:['Stampi pressofusione Al/Mg/Zn','Matrici forgiatura a caldo','Utensili estrusione'],
+    creep:'Resistenza al rinvenimento fino a ~600°C. Perdita durezza per coalescenza carburi sopra 600°C.',
+    weldability:'Saldabile con preriscaldo 300-400°C. Post-riscaldo necessario. Rischio cracking a freddo (alto CE).'
+  },
+  {
+    id:'42crmo4',name:'Acciaio 42CrMo4 (4140)',formula:'Fe-C-Cr-Mo',family:'Acciai',color:'#85929e',
+    hv:300,density:7.85,E:210,UTS:1000,YS:850,elongation:12,melt:1430,
+    tags:['Costruzione','Bonificato','Trattabile','CrMo'],
+    summary:'Acciaio legato Cr-Mo bonificato. Eccellente combinazione resistenza + tenacità + lavorabilità. Il cavallo da lavoro dell\'ingegneria meccanica.',
+    chemistry:{structure:'Martensite rinvenuta dopo bonifica. BCC/BCT con carburi dispersi finemente.',bonding:'C interstiziale + Cr e Mo in soluzione solida. Mo riduce la fragilità da rinvenimento.',composition:'C 0.38–0.45%, Cr 0.9–1.2%, Mo 0.15–0.25%, Mn 0.6–0.9%'},
+    mechanical:[{l:'UTS (bonificato)',v:'1000',u:'MPa'},{l:'YS',v:'850',u:'MPa'},{l:'Allungamento',v:'12',u:'%'},{l:'Durezza',v:'~300',u:'HB'},{l:'Charpy (20°C)',v:'60',u:'J'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1430',u:'°C'},{l:'Cond. termica',v:'42',u:'W/m·K'}],
+    machinability:{rating:7,notes:'Ottima lavorabilità allo stato normalizzato. Parametri ampi.',params:[{op:'Tornitura',vc:'150–250 m/min',fz:'0.2–0.5 mm/giro',note:'Carburo P10-P30'},{op:'Fresatura',vc:'100–200 m/min',fz:'0.05–0.2 mm/dente',note:'Standard'}]},
+    applications:['Alberi di trasmissione','Ingranaggi','Bielle','Bulloni ad alta resistenza','Cilindri idraulici'],
+    creep:'Non adatto ad alta T strutturalmente. Perdita proprietà sopra ~400°C.',
+    weldability:'Saldabile con precauzioni. CE ~ 0.65 → preriscaldo 200–300°C. Rischio cracking idrogeno.'
+  },
+  {
+    id:'acciaio-inox304',name:'Acciaio Inox 304',formula:'Fe-18Cr-8Ni (AISI 304)',family:'Acciai Inossidabili',color:'#d5d8dc',
+    hv:160,density:7.93,E:193,UTS:515,YS:205,elongation:40,melt:1450,
+    tags:['Corrosione','Alimentare','Saldabile','Austenitico'],
+    summary:'L\'acciaio inossidabile più comune al mondo. Austenitico, eccellente resistenza a corrosione generale, buona saldabilità.',
+    chemistry:{structure:'Austenite FCC stabile grazie al Ni. Non magnetico. Trasformazione martensitica parziale per deformazione a freddo.',bonding:'Legame metallico Fe. Cr forma Cr₂O₃ passivante. Ni stabilizza austenite.',composition:'C ≤0.08%, Cr 18–20%, Ni 8–10.5%, Mn ≤2%, Fe resto'},
+    mechanical:[{l:'UTS',v:'515',u:'MPa'},{l:'YS 0.2%',v:'205',u:'MPa',n:'Basso — fortemente incrudinabile'},{l:'Allungamento',v:'40',u:'%',n:'Eccellente formabilità'},{l:'Durezza',v:'~160',u:'HB'}],
+    physical:[{l:'Densità',v:'7.93',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'Cond. termica',v:'16.2',u:'W/m·K'}],
+    machinability:{rating:5,notes:'Lavorabile ma incrudimento rapido. Evitare strisciamento — avanzamenti adeguati.',params:[{op:'Tornitura',vc:'120–200 m/min',fz:'0.1–0.4 mm/giro',note:'Carburo P25/M25'},{op:'Fresatura',vc:'80–150 m/min',fz:'0.05–0.15 mm/dente',note:'Geometria positiva'}]},
+    applications:['Attrezzature alimentari e farmaceutiche','Tubi e raccordi','Serbatoi criogenici'],
+    creep:'Sensitizzazione tra 425–850°C → perdita resistenza corrosione intergranulare. Usare 304L per saldatura.',
+    weldability:'Ottima. TIG, MIG, laser. Rischio sensitizzazione in HAZ → usare 304L.'
+  },
+  {
+    id:'acciaio-inox316',name:'Acciaio Inox 316/316L',formula:'Fe-18Cr-10Ni-2Mo',family:'Acciai Inossidabili',color:'#bfc9ca',
+    hv:170,density:7.99,E:193,UTS:515,YS:220,elongation:40,melt:1395,
+    tags:['Marine','Farmaceutico','Mo','Austenitico'],
+    summary:'Inox austenitico con Mo per superiore resistenza a corrosione per pitting in ambienti clorurati. La variante L per saldatura.',
+    chemistry:{structure:'Austenite FCC. Il Mo (2–3%) aumenta PREN (Pitting Resistance Equivalent Number).',bonding:'Simile a 304 + Mo potenzia la passivazione superficiale.',composition:'C ≤0.08% (L: ≤0.03%), Cr 16–18%, Ni 10–14%, Mo 2–3%, Fe resto'},
+    mechanical:[{l:'UTS',v:'515',u:'MPa'},{l:'YS 0.2%',v:'220',u:'MPa'},{l:'Allungamento',v:'40',u:'%'},{l:'Durezza',v:'~170',u:'HB'}],
+    physical:[{l:'Densità',v:'7.99',u:'g/cm³'},{l:'T. Fusione',v:'~1395',u:'°C'},{l:'Cond. termica',v:'13.4',u:'W/m·K'}],
+    machinability:{rating:5,notes:'Simile al 304, leggermente più tenace. Stessa attenzione all\'incrudimento.',params:[{op:'Tornitura',vc:'100–180 m/min',fz:'0.1–0.35 mm/giro',note:'Carburo M-grade'}]},
+    applications:['Impiantistica farmaceutica e alimentare','Protesi medicali (316L)','Ambiente marino'],
+    creep:'Migliore del 304 per l\'azione del Mo. Usare 316L per saldatura.',
+    weldability:'Eccellente (specie 316L). TIG con filo ER316L.'
+  },
+  {
+    id:'duplex2205',name:'Inox Duplex 2205',formula:'Fe-22Cr-5Ni-3Mo-N',family:'Acciai Inossidabili',color:'#a8b2c1',
+    hv:280,density:7.82,E:200,UTS:660,YS:450,elongation:25,melt:1440,
+    tags:['Duplex','Marine','Alta Resistenza','Bifasico'],
+    summary:'Acciaio bifasico austenitico-ferritico. Alta resistenza meccanica (2× 316L) + eccellente resistenza SCC (stress corrosion cracking). PREN > 34.',
+    chemistry:{structure:'~50% austenite (FCC) + ~50% ferrite (BCC). N per stabilizzare austenite.',bonding:'Due fasi complementari: ferrite → alta resistenza + SCC; austenite → duttilità + pitting.',composition:'C ≤0.03%, Cr 22–23%, Ni 4.5–6.5%, Mo 3–3.5%, N 0.14–0.2%'},
+    mechanical:[{l:'UTS',v:'660',u:'MPa'},{l:'YS 0.2%',v:'450',u:'MPa'},{l:'Allungamento',v:'25',u:'%'},{l:'Durezza',v:'~280',u:'HB'}],
+    physical:[{l:'Densità',v:'7.82',u:'g/cm³'},{l:'T. Fusione',v:'~1440',u:'°C'},{l:'Cond. termica',v:'19',u:'W/m·K'}],
+    machinability:{rating:4,notes:'Più difficile del 316L per maggiore resistenza. Incrudimento significativo.',params:[{op:'Tornitura',vc:'80–140 m/min',fz:'0.15–0.35 mm/giro',note:'Carburo CVD TiCN/Al₂O₃'}]},
+    applications:['Oil & gas (riser, pipeline)','Impianti desalinizzazione','Industria cartaria'],
+    creep:'Fino a ~280°C. Sopra 300°C fragilizzazione per fase sigma (σ-phase).',
+    weldability:'Saldabile con controllo input termico. Post-weld annealing per ripristino struttura bifasica.'
+  },
+  {
+    id:'al7075',name:'Alluminio 7075-T6',formula:'Al-Zn-Mg-Cu',family:'Alluminio',color:'#f9e79f',
+    hv:175,density:2.81,E:72,UTS:503,YS:435,elongation:11,melt:635,
+    tags:['Aerospazio','Alta resistenza','7000','T6'],
+    summary:'La lega Al più resistente delle serie standard. Strutture aeronautiche primarie. Rapporto UTS/peso eccellente ma suscettibile a stress corrosion cracking.',
+    chemistry:{structure:'Matrice α-Al con precipitati MgZn₂ (η\') + Al₂CuMg (S phase). T6: solubilizzazione + invecchiamento artificiale.',bonding:'Precipitation hardening: zone GP → η\' → η. Blocco dislocazioni.',composition:'Al ~90%, Zn 5.1–6.1%, Mg 2.1–2.9%, Cu 1.2–2.0%, Cr 0.18–0.28%'},
+    mechanical:[{l:'UTS (T6)',v:'503',u:'MPa'},{l:'YS (T6)',v:'435',u:'MPa'},{l:'Allungamento',v:'11',u:'%'},{l:'Durezza',v:'~175',u:'HB'},{l:'Modulo Young',v:'72',u:'GPa'}],
+    physical:[{l:'Densità',v:'2.81',u:'g/cm³',n:'~1/3 dell\'acciaio'},{l:'T. Fusione',v:'~635',u:'°C'},{l:'Cond. termica',v:'130',u:'W/m·K'},{l:'Coeff. dilat.',v:'23.6',u:'×10⁻⁶/K'}],
+    machinability:{rating:9,notes:'Eccellente. Velocità di taglio molto elevate (HSM). BUE se geometria utensile non adeguata.',params:[{op:'Tornitura',vc:'300–800 m/min',fz:'0.1–0.5 mm/giro',note:'PCD o carburo lucidato, angolo +15°'},{op:'Fresatura HSM',vc:'400–1000+ m/min',fz:'0.05–0.2 mm/dente',note:'Frese 2-3 taglienti'}]},
+    applications:['Longheroni ala (F-16, A380)','Fusoliere militari','Telai auto sportive'],
+    creep:'Non strutturale sopra 120°C. Overaging rapido a T elevate.',
+    weldability:'Scarsa — cracking da solidificazione. Rivettatura, incollaggio (Redux), FSW.'
+  },
+  {
+    id:'al2024',name:'Alluminio 2024-T3',formula:'Al-Cu-Mg',family:'Alluminio',color:'#fdebd0',
+    hv:130,density:2.78,E:73,UTS:483,YS:345,elongation:19,melt:638,
+    tags:['Aerospazio','Fatica','2000','T3'],
+    summary:'Lega Al-Cu classica per fusoliere. Eccellente resistenza a fatica. Usata principalmente allo stato T3.',
+    chemistry:{structure:'Precipitati Al₂CuMg (fase S) e Al₂Cu (fase θ). T3: solubilizzato + lavorato a freddo + invecchiamento naturale.',bonding:'Cu forma precipitati finissimi → alto rinforzo.',composition:'Al ~93%, Cu 3.8–4.9%, Mg 1.2–1.8%, Mn 0.3–0.9%'},
+    mechanical:[{l:'UTS (T3)',v:'483',u:'MPa'},{l:'YS',v:'345',u:'MPa'},{l:'Allungamento',v:'19',u:'%'},{l:'Fatica (10⁸ cicli)',v:'138',u:'MPa'}],
+    physical:[{l:'Densità',v:'2.78',u:'g/cm³'},{l:'T. Fusione',v:'~638',u:'°C'},{l:'Cond. termica',v:'121',u:'W/m·K'}],
+    machinability:{rating:9,notes:'Eccellente. Simile a 7075 ma leggermente più duttile.',params:[{op:'Tornitura',vc:'250–700 m/min',fz:'0.1–0.4 mm/giro',note:'PCD o K-grade'}]},
+    applications:['Pannelli fusoliera (Airbus A320)','Rivestimento alare (struttura fatica)','Flap'],
+    creep:'Non strutturale sopra 100°C.',
+    weldability:'Scarsa. Rivettatura e giunzione meccanica standard in aeronautica.'
+  },
+  {
+    id:'al6061',name:'Alluminio 6061-T6',formula:'Al-Mg-Si',family:'Alluminio',color:'#fef9e7',
+    hv:95,density:2.70,E:69,UTS:310,YS:276,elongation:17,melt:652,
+    tags:['Strutturale','Estruso','6000','Saldabile'],
+    summary:'La lega Al più versatile e comunemente usata. Buona resistenza + ottima lavorabilità + saldabilità.',
+    chemistry:{structure:'Precipitati Mg₂Si nella matrice α-Al. T6: solubilizzazione 527°C + quench + aging 160°C/18h.',bonding:'Precipitati Mg₂Si coerenti.',composition:'Al ~97%, Mg 0.8–1.2%, Si 0.4–0.8%, Cu 0.15–0.4%, Cr 0.04–0.35%'},
+    mechanical:[{l:'UTS (T6)',v:'310',u:'MPa'},{l:'YS',v:'276',u:'MPa'},{l:'Allungamento',v:'17',u:'%'},{l:'Durezza',v:'~95',u:'HB'}],
+    physical:[{l:'Densità',v:'2.70',u:'g/cm³'},{l:'T. Fusione',v:'~652',u:'°C'},{l:'Cond. termica',v:'167',u:'W/m·K'}],
+    machinability:{rating:10,notes:'Eccellente. Velocità elevatissime. Il materiale di riferimento per lavorabilità Al.',params:[{op:'Tornitura',vc:'400–1000 m/min',fz:'0.15–0.5 mm/giro',note:'PCD o K05, MQL o secco'}]},
+    applications:['Profilati architettura','Telai bici','Strutture navali','Componenti meccanici generici'],
+    creep:'Perdita rapida di durezza sopra 150°C per overaging.',
+    weldability:'Buona TIG/MIG con ER4043/ER5356. Perdita resistenza in HAZ (~50% in T6).'
+  },
+  {
+    id:'ghisa-grigia',name:'Ghisa Grigia GG25',formula:'Fe-C-Si (grafite lamellare)',family:'Ghise',color:'#717d7e',
+    hv:200,density:7.15,E:100,UTS:250,YS:null,elongation:0,melt:1200,
+    tags:['Colato','Grafite','Smorzamento','Macchine'],
+    summary:'Ghisa lamellare per basi di macchine utensili, blocchi motore. Eccellente smorzamento delle vibrazioni, ottima lavorabilità, basso costo.',
+    chemistry:{structure:'Matrice perlitica + ferritica con grafite lamellare. La grafite in equilibrio stabile agisce come entaché.',bonding:'Fe-C con grafite libera. Lamelle interrompono continuità metallica → bassa trazione, alta compressione.',composition:'C totale 2.5–4%, Si 1–3%, Mn 0.5–1%, P <0.3%, S <0.15%'},
+    mechanical:[{l:'UTS (trazione)',v:'250',u:'MPa',n:'Bassa — grafite = entaché'},{l:'Resistenza compressa',v:'~900',u:'MPa',n:'Molto alta'},{l:'Durezza',v:'~200',u:'HB'},{l:'Allungamento',v:'<1',u:'%',n:'Praticamente fragile'},{l:'Smorzamento vibrazioni',v:'10×',u:'vs acciaio'}],
+    physical:[{l:'Densità',v:'7.15',u:'g/cm³'},{l:'T. Fusione',v:'~1200',u:'°C'},{l:'Cond. termica',v:'46',u:'W/m·K'}],
+    machinability:{rating:9,notes:'Ottima lavorabilità — grafite lubrifica e sminuzza il truciolo. Truciolo discontinuo. Spesso a secco.',params:[{op:'Tornitura',vc:'150–300 m/min',fz:'0.2–0.6 mm/giro',note:'Carburo K10-K20, secco'},{op:'Fresatura',vc:'100–250 m/min',fz:'0.05–0.2 mm/dente',note:'Geometria negativa'}]},
+    applications:['Basi macchine utensili (CNC)','Blocchi motore','Freni a disco','Cuscinetti portanti'],
+    creep:'Fino a ~400°C grazie alla grafite (modesta resistenza a scorrimento).',
+    weldability:'Difficile — rischio ledeburite in HAZ. Preriscaldo 300–600°C. Elettrodi Ni puro o NiFe.'
+  },
+  {
+    id:'rame-ottone',name:'Rame (Cu) e Ottone',formula:'Cu / Cu-Zn',family:'Rame e Leghe',color:'#e59866',
+    hv:100,density:8.96,E:120,UTS:220,YS:70,elongation:45,melt:1085,
+    tags:['Elettrico','Termico','Ottone','Rame'],
+    summary:'Eccellente conduttività elettrica e termica. L\'ottone (Cu-Zn) aggiunge resistenza e lavorabilità. Standard industriale per conduttività.',
+    chemistry:{structure:'Cu puro: FCC. Ottone: soluzione solida α (FCC, Zn<37%) o bifasica α+β (Zn 37–46%).',bonding:'Legame metallico con elettroni liberi → eccellente conducibilità. Zn in soluzione solida rinforza.',composition:'Cu puro: >99.9%. Ottone: Cu 60–90% + Zn 10–40%. Bronzo: Cu + 5–20% Sn.'},
+    mechanical:[{l:'UTS (Cu puro ricotto)',v:'220',u:'MPa'},{l:'UTS (Ottone C360)',v:'385',u:'MPa'},{l:'YS (Cu puro)',v:'70',u:'MPa'},{l:'Allungamento',v:'45',u:'%'},{l:'Durezza Cu puro',v:'~100',u:'HB'}],
+    physical:[{l:'Densità Cu',v:'8.96',u:'g/cm³'},{l:'T. Fusione Cu',v:'1085',u:'°C'},{l:'Cond. termica Cu',v:'401',u:'W/m·K',n:'La più alta tra i metalli strutturali'},{l:'Cond. elettrica',v:'5.96×10⁷',u:'S/m',n:'Riferimento = 100% IACS'}],
+    machinability:{rating:9,notes:'Ottone C360 ("free-cutting brass"): indice di lavorabilità 100 — il riferimento assoluto. Cu puro appiccicoso.',params:[{op:'Tornitura ottone',vc:'200–500 m/min',fz:'0.1–0.4 mm/giro',note:'Massima lavorabilità — barre ottone automatica'},{op:'Tornitura Cu',vc:'100–300 m/min',fz:'0.1–0.3 mm/giro',note:'Tagliente affilato, evitare BUE'}]},
+    applications:['Connettori e bus elettrici','Scambiatori di calore','Raccorderia idraulica (ottone)','Bossoli munizioni'],
+    creep:'Cu puro: creep sopra 150°C. Ottone: moderato. Per alta T usare Cu-Cr-Zr.',
+    weldability:'Saldabile TIG/MIG/ossiacetilenica. Alta cond. termica → alto input necessario. Ottone: fumi Zn tossici.'
+  },
+  {
+    id:'peek',name:'PEEK',formula:'Polietereterchetone',family:'Polimeri Tecnici',color:'#82e0aa',
+    hv:25,density:1.32,E:4.0,UTS:100,YS:91,elongation:30,melt:343,
+    tags:['Polimero','Alta T','Biomedico','Leggero'],
+    summary:'Polimero termoplastico semi-cristallino ad alte prestazioni. Sostituisce i metalli dove il peso è critico. Resistente in continuo a 260°C.',
+    chemistry:{structure:'Catena polimerica aromatica: gruppi etere (-O-) + chetone (-C=O-) + anelli fenilici. Semi-cristallino (~35%). Tg = 143°C, Tm = 343°C.',bonding:'Legame covalente C-C/C-O in catena. Struttura aromatica → alta stabilità termica.',composition:'C₁₉H₁₂O₃. Gradi: standard, CF30 (fibra carbonio), GF30, implant grade.'},
+    mechanical:[{l:'UTS',v:'100',u:'MPa'},{l:'Modulo flessione',v:'4.0',u:'GPa'},{l:'Durezza Shore D',v:'~85',u:''},{l:'Allungamento',v:'30',u:'%'},{l:'PEEK-CF30 UTS',v:'210',u:'MPa',n:'Con 30% fibra carbonio'}],
+    physical:[{l:'Densità',v:'1.32',u:'g/cm³',n:'5× più leggero dell\'acciaio'},{l:'T. Fusione',v:'343',u:'°C'},{l:'T. servizio max',v:'260',u:'°C'},{l:'Cond. termica',v:'0.25',u:'W/m·K'},{l:'Resistività',v:'>10¹⁶',u:'Ω·cm',n:'Ottimo isolante'}],
+    machinability:{rating:8,notes:'Lavorabile a CNC con utensili HSS o carburo. Evitare T > 100°C superficiale. Raffreddamento ad aria o MQL.',params:[{op:'Tornitura',vc:'100–200 m/min',fz:'0.1–0.3 mm/giro',note:'Utensili affilati, geometria positiva'},{op:'Fresatura',vc:'100–300 m/min',fz:'0.05–0.15 mm/dente',note:'Truciolo non troppo fine'}]},
+    applications:['Impianti spinali (gabbie vertebrali)','Valvole aerospace','Boccole e cuscinetti self-lubrificanti','Parti in alta T in alternativa ai metalli'],
+    creep:'Significativo sopra ~100°C. PEEK-CF30 resiste meglio. Verificare modulo di scorrimento per carichi statici.',
+    weldability:'Saldatura per ultrasuoni, laser, friction. Incollaggio con epossidici o cianoacrilati.'
+  },
+  {
+    id:'magnesio-az31',name:'Magnesio AZ31',formula:'Mg-3Al-1Zn',family:'Magnesio',color:'#d5f5e3',
+    hv:73,density:1.77,E:45,UTS:260,YS:200,elongation:15,melt:630,
+    tags:['Leggero','Automotive','Aerospazio','Formatura'],
+    summary:'Lega di magnesio più comune. La più leggera tra le leghe strutturali. Uso crescente in automotive e aerospazio. Truciolo piroforico — no acqua!',
+    chemistry:{structure:'Matrice α-Mg (HCP) con precipitati Mg₁₇Al₁₂. HCP → pochi piani di scorrimento → formatura difficile a T ambiente.',bonding:'Legame metallico Mg. Struttura HCP limita sistemi di scorrimento → bassa duttilità a freddo.',composition:'Mg ~96%, Al 2.5–3.5%, Zn 0.6–1.4%, Mn ≥0.2%'},
+    mechanical:[{l:'UTS',v:'260',u:'MPa'},{l:'YS',v:'200',u:'MPa'},{l:'Allungamento',v:'15',u:'%'},{l:'Durezza',v:'~73',u:'HB'},{l:'Modulo Young',v:'45',u:'GPa',n:'Il più basso tra metalli strutturali'}],
+    physical:[{l:'Densità',v:'1.77',u:'g/cm³',n:'35% più leggero dell\'alluminio'},{l:'T. Fusione',v:'630',u:'°C'},{l:'Cond. termica',v:'96',u:'W/m·K'}],
+    machinability:{rating:9,notes:'Eccellente lavorabilità. Forze di taglio bassissime. RISCHIO: truciolo fine piroforico. A secco o olio minerale — MAI acqua!',params:[{op:'Tornitura',vc:'200–600 m/min',fz:'0.1–0.4 mm/giro',note:'A secco o olio minerale — MAI acqua'}]},
+    applications:['Carter cambio auto','Volanti in lega Mg','Strutture aerospaziali (elicotteri)','Notebook (chassis)'],
+    creep:'Significativo sopra ~120°C. Leghe WE (Mg-Y-Zr) resistono fino a 250°C.',
+    weldability:'Saldabile TIG con Ar ma tendenza alla porosità. Fusione in atmosfera controllata.'
+  },
+  {
+    id:'stellite6',name:'Stellite 6 (Co-base)',formula:'Co-28Cr-4W-C',family:'Superleghe Co',color:'#bb8fce',
+    hv:420,density:8.44,E:210,UTS:897,YS:655,elongation:12,melt:1410,
+    tags:['Usura','Alta T','Corrosione','Stellite'],
+    summary:'Superlega Co per eccellente resistenza usura + corrosione + alta temperatura. Usata come riporto hardfacing su valvole, utensili chirurgici, parti a contatto.',
+    chemistry:{structure:'Matrice FCC Co con carburi primari M₇C₃ e M₂₃C₆ dispersi. Struttura metastabile a T ambiente (FCC, non HCP).',bonding:'Co-Cr con carburi duri → elevatissima resistenza ad abrasione. Cr fornisce resistenza a ossidazione.',composition:'Co ~64%, Cr 28%, W 4%, C 1.2%, Fe ≤3%, Ni ≤3%'},
+    mechanical:[{l:'Durezza (massiva)',v:'420',u:'HV'},{l:'UTS',v:'897',u:'MPa'},{l:'YS',v:'655',u:'MPa'},{l:'Allungamento',v:'12',u:'%'}],
+    physical:[{l:'Densità',v:'8.44',u:'g/cm³'},{l:'T. Fusione',v:'~1410',u:'°C'},{l:'Cond. termica',v:'14.7',u:'W/m·K'}],
+    machinability:{rating:3,notes:'Difficile. Inserti PCBN o ceramica. Rettifica CBN. Solitamente depositato come riporto e rettificato.',params:[{op:'Rettifica',vc:'20–30 m/s',fz:'0.005 mm/pass',note:'Mole CBN o diamante'},{op:'Tornitura',vc:'30–60 m/min',fz:'0.05–0.15 mm/giro',note:'Inserti PCBN o ceramica'}]},
+    applications:['Riporto valvole motori (sedi e steli)','Pale turbina a gas (hardfacing)','Utensili chirurgici','Stampi per plastica ad alta usura'],
+    creep:'Eccellente resistenza a creep + usura fino a ~900°C. Superiore a Ni per corrosione in ambienti ossidanti.',
+    weldability:'Deposizione hardfacing: ossiacetilenica, PTAW, laser cladding. Preriscaldo substrato necessario.'
+  },
+
+  // ═══════ NUOVI MATERIALI ═══════
+
+  // SUPERLEGHE Ni aggiuntive
+  {
+    id:'incoloy825',name:'Incoloy 825',formula:'Ni-Fe-Cr-Mo-Cu-Ti',family:'Superleghe Ni',color:'#ffb347',
+    hv:200,density:8.14,E:196,UTS:690,YS:310,elongation:45,melt:1370,
+    tags:['Corrosione','Oil&Gas','Acidi','Ni-Fe'],
+    summary:'Superlega Ni-Fe-Cr con aggiunta di Mo, Cu e Ti. Progettata per resistere a corrosione in ambienti riducenti e ossidanti, acido solforico, acido fosforico e acqua di mare. Ampiamente usata in oil&gas e industria chimica.',
+    chemistry:{structure:'Matrice austenitica FCC stabile. Precipitati TiC e Ti(C,N) ai bordi grano. Il Ti fissa il C prevenendo sensitizzazione (simile al 321 SS). Struttura monofase sostanzialmente.',bonding:'Legame metallico Ni-Fe con Cr per passivazione, Mo per resistenza pitting, Cu per acidi riducenti (H₂SO₄, H₃PO₄), Ti per stabilizzazione.',composition:'Ni 38–46%, Fe 22% bilanciante, Cr 19.5–23.5%, Mo 2.5–3.5%, Cu 1.5–3.0%, Ti 0.6–1.2%, C ≤0.05%, Al ≤0.2%'},
+    mechanical:[{l:'UTS',v:'690',u:'MPa'},{l:'YS 0.2%',v:'310',u:'MPa'},{l:'Allungamento',v:'45',u:'%',n:'Eccellente formabilità'},{l:'Durezza',v:'~200',u:'HB'},{l:'Tenacità Kic',v:'Alta',u:'',n:'Buona a T criogeniche'}],
+    physical:[{l:'Densità',v:'8.14',u:'g/cm³'},{l:'T. Fusione',v:'1370–1400',u:'°C'},{l:'Cond. termica',v:'11.1',u:'W/m·K'},{l:'Coeff. dilat.',v:'14.0',u:'×10⁻⁶/K'},{l:'Resistività',v:'1.13',u:'µΩ·m'}],
+    machinability:{rating:4,notes:'Lavorabilità moderata — simile agli austenitici 316 ma con maggiore tendenza all\'incrudimento per il contenuto di Ni. Utensili carburo rivestiti TiAlN. Refrigerazione abbondante obbligatoria. Evitare ripassate su materiale incrudito.',params:[{op:'Tornitura',vc:'60–100 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo M25/M35, profondità costante'},{op:'Fresatura',vc:'50–80 m/min',fz:'0.04–0.1 mm/dente',note:'Climb milling, refrigerante abbondante'},{op:'Foratura',vc:'25–45 m/min',fz:'0.05–0.15 mm/giro',note:'Peck drilling, Through Spindle Coolant'}]},
+    applications:['Tubazioni oil&gas offshore','Scambiatori di calore (acidi)','Serbatoi per acido solforico e fosforico','Industria petrolchimica (distillazione)','Desalinizzazione','Tubazioni acqua di mare','Impianti nucleari'],
+    creep:'Non ottimizzato per creep strutturale. T di servizio max ~450°C continuativo. Sensitizzazione evitata grazie al Ti che stabilizza il carbonio.',
+    weldability:'Ottima saldabilità TIG/MIG con filo ERNiFeCr-1 (Alloy 65). Nessun preriscaldo necessario. Post-weld annealing opzionale a 940°C per massima resistenza a corrosione.'
+  },
+  {
+    id:'hastelloyC276',name:'Hastelloy C-276',formula:'Ni-Mo-Cr-W-Fe',family:'Superleghe Ni',color:'#ff9a3c',
+    hv:230,density:8.89,E:205,UTS:790,YS:355,elongation:62,melt:1352,
+    tags:['Corrosione','Chimica','Mo-alto','Universale'],
+    summary:'La superlega Ni più resistente alla corrosione in assoluto. L\'alto Mo (16%) la rende resistente a praticamente tutti gli ambienti aggressivi: acidi ossidanti e riducenti, cloruri, soluzioni alcaline. Considerata "universale" per la chimica aggressiva.',
+    chemistry:{structure:'Matrice austenitica FCC. Molto basso C e Si per prevenire precipitazione di carburi/siliciuri in saldatura. W aggiunto per rafforzare la resistenza pitting nei cloruri ad alta T.',bonding:'Ni base con Mo altissimo (16%) che forma strato passivante MoO₃ superlattice su Cr₂O₃. Combinazione unica per pitting resistance. W sinergico al Mo.',composition:'Ni 57%, Mo 15–17%, Cr 14.5–16.5%, W 3–4.5%, Fe 4–7%, Co ≤2.5%, Mn ≤1%, C ≤0.01%, Si ≤0.08%'},
+    mechanical:[{l:'UTS',v:'790',u:'MPa'},{l:'YS 0.2%',v:'355',u:'MPa'},{l:'Allungamento',v:'62',u:'%'},{l:'Durezza',v:'~230',u:'HB'},{l:'Tenacità (-196°C)',v:'Alta',u:'',n:'Valida anche a T criogeniche'}],
+    physical:[{l:'Densità',v:'8.89',u:'g/cm³'},{l:'T. Fusione',v:'1323–1371',u:'°C'},{l:'Cond. termica',v:'10.2',u:'W/m·K'},{l:'Coeff. dilat.',v:'11.2',u:'×10⁻⁶/K'},{l:'PREN',v:'>50',u:'',n:'Pitting Resistance Equivalent Number'}],
+    machinability:{rating:3,notes:'Difficile — bassa cond. termica + incrudimento rapido + alta tenacità. Utensili carburo TiAlN o AlCrN. Parametri conservativi. Passate continue senza interruzioni.',params:[{op:'Tornitura',vc:'25–55 m/min',fz:'0.1–0.25 mm/giro',note:'Carburo P/M grado fine, passate continue'},{op:'Fresatura',vc:'20–40 m/min',fz:'0.03–0.08 mm/dente',note:'Climb milling, refrigerante alta pressione'},{op:'Foratura',vc:'15–30 m/min',fz:'0.05–0.12 mm/giro',note:'Peck obbligatorio, TSC'}]},
+    applications:['Reattori per sintesi acido cloridrico','Scrubber gas di scarico','Impianti trattamento rifiuti pericolosi','Pompe e valvole in ambienti HCl','Industria farmaceutica aggressiva','Celle di elettrolisi per cloro-soda','Ambienti FGD (desolforazione fumi)'],
+    creep:'Buona resistenza a creep fino a ~650°C. Non ottimizzata come IN718 per applicazioni a ciclo termico, ma superiore agli acciai inox per resistenza a corrosione ad alta T.',
+    weldability:'Saldabile TIG/MIG/SAW con filo ERNiCrMo-4. Basso C e Si rendono le saldature resistenti alla sensitizzazione. Nessun preriscaldo. Post-weld annealing a 1120°C per massime proprietà.'
+  },
+  {
+    id:'hastelloyX',name:'Hastelloy X',formula:'Ni-Cr-Fe-Mo-W-Co',family:'Superleghe Ni',color:'#ffa952',
+    hv:210,density:8.22,E:197,UTS:785,YS:360,elongation:43,melt:1355,
+    tags:['Alta T','Ossidazione','Combustione','Ni-base'],
+    summary:'Superlega Ni per eccellenza resistenza a ossidazione e resistenza strutturale a temperature estreme (fino a 1200°C). Standard per componenti di camere di combustione e afterburner nei motori jet.',
+    chemistry:{structure:'Matrice γ FCC con carburi M₆C e M₂₃C₆. Nessun rafforzamento per precipitati γ\' — il rafforzamento è da soluzione solida. Questo consente buona formabilità e saldabilità.',bonding:'Mo + W in soluzione solida nella matrice Ni-Cr-Fe. Cr per ossidazione. L\'assenza di γ\' lo rende più saldabile di IN718 ma meno resistente a stress.',composition:'Ni 47%, Cr 20.5–23%, Fe 17–20%, Mo 8–10%, Co ≤2.5%, W 0.2–1.0%, C 0.05–0.15%, Mn ≤1%, Si ≤1%'},
+    mechanical:[{l:'UTS',v:'785',u:'MPa'},{l:'YS 0.2%',v:'360',u:'MPa'},{l:'Allungamento',v:'43',u:'%'},{l:'UTS a 870°C',v:'~230',u:'MPa'},{l:'Durezza',v:'~210',u:'HB'}],
+    physical:[{l:'Densità',v:'8.22',u:'g/cm³'},{l:'T. Fusione',v:'1260–1355',u:'°C'},{l:'Cond. termica (870°C)',v:'26.9',u:'W/m·K'},{l:'Coeff. dilat.',v:'15.1',u:'×10⁻⁶/K'},{l:'T. ossidazione max',v:'1200',u:'°C'}],
+    machinability:{rating:3,notes:'Difficile ma leggermente più lavorabile di IN718 per assenza di γ\'. Incrudimento rapido. Refrigerazione obbligatoria.',params:[{op:'Tornitura',vc:'30–60 m/min',fz:'0.1–0.25 mm/giro',note:'Carburo TiAlN, passate regolari'},{op:'Fresatura',vc:'25–50 m/min',fz:'0.03–0.08 mm/dente',note:'Climb milling'}]},
+    applications:['Camere di combustione motori jet (B737, F100)','Afterburner e ugelli supersonici','Turbine industriali a gas (GE, Siemens)','Fornaci industriali ad alta T','Tubi radianti per trattamenti termici','Componenti di reattori sperimentali'],
+    creep:'Resistenza a creep fino a ~900°C in servizio continuo. Rafforzamento da soluzione solida — nessuna instabilità per dissoluzione precipitati. Parametro Larson-Miller documentato per camere di combustione.',
+    weldability:'Ottima saldabilità — progettata per facilità di fabbricazione. TIG, MIG, plasma. Filo ERNiCrMo-2. Nessun preriscaldo. Post-weld: solution anneal a 1177°C se richiesto.'
+  },
+  {
+    id:'nimonic90',name:'Nimonic 90',formula:'Ni-Cr-Co-Ti-Al',family:'Superleghe Ni',color:'#e8a000',
+    hv:380,density:8.18,E:224,UTS:1250,YS:940,elongation:20,melt:1340,
+    tags:['Alta T','Turbina','γ-prime','Forgiato'],
+    summary:'Superlega Ni-Cr-Co γ\' hardened per pale e dischi di turbina. Sviluppata da Rolls-Royce negli anni \'40. Alta resistenza a creep e fatica termica fino a 920°C. Ancora ampiamente usata in turbine aero e industriali.',
+    chemistry:{structure:'Matrice γ FCC con precipitati γ\' Ni₃(Al,Ti) ~20–25% vol. Il Co abbassa l\'energia di difetto di impaccamento (SFE) riducendo la scorrimento trasversale delle dislocazioni → migliore resistenza a creep.',bonding:'Ni-Cr base + Co in soluzione solida + γ\' Ni₃(Ti,Al) coerente. Ti/Al ratio ~2:1 ottimizza la stabilità termica di γ\'.',composition:'Ni 54–60%, Cr 18–21%, Co 15–21%, Ti 2–3%, Al 1–2%, Fe ≤1.5%, C 0.04–0.1%, Mn ≤1%, Si ≤1%'},
+    mechanical:[{l:'UTS',v:'1250',u:'MPa'},{l:'YS 0.2%',v:'940',u:'MPa'},{l:'Allungamento',v:'20',u:'%'},{l:'Durezza',v:'~380',u:'HV'},{l:'UTS a 760°C',v:'~900',u:'MPa'}],
+    physical:[{l:'Densità',v:'8.18',u:'g/cm³'},{l:'T. Fusione',v:'1290–1340',u:'°C'},{l:'Cond. termica',v:'12.5',u:'W/m·K'},{l:'Coeff. dilat.',v:'13.2',u:'×10⁻⁶/K'}],
+    machinability:{rating:2,notes:'Difficile. Simile a IN718. Alto incrudimento, bassa cond. termica. CBN per finishing a duro. Carburo TiAlN per sgrossatura.',params:[{op:'Tornitura',vc:'25–50 m/min',fz:'0.1–0.2 mm/giro',note:'Carburo grado fine, passate continue'},{op:'Rettifica',vc:'20–28 m/s',fz:'0.005–0.015 mm/pass',note:'Mole CBN o Al₂O₃ friabile'}]},
+    applications:['Pale e dischi turbina Rolls-Royce (Olympus, Trent)','Turbine a gas industriali','Componentistica hot section','Anelli tenuta alta T','Bulloneria per flange alte T'],
+    creep:'Ottima resistenza a creep fino a 920°C grazie a γ\' stabile + effetto Co (abbassa SFE). Curva Larson-Miller ben documentata.',
+    weldability:'Saldabilità limitata — rischio strain-age cracking per alto Al+Ti. Microplasma o EBW in condizioni controllate. In pratica si tende a evitare la saldatura.'
+  },
+  {
+    id:'rene41',name:'René 41',formula:'Ni-Cr-Co-Mo-Ti-Al',family:'Superleghe Ni',color:'#d4890a',
+    hv:400,density:8.25,E:220,UTS:1420,YS:1060,elongation:14,melt:1316,
+    tags:['Alta T','Aerospazio','γ-prime','NASA'],
+    summary:'Superlega Ni γ\' hardened ad altissima resistenza. Sviluppata da GE per applicazioni NASA (Apollo, Space Shuttle). Eccellente resistenza a creep e ossidazione fino a 980°C. Difficilissima da saldare.',
+    chemistry:{structure:'Matrice γ FCC + γ\' Ni₃(Al,Ti) ~35% vol. Alta percentuale di γ\' → massima resistenza ma ridotta saldabilità. Carburi MC (TiC) e M₂₃C₆ ai bordi grano per rinforzare i bordi.',bonding:'Mo in soluzione solida + γ\' coerente fine. Il Mo abbassa la temperatura di solvus di γ\' rendendo il trattamento termico critico.',composition:'Ni 55%, Cr 18–20%, Co 10–12%, Mo 9–10.5%, Ti 3–3.3%, Al 1.4–1.6%, C 0.06–0.12%, B 0.003–0.01%'},
+    mechanical:[{l:'UTS',v:'1420',u:'MPa'},{l:'YS 0.2%',v:'1060',u:'MPa'},{l:'Allungamento',v:'14',u:'%'},{l:'Durezza',v:'~400',u:'HV'},{l:'UTS a 871°C',v:'~970',u:'MPa'}],
+    physical:[{l:'Densità',v:'8.25',u:'g/cm³'},{l:'T. Fusione',v:'1288–1316',u:'°C'},{l:'Cond. termica',v:'12.0',u:'W/m·K'},{l:'Coeff. dilat.',v:'13.5',u:'×10⁻⁶/K'}],
+    machinability:{rating:2,notes:'Estremamente difficile. Simile a IN718 ma con resistenza a caldo superiore. Utensili CBN per operazioni di finitura. Rettifica con raffreddamento intenso.',params:[{op:'Tornitura',vc:'20–40 m/min',fz:'0.08–0.2 mm/giro',note:'Carburo ultra-fine o CBN'},{op:'Rettifica',vc:'18–25 m/s',fz:'0.003–0.01 mm/pass',note:'CBN, refrigerazione intensa'}]},
+    applications:['Dischi turbina motori J79 (F-104)','Pale turbina HP (motori militari)','Strutture Space Shuttle (OMS engine)','Fasci missili militari','Camere di combustione ipersonici'],
+    creep:'Eccellente fino a 980°C. Parametro Larson-Miller superiore a IN718 a T>800°C grazie al maggiore volume di γ\' e alla stabilizzazione per Mo.',
+    weldability:'Molto difficile — elevato rischio strain-age cracking (SAC) per alto Al+Ti (>4%). Solo EBW o microplasma in camera di vuoto su substrato preriscaldato. Riparazione critica.'
+  },
+  {
+    id:'waspaloy',name:'Waspaloy',formula:'Ni-Cr-Co-Mo-Ti-Al',family:'Superleghe Ni',color:'#c97d00',
+    hv:390,density:8.19,E:213,UTS:1275,YS:895,elongation:25,melt:1330,
+    tags:['Alta T','Turbina','Forgiato','Dischi'],
+    summary:'Superlega Ni classica per dischi di turbina forgiati. Sviluppata da Pratt & Whitney. Eccellente bilanciamento tra resistenza a creep, fatica e tenacità. Standard industriale per dischi HP.',
+    chemistry:{structure:'Matrice γ + precipitati γ\' Ni₃(Al,Ti) ~25–30% vol + carburi M₂₃C₆. Il B e Zr segregano ai bordi grano migliorando la coesione intergranulare.',bonding:'Bilanciamento ottimale Al+Ti (2.5–3.5%) per γ\' stabile senza eccessivo rischio di SAC in saldatura.',composition:'Ni 57%, Cr 18–21%, Co 12–15%, Mo 3.5–5%, Ti 2.75–3.25%, Al 1.2–1.6%, C 0.02–0.1%, B 0.003–0.01%, Zr 0.02–0.12%'},
+    mechanical:[{l:'UTS',v:'1275',u:'MPa'},{l:'YS 0.2%',v:'895',u:'MPa'},{l:'Allungamento',v:'25',u:'%'},{l:'Durezza',v:'~390',u:'HV'},{l:'Kic',v:'~80',u:'MPa√m'}],
+    physical:[{l:'Densità',v:'8.19',u:'g/cm³'},{l:'T. Fusione',v:'1300–1355',u:'°C'},{l:'Cond. termica',v:'12.7',u:'W/m·K'},{l:'Coeff. dilat.',v:'13.5',u:'×10⁻⁶/K'}],
+    machinability:{rating:2,notes:'Difficile. Alta resistenza a caldo. Parametri simili a IN718 ma leggermente meno incrudente. Utensili carburo TiAlN.',params:[{op:'Tornitura',vc:'25–55 m/min',fz:'0.1–0.2 mm/giro',note:'Carburo P/M fine'},{op:'Fresatura',vc:'20–45 m/min',fz:'0.03–0.08 mm/dente',note:'Climb milling, refrigerante abbondante'}]},
+    applications:['Dischi compressore e turbina P&W JT8D, JT9D','Dischi motori commerciali (Boeing 747, 767)','Anelli di tenuta HP','Bulloneria alta T motori','Turbine a gas industriali (GE Frame 7)'],
+    creep:'Resistenza a creep fino a ~870°C. Parametro Larson-Miller intermediario tra IN718 (peggiore) e René 41 (migliore). Standard per dischi forgiati nelle specifiche AMS 5706.',
+    weldability:'Saldabilità media — rischio SAC per Al+Ti ~4.3%. Preriscaldo 760°C + post-weld aging obbligatorio per riparazioni. EBW preferita per nuove costruzioni.'
+  },
+  {
+    id:'incoloy901',name:'Incoloy 901',formula:'Ni-Fe-Cr-Ti-Mo-Al',family:'Superleghe Ni',color:'#b8860b',
+    hv:320,density:8.19,E:210,UTS:1240,YS:965,elongation:15,melt:1345,
+    tags:['Alta T','Compressore','Fe-Ni','Dischi'],
+    summary:'Superlega Fe-Ni per dischi di compressore di medio stadio. Meno costosa delle superleghe Ni pure grazie al contenuto Fe. Buon compromesso costo-prestazioni per T ≤ 650°C.',
+    chemistry:{structure:'Matrice γ FCC (Fe-Ni base) con precipitati γ\' Ni₃Ti principalmente. Carburi M₆C e MC. La base Fe-Ni abbassa il costo ma limita la T di servizio.',bonding:'Ni-Fe base con Ti come principale elemento γ\' former. Mo per rafforzamento in soluzione solida e resistenza scorrimento.',composition:'Ni 40–45%, Fe 32–36%, Cr 11–14%, Ti 2.5–3.2%, Mo 5.5–6.5%, Al 0.1–0.35%, C 0.02–0.06%, B 0.01–0.02%'},
+    mechanical:[{l:'UTS',v:'1240',u:'MPa'},{l:'YS 0.2%',v:'965',u:'MPa'},{l:'Allungamento',v:'15',u:'%'},{l:'Durezza',v:'~320',u:'HB'},{l:'Fatica LCF',v:'Alta',u:'',n:'Buona vita a ciclo termico'}],
+    physical:[{l:'Densità',v:'8.19',u:'g/cm³'},{l:'T. Fusione',v:'1315–1370',u:'°C'},{l:'Cond. termica',v:'12.9',u:'W/m·K'},{l:'Coeff. dilat.',v:'12.8',u:'×10⁻⁶/K'}],
+    machinability:{rating:3,notes:'Leggermente più lavorabile di IN718 puro per il contenuto Fe. Simili precauzioni: carburo TiAlN, refrigerante abbondante, no ripassate su materiale incrudito.',params:[{op:'Tornitura',vc:'30–65 m/min',fz:'0.1–0.25 mm/giro',note:'Carburo M-grade TiAlN'},{op:'Foratura',vc:'20–35 m/min',fz:'0.05–0.12 mm/giro',note:'Peck drilling L/D>3'}]},
+    applications:['Dischi compressore medio stadio (motori civili)','Boccole e anelli tenuta ad alta T','Alberi compressore turbine industriali','Componenti strutturali hot section a basso costo'],
+    creep:'Ottima fino a ~650°C. Sopra 700°C inferiore a IN718 per minore stabilità γ\' della base Fe-Ni. Usato dove il costo è importante e la T non supera 650°C.',
+    weldability:'Saldabilità media. TIG con filo ERNiFeCr. Preriscaldo 200°C. Post-weld aging per ripristino proprietà.'
+  },
+  {
+    id:'incoloy925',name:'Incoloy 925',formula:'Ni-Fe-Cr-Mo-Ti-Al-Cu',family:'Superleghe Ni',color:'#daa520',
+    hv:280,density:8.17,E:200,UTS:1034,YS:724,elongation:20,melt:1360,
+    tags:['Oil&Gas','HPHT','Corrosione','H2S'],
+    summary:'Superlega Fe-Ni γ\' hardened per applicazioni HPHT (High Pressure High Temperature) in oil&gas. Resistente a H₂S (sour service), CO₂ e cloruri. Certificata NACE MR0175 per ambienti acidi.',
+    chemistry:{structure:'Matrice γ FCC (Fe-Ni base) con precipitati γ\' Ni₃(Ti,Al). Simile all\'Alloy 825 ma con aggiunta di Al per precipitation hardening. Ti+Al per γ\' stabile.',bonding:'Ni-Fe base + Mo + Cu per corrosione riducente. Ti+Al per γ\' che porta la resistenza meccanica al livello richiesto per HPHT.',composition:'Ni 38–46%, Fe 22% bilanciante, Cr 19.5–22.5%, Mo 2.5–3.5%, Ti 1.9–2.4%, Al 0.1–0.5%, Cu 1.5–3.0%, C ≤0.03%'},
+    mechanical:[{l:'UTS',v:'1034',u:'MPa'},{l:'YS 0.2%',v:'724',u:'MPa'},{l:'Allungamento',v:'20',u:'%'},{l:'Durezza',v:'~280',u:'HB',n:'Tipico per NACE: max 35 HRC'},{l:'Durezza max NACE',v:'≤35',u:'HRC',n:'Requisito per sour service'}],
+    physical:[{l:'Densità',v:'8.17',u:'g/cm³'},{l:'T. Fusione',v:'1335–1395',u:'°C'},{l:'Cond. termica',v:'11.5',u:'W/m·K'},{l:'Coeff. dilat.',v:'13.9',u:'×10⁻⁶/K'}],
+    machinability:{rating:4,notes:'Lavorabilità simile all\'Alloy 825. Incrudimento moderato. Carburo TiAlN obbligatorio. Controllo durezza importante: troppo duro = rischio SSC (Sulfide Stress Cracking) in servizio.',params:[{op:'Tornitura',vc:'55–90 m/min',fz:'0.1–0.3 mm/giro',note:'Verificare HRC finale ≤35 per NACE'},{op:'Fresatura',vc:'45–75 m/min',fz:'0.04–0.1 mm/dente',note:'Refrigerante abbondante'}]},
+    applications:['Testa-pozzo HPHT (wellhead)','Valvole di controllo in ambienti H₂S','Connettori subsea','Pompe per pozzi acidi','Strumenti downhole (MWD/LWD)','Serbatoi in ambienti sour service'],
+    creep:'Non ottimizzata per creep strutturale. T di servizio max ~450°C in oil&gas. Resistenza principale richiesta: SSC e HIC (Hydrogen Induced Cracking).',
+    weldability:'Saldabile TIG/MIG con filo ERNiFeCr. Post-weld aging per ripristino proprietà meccaniche e compliance NACE. Controllo hardness in HAZ critico.'
+  },
+  {
+    id:'alloy625',name:'Inconel 625',formula:'Ni-Cr-Mo-Nb',family:'Superleghe Ni',color:'#ff8c42',
+    hv:240,density:8.44,E:207,UTS:930,YS:517,elongation:42,melt:1350,
+    tags:['Corrosione','Saldabile','Cladding','Ni-Mo-Cr'],
+    summary:'Superlega Ni con rafforzamento da soluzione solida Mo+Nb. Eccellente resistenza a corrosione in ambienti marini e chimici. Largamente usata come materiale di cladding e per saldatura di riporto su acciai carbon. Saldabilità eccezionale.',
+    chemistry:{structure:'Matrice γ FCC con rafforzamento principalmente da soluzione solida (Mo, Nb). Precipitati γ″ Ni₃Nb possono formarsi dopo invecchiamento ma non è il meccanismo primario. Nb forma anche carburi NbC.',bonding:'Mo (9%) + Nb (3.6%) in soluzione solida aumentano la resistenza a temperatura e la resistenza a pitting. Cr per ossidazione e corrosione.',composition:'Ni 58%, Cr 20–23%, Mo 8–10%, Nb+Ta 3.15–4.15%, Fe ≤5%, C ≤0.1%, Mn ≤0.5%, Si ≤0.5%'},
+    mechanical:[{l:'UTS',v:'930',u:'MPa'},{l:'YS 0.2%',v:'517',u:'MPa'},{l:'Allungamento',v:'42',u:'%'},{l:'Durezza',v:'~240',u:'HB'},{l:'Tenacità (-196°C)',v:'Alta',u:'',n:'Usato in criogenica'}],
+    physical:[{l:'Densità',v:'8.44',u:'g/cm³'},{l:'T. Fusione',v:'1290–1350',u:'°C'},{l:'Cond. termica',v:'9.8',u:'W/m·K'},{l:'Coeff. dilat.',v:'12.8',u:'×10⁻⁶/K'},{l:'PREN',v:'>40',u:''}],
+    machinability:{rating:3,notes:'Difficile — simile a C-276. Alto incrudimento, bassa cond. termica. Spesso usato come cladding quindi la lavorazione è di finitura sul riporto.',params:[{op:'Tornitura cladding',vc:'30–60 m/min',fz:'0.1–0.25 mm/giro',note:'Carburo TiAlN, passate regolari'},{op:'Fresatura',vc:'25–50 m/min',fz:'0.03–0.08 mm/dente',note:'Climb milling'}]},
+    applications:['Cladding interno di pipeline (bonded clad pipe)','Riporto saldatura su valvole acciaio carbon','Tubi flessibili offshore','Serbatoi acqua di mare','Turbine a vapore (parti umide)','Paracadute lancio razzi','Strutture undersea'],
+    creep:'Resistenza a creep modesta (rafforzamento solo in soluzione solida). T di servizio max ~815°C in ossidazione. Non indicato per applicazioni strutturali ad alta T prolungata.',
+    weldability:'Saldabilità eccellente — una delle migliori tra le superleghe. TIG/MIG/SAW/SMAW. Filo ERNiCrMo-3. No preriscaldo, no post-weld heat treatment obbligatorio. Standard per applicazioni di cladding e rivestimento.'
+  },
+  {
+    id:'alloy600',name:'Inconel 600',formula:'Ni-Cr-Fe',family:'Superleghe Ni',color:'#e07b00',
+    hv:170,density:8.47,E:214,UTS:655,YS:310,elongation:40,melt:1415,
+    tags:['Corrosione','Alta T','Nucleare','Base Ni'],
+    summary:'La superlega Ni base storica. Sviluppata negli anni \'30. Eccellente resistenza a ossidazione e corrosione ad alta T. Usata in applicazioni nucleari (generatori di vapore) e come materiale di base per processi termici.',
+    chemistry:{structure:'Matrice austenitica FCC monofase. Carburi M₇C₃ e M₂₃C₆ ai bordi grano. Il Cr fornisce resistenza a ossidazione, il Fe abbassa il costo.',bonding:'Ni base con Cr in soluzione solida. Struttura semplice senza γ\' — rafforzamento principalmente da soluzione solida e incrudimento.',composition:'Ni ≥72%, Cr 14–17%, Fe 6–10%, Mn ≤1%, C ≤0.15%, Si ≤0.5%, Cu ≤0.5%, S ≤0.015%'},
+    mechanical:[{l:'UTS',v:'655',u:'MPa'},{l:'YS 0.2%',v:'310',u:'MPa'},{l:'Allungamento',v:'40',u:'%'},{l:'Durezza',v:'~170',u:'HB'}],
+    physical:[{l:'Densità',v:'8.47',u:'g/cm³'},{l:'T. Fusione',v:'1354–1415',u:'°C'},{l:'Cond. termica',v:'14.9',u:'W/m·K'},{l:'Coeff. dilat.',v:'13.3',u:'×10⁻⁶/K'},{l:'Resistività elettrica',v:'1.03',u:'µΩ·m'}],
+    machinability:{rating:5,notes:'Moderatamente lavorabile. Simile agli austenitici 316 ma con maggiore incrudimento. Parametri conservativi. Carburo M-grade.',params:[{op:'Tornitura',vc:'60–100 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo M25, refrigerante'},{op:'Fresatura',vc:'50–80 m/min',fz:'0.04–0.1 mm/dente',note:'Geometria positiva'}]},
+    applications:['Generatori di vapore centrali nucleari (PWR)','Tubi caldaie per trattamenti termici','Cesti per forni di trattamento','Guarnizioni ad alta T','Conduit per cavi in ambienti corrosivi','Impianti di produzione cloro'],
+    creep:'Resistenza a creep fino a ~760°C. Non ottimizzata come IN718. Attenzione: suscettibile a SCC (Stress Corrosion Cracking) in ambienti a vapore ad alta T con tensioni residue (problema noto nei generatori di vapore nucleari).',
+    weldability:'Ottima saldabilità. TIG/MIG con filo ERNiCr-3. No preriscaldo. Attenzione alla sensitizzazione (M₂₃C₆ ai bordi grano tra 650–870°C) — usare grado a basso C (600L) per saldatura.'
+  },
+  {
+    id:'alloy617',name:'Inconel 617',formula:'Ni-Co-Cr-Mo-Al',family:'Superleghe Ni',color:'#cc7a00',
+    hv:230,density:8.36,E:211,UTS:740,YS:300,elongation:55,melt:1375,
+    tags:['Alta T','Idrogeno','Turbine gas','1000°C'],
+    summary:'Superlega Ni per applicazioni estreme ad alta temperatura (fino a 1000°C). Progettata per turbine a gas ad elevatissima efficienza e impianti produzione idrogeno (SMR). Resistenza a ossidazione e carburazione eccezionale.',
+    chemistry:{structure:'Matrice γ FCC con Al₂O₃ passivante in superficie. Co in soluzione solida abbassa SFE → migliore creep. Formazione di γ\' Ni₃Al modesta (~5%) che contribuisce parzialmente al rafforzamento.',bonding:'Co+Mo in soluzione solida + piccola percentuale γ\'. Il segreto è la combinazione: Al per ossidazione + Cr per carburazione + Co per creep.',composition:'Ni 44–56%, Co 10–15%, Cr 20–24%, Mo 8–10%, Al 0.8–1.5%, C 0.05–0.15%, Ti ≤0.6%, Fe ≤3%'},
+    mechanical:[{l:'UTS',v:'740',u:'MPa'},{l:'YS 0.2%',v:'300',u:'MPa'},{l:'Allungamento',v:'55',u:'%',n:'Eccellente duttilità'},{l:'UTS a 1000°C',v:'~115',u:'MPa'},{l:'Durezza',v:'~230',u:'HB'}],
+    physical:[{l:'Densità',v:'8.36',u:'g/cm³'},{l:'T. Fusione',v:'1333–1375',u:'°C'},{l:'Cond. termica (927°C)',v:'25.5',u:'W/m·K'},{l:'Coeff. dilat.',v:'13.8',u:'×10⁻⁶/K'},{l:'T. ossidazione max',v:'1093',u:'°C'}],
+    machinability:{rating:3,notes:'Difficile. Alta duttilità causa incrudimento e BUE. Parametri conservativi, refrigerazione alta pressione.',params:[{op:'Tornitura',vc:'25–55 m/min',fz:'0.1–0.25 mm/giro',note:'Carburo TiAlN, passate continue'},{op:'Fresatura',vc:'20–45 m/min',fz:'0.03–0.08 mm/dente',note:'Climb milling'}]},
+    applications:['Combustori turbine a gas Advanced USC (>700°C vapore)','Impianti SMR produzione idrogeno','Tubi per reformer H₂','Recuperatori di calore ad alta T','Componenti nucleari Gen-IV (HTGR)','Fasci forni per trattamento termico'],
+    creep:'Progettata specificamente per creep fino a 1000°C. Parametro Larson-Miller superiore a Hastelloy X. Usata nelle specifiche ASME per caldaie ad altissima T.',
+    weldability:'Saldabilità buona. TIG con filo ERNiCrCoMo-1. Basso rischio SAC (Al+Ti basso). Post-weld annealing consigliato per rimozione tensioni residue.'
+  },
+
+  // ACCIAI SPECIALI aggiuntivi
+  {
+    id:'17-4ph',name:'17-4 PH (630)',formula:'Fe-17Cr-4Ni-4Cu-Nb',family:'Acciai Inossidabili',color:'#b8d4e8',
+    hv:400,density:7.78,E:197,UTS:1310,YS:1170,elongation:10,melt:1440,
+    tags:['PH','Martensitico','Alta resistenza','Aerospazio'],
+    summary:'Acciaio inossidabile martensitico a indurimento per precipitazione (PH). Combina alta resistenza meccanica con buona resistenza a corrosione. Largamente usato in aerospazio, industria nucleare e food. Trattamento termico H900, H1025, H1150.',
+    chemistry:{structure:'Martensite con precipitati Cu ε (epsilon) finissimi dopo aging. Struttura BCC martensitica. Diversi condizioni: A (solubilizzata), H900-H1150 (invecchiata a T diverse). H900=massima resistenza, H1150=massima tenacità.',bonding:'Cr per corrosione + Cu+Nb per precipitation hardening. I precipitati Cu-ε coerenti bloccano le dislocazioni. Nb forma NbC che stabilizza i bordi grano.',composition:'Fe base, Cr 15–17.5%, Ni 3–5%, Cu 3–5%, Nb 0.15–0.45%, Mn ≤1%, Si ≤1%, C ≤0.07%'},
+    mechanical:[{l:'UTS (H900)',v:'1310',u:'MPa'},{l:'YS (H900)',v:'1170',u:'MPa'},{l:'UTS (H1150)',v:'930',u:'MPa'},{l:'Allungamento (H900)',v:'10',u:'%'},{l:'Durezza H900',v:'~400',u:'HV'}],
+    physical:[{l:'Densità',v:'7.78',u:'g/cm³'},{l:'T. Fusione',v:'~1440',u:'°C'},{l:'Cond. termica',v:'18.3',u:'W/m·K'},{l:'Coeff. dilat.',v:'10.8',u:'×10⁻⁶/K',n:'Basso — quasi come acciaio'}],
+    machinability:{rating:6,notes:'Lavorabile in condizione A (solubilizzata, ~32 HRC). Difficile in H900 (40+ HRC). EDM per forme dopo aging. Preferire lavorare in condizione A poi invecchiare.',params:[{op:'Tornitura (cond. A)',vc:'80–150 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo M/P grade, poi invecchiare'},{op:'Fresatura (cond. A)',vc:'60–120 m/min',fz:'0.04–0.12 mm/dente',note:'Standard, before aging'},{op:'EDM (post-aging)',vc:'-',fz:'-',note:'Per geometrie di precisione dopo H900'}]},
+    applications:['Ingranaggi aerospazio (F/A-18, C-17)','Alberi pompe in ambienti corrosivi','Componenti valvole nucleari','Golfari e viterie marine','Stampi per plastica','Attrezzature food & beverage'],
+    creep:'Non adatto per creep strutturale sopra ~300°C. La resistenza del precipitato Cu degrada rapidamente sopra 400°C.',
+    weldability:'Saldabilità buona in condizione A. TIG con filo ER630. Post-weld aging per ripristino proprietà meccaniche. Rischio delta-ferrite in saldatura che riduce tenacità.'
+  },
+  {
+    id:'maraging300',name:'Maraging 300',formula:'Fe-Ni-Co-Mo-Ti',family:'Acciai',color:'#6e8ca0',
+    hv:560,density:8.00,E:190,UTS:2000,YS:1900,elongation:8,melt:1415,
+    tags:['Ultra-resistente','Aerospazio','Missili','PH'],
+    summary:'Acciaio maraging ad altissima resistenza. Praticamente privo di carbonio — il rafforzamento avviene per precipitazione di composti intermetallici Ni₃Mo, Ni₃Ti da una matrice martensitica. UTS fino a 2000 MPa con buona tenacità.',
+    chemistry:{structure:'Martensite BCC a basso C (quasi Fe puro + elementi leganti). Dopo aging (480°C/3h): precipitati Ni₃Mo, Ni₃Ti, Fe₂Mo finissimi. Matrice ultra-bassa C → nessuna fragilità da carburi.',bonding:'La martensite BCC di Fe-Ni è duttile (no C). Gli intermetallici precipitano su dislocazioni e bordi grano → massima resistenza conservando tenacità.',composition:'Fe base, Ni 17–19%, Co 8–9%, Mo 4.6–5.1%, Ti 0.5–0.8%, Al 0.05–0.15%, C ≤0.03%, Si ≤0.1%, Mn ≤0.1%'},
+    mechanical:[{l:'UTS (invecchiato)',v:'2000',u:'MPa'},{l:'YS',v:'1900',u:'MPa'},{l:'Allungamento',v:'8',u:'%'},{l:'Durezza',v:'~56',u:'HRC'},{l:'Kic',v:'~80',u:'MPa√m',n:'Alta per UTS di questo livello'}],
+    physical:[{l:'Densità',v:'8.00',u:'g/cm³'},{l:'T. Fusione',v:'~1415',u:'°C'},{l:'Cond. termica',v:'20',u:'W/m·K'},{l:'Coeff. dilat.',v:'10.2',u:'×10⁻⁶/K'}],
+    machinability:{rating:6,notes:'Lavorabile allo stato solubilizzato (~30 HRC, simile a 42CrMo4 bonificato). Dopo aging (56 HRC) solo rettifica o EDM. Strategia: lavorare in condizione solubilizzata, poi invecchiare.',params:[{op:'Tornitura (solubilizzato)',vc:'80–130 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo P30/M30, prima dell\'aging'},{op:'Rettifica (post-aging)',vc:'20–28 m/s',fz:'0.005–0.015 mm',note:'CBN — l\'unico pratico dopo aging'},{op:'EDM (post-aging)',vc:'-',fz:'-',note:'Per fori e forme complesse'}]},
+    applications:['Tubi e carcasse razzi (Atlas V, Ariane)','Viti di estrusori ad alta pressione','Ingranaggi aerospazio ad alta resistenza','Molle ad alta fatica','Utensili per forgiatura a freddo','Componenti Formula 1 (alberi, bielle)'],
+    creep:'Non ottimizzato per creep. Sopra ~400°C gli intermetallici si ridissolvono → perdita proprietà. Applicazioni tipicamente a T ambiente.',
+    weldability:'Saldabilità eccezionale per un acciaio ad alta resistenza — nessun C → no rischio cold cracking. TIG/MIG/EBW senza preriscaldo. Post-weld aging completo per ripristino proprietà. Distorsioni minime.'
+  },
+  {
+    id:'hardox450',name:'Hardox 450',formula:'Fe-C-Mn-Cr-Ni-Mo-B (SSAB)',family:'Acciai',color:'#5d7a8a',
+    hv:450,density:7.85,E:210,UTS:1400,YS:1200,elongation:10,melt:1500,
+    tags:['Usura','Abrasione','Mining','SSAB'],
+    summary:'Acciaio anti-usura di riferimento mondiale (SSAB). Microstruttura martensitica con elevata durezza e sorprendente tenacità per una lastra anti-abrasione. Standard per ribaltabili, tramogge, piastre di usura.',
+    chemistry:{structure:'Martensite tempered ultra-fine con distribuzione omogenea di carburi. Microstruttura ottimizzata da SSAB con tecnologia ThermoMechanical Controlled Process (TMCP).',bonding:'B per temprabilità eccellente anche in grandi spessori. Cr+Ni+Mo per tenacità della martensite. C controllato per equilibrio durezza/saldabilità.',composition:'C ~0.20%, Mn 1.6%, Cr 1.0%, Ni 0.25%, Mo 0.25%, B 0.003%, Si 0.7%, Fe resto'},
+    mechanical:[{l:'Durezza',v:'425–475',u:'HB'},{l:'UTS',v:'~1400',u:'MPa'},{l:'YS',v:'~1200',u:'MPa'},{l:'Allungamento',v:'10',u:'%'},{l:'Charpy (-40°C)',v:'>30',u:'J',n:'Buona tenacità al freddo'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1500',u:'°C'},{l:'Cond. termica',v:'36',u:'W/m·K'}],
+    machinability:{rating:4,notes:'Difficile da lavorare per alta durezza. Taglio plasma o ossiacetilenico in officina. Foratura con punte in carburo o HSS-Co. Fresatura e tornitura impraticabili convenzionalmente.',params:[{op:'Taglio plasma/laser',vc:'-',fz:'-',note:'Metodo standard per sagomatura'},{op:'Foratura',vc:'8–20 m/min',fz:'0.1–0.2 mm/giro',note:'HSS-Co o carburo, refrigerante'},{op:'Rettifica',vc:'20–28 m/s',fz:'0.01 mm',note:'Solo per superfici di precisione'}]},
+    applications:['Cassoni ribaltabili (dumper mining)','Tramogge e coclee per minerali','Piastre di protezione macchine movimento terra','Frantoi e mulini','Paraurti anti-usura','Lame raschiatori','Rivestimenti silos'],
+    creep:'Non pertinente — applicazione tipica a T ambiente. Perdita durezza sopra 250°C (rinvenimento della martensite). Non riscaldare durante saldatura sopra 250°C.',
+    weldability:'Saldabile con precauzioni specifiche SSAB. CE moderato → preriscaldo 50–100°C (spessori >20mm). Elettrodi a basso idrogeno (E7018 o OK 73.68). Apporto termico controllato per mantenere durezza in HAZ.'
+  },
+  {
+    id:'tungsteno',name:'Tungsteno (W)',formula:'W puro / W-Ni-Fe',family:'Metalli Refrattari',color:'#9e9e9e',
+    hv:350,density:19.3,E:411,UTS:1510,YS:750,elongation:2,melt:3422,
+    tags:['Refrattario','Densità alta','Utensile','Nucleare'],
+    summary:'Metallo con il più alto punto di fusione tra tutti gli elementi (3422°C) e massima densità tra i metalli strutturali. Usato in applicazioni di schermatura, elettrodi, utensili e come legante in WC-Co.',
+    chemistry:{structure:'BCC cubica centrata nel corpo. a=0.316 nm. Struttura stabile fino alla fusione — nessuna trasformazione allotropica. Alta energia di legame W-W per le interazioni d-d.',bonding:'Legame metallico forte con band d parzialmente riempita. Alta temperatura di Debye (400K) → alte proprietà meccaniche a T elevate.',composition:'W ≥99.95% (puro). W-Ni-Fe (heavy alloy): W 90–97%, Ni 2–6%, Fe 1–4% per migliorare formabilità e tenacità.'},
+    mechanical:[{l:'Durezza',v:'~350',u:'HV'},{l:'UTS',v:'1510',u:'MPa',n:'In filo trafilato'},{l:'YS',v:'750',u:'MPa'},{l:'Modulo Young',v:'411',u:'GPa'},{l:'Allungamento',v:'2',u:'%',n:'Fragile a T ambiente'},{l:'DBTT',v:'~300',u:'°C',n:'Ductile-Brittle Transition T'}],
+    physical:[{l:'Densità',v:'19.3',u:'g/cm³',n:'La più alta tra i metalli strutturali'},{l:'T. Fusione',v:'3422',u:'°C',n:'La più alta tra tutti gli elementi'},{l:'Cond. termica',v:'173',u:'W/m·K'},{l:'Coeff. dilat.',v:'4.5',u:'×10⁻⁶/K',n:'Basso — simile al vetro borosilicato'},{l:'T. ricristallizzazione',v:'>1200',u:'°C'}],
+    machinability:{rating:2,notes:'Fragile a T ambiente. Lavorabile sopra la DBTT (~300°C) o tramite EDM. Rettifica con mole diamantate. Heavy alloy (W-Ni-Fe) molto più lavorabile del W puro.',params:[{op:'EDM',vc:'-',fz:'-',note:'Metodo principale per W puro'},{op:'Rettifica',vc:'15–22 m/s',fz:'0.005 mm',note:'Mole diamantate, refrigerazione'},{op:'Tornitura (W-Ni-Fe)',vc:'30–60 m/min',fz:'0.05–0.15 mm/giro',note:'Carburo fine, geometria negativa'}]},
+    applications:['Filamenti lampadine (W puro)','Elettrodi TIG (W-ThO₂, W-CeO₂)','Contrappesi e zavorre (W-Ni-Fe)','Schermaggi radiazioni X/γ (bunker, TC scanner)','Target per raggi X medicali','Ugelli razzi supersonici','Munizioni perforanti (APFSDS)'],
+    creep:'Resistenza a creep eccelsa fino a ~2000°C. Sopra la ricristallizzazione (>1200°C) la resistenza a creep si riduce per crescita grano. Drogaggio con ossidi (W-La₂O₃) alza la T di ricristallizzazione.',
+    weldability:'Difficile — fragilità a T ambiente e ossidazione rapida. Saldatura EBW o laser in vuoto/Ar puro. Brasatura con leghe Ni a T>1000°C. Heavy alloy più saldabile con TIG in Ar.'
+  },
+  {
+    id:'invar36',name:'Invar 36',formula:'Fe-36Ni',family:'Leghe Speciali',color:'#7eb8c9',
+    hv:160,density:8.05,E:148,UTS:490,YS:280,elongation:42,melt:1427,
+    tags:['Dilatazione zero','Precisione','Aerospazio','Strumentazione'],
+    summary:'Lega Fe-Ni con coefficiente di dilatazione termica quasi zero (1.2×10⁻⁶/K) tra -100°C e +100°C. Indispensabile per strumentazione di precisione, calibri, maschere di laminazione compositi aeronautici e strumenti ottici.',
+    chemistry:{structure:'Austenite FCC stabile. Il fenomeno Invar è legato all\'invarianza del magnetovolume: vicino al punto di Curie (230°C) l\'espansione termica normale è compensata dalla contrazione magnetostrittiva. Effetto scompare sopra Tc.',bonding:'L\'anomalia di dilatazione è un effetto quantistico-magnetico: gli scambi magnetici Fe-Ni dipendono dal volume reticolare, creando una compensazione quasi perfetta della dilatazione normale.',composition:'Fe 64%, Ni 36%. Piccole aggiunte di C, Mn, Si per lavorabilità. Varianti: Super-Invar (Fe-32Ni-4Co, CTE ancora più basso ~0.5×10⁻⁶/K)'},
+    mechanical:[{l:'UTS',v:'490',u:'MPa'},{l:'YS 0.2%',v:'280',u:'MPa'},{l:'Allungamento',v:'42',u:'%'},{l:'Durezza',v:'~160',u:'HB'},{l:'Modulo Young',v:'148',u:'GPa',n:'Basso rispetto acciaio'}],
+    physical:[{l:'Densità',v:'8.05',u:'g/cm³'},{l:'T. Fusione',v:'1427',u:'°C'},{l:'CTE (-100÷+100°C)',v:'1.2',u:'×10⁻⁶/K',n:'Quasi zero — il segreto di Invar'},{l:'CTE (>230°C)',v:'~13',u:'×10⁻⁶/K',n:'Normale sopra Tc (Curie)'},{l:'Cond. termica',v:'10.5',u:'W/m·K'},{l:'T. Curie',v:'230',u:'°C'}],
+    machinability:{rating:6,notes:'Lavorabile ma con tendenza all\'incrudimento (simile all\'austenite). Utensili carburo affilati. Refrigerante obbligatorio. Controllare T lavorazione — il surriscaldamento sopra 230°C cambia la microstruttura.',params:[{op:'Tornitura',vc:'80–150 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo M-grade, refrigerante abbondante'},{op:'Fresatura',vc:'70–120 m/min',fz:'0.04–0.12 mm/dente',note:'Geometria positiva, no surriscaldamento'},{op:'Rettifica',vc:'20–28 m/s',fz:'0.005–0.01 mm',note:'Per tolleranze elevate di precisione'}]},
+    applications:['Maschere (tooling) per laminazione compositi CFRP (Airbus, Boeing)','Calibri e strumenti di misura di precisione','Specchi e supporti per telescopi spaziali','Laser e strumentazione ottica','Risuonatori a frequenza stabile','Bimetallici di precisione','Contatti nel termostati di precisione'],
+    creep:'Creep non critico in applicazioni tipiche (T ambiente). Sopra 230°C (Tc) perde l\'effetto Invar — non usare come elemento di precisione dimensionale ad alta T.',
+    weldability:'Saldabile TIG/MIG con filo Fe-Ni matching. Rischio perdita dell\'effetto Invar in HAZ se T supera 230°C. Saldatura con basso input termico. Ricottura finale a 830°C per omogeneità CTE.'
+  },
+  {
+    id:'zirconio',name:'Zirconio (Zr) / Zircaloy',formula:'Zr / Zr-Sn-Fe-Cr',family:'Metalli Refrattari',color:'#b0c4de',
+    hv:150,density:6.52,E:88,UTS:450,YS:380,elongation:25,melt:1855,
+    tags:['Nucleare','Corrosione','Reattori','Tubi combustibile'],
+    summary:'Metallo con eccezionale resistenza a corrosione in acqua ad alta T e pressione + bassa sezione d\'urto per neutroni termici. Indispensabile per i rivestimenti (cladding) delle barre di combustibile nucleare nei reattori PWR/BWR.',
+    chemistry:{structure:'Fase α (HCP) a T ambiente. Transus α→β a 862°C. Struttura simile al titanio. Zircaloy-2 e -4 sono leghe standard per rivestimento combustibile.',bonding:'Legame metallico Zr. Lo strato ZrO₂ spontaneo è denso e protettivo in acqua ad alta T (non si sfoglia come su Al). Sn per resistenza meccanica, Fe+Cr per corrosione.',composition:'Zr puro >99.5% (Reattore-grade: Hf <100 ppm critico!). Zircaloy-4: Zr base, Sn 1.2–1.7%, Fe 0.18–0.24%, Cr 0.07–0.13%, Ni <0.007%'},
+    mechanical:[{l:'UTS',v:'450',u:'MPa'},{l:'YS 0.2%',v:'380',u:'MPa'},{l:'Allungamento',v:'25',u:'%'},{l:'Durezza',v:'~150',u:'HB'},{l:'Sezione d\'urto neutroni',v:'0.18',u:'barns',n:'La più bassa tra i metalli strutturali'}],
+    physical:[{l:'Densità',v:'6.52',u:'g/cm³'},{l:'T. Fusione',v:'1855',u:'°C'},{l:'Cond. termica',v:'22.7',u:'W/m·K'},{l:'Coeff. dilat.',v:'5.9',u:'×10⁻⁶/K'},{l:'T. transus β',v:'862',u:'°C'}],
+    machinability:{rating:6,notes:'Lavorabile con precauzioni. Simile al titanio — bassa cond. termica, reattività chimica. RISCHIO: trucioli piroforici (come Mg). Lavorazione a secco o con olio minerale. NO refrigeranti alogenati.',params:[{op:'Tornitura',vc:'60–100 m/min',fz:'0.1–0.3 mm/giro',note:'Carburo non rivestito, olio minerale puro'},{op:'Fresatura',vc:'50–80 m/min',fz:'0.03–0.08 mm/dente',note:'A secco o olio, NO acqua+cloro'},{op:'Foratura',vc:'20–40 m/min',fz:'0.05–0.1 mm/giro',note:'Peck obbligatorio, evacuare trucioli frequentemente'}]},
+    applications:['Rivestimento (cladding) barre combustibile (UO₂) in PWR e BWR','Tubi del reattore nucleare (pressure tubes in CANDU)','Componenti per impianti chimici in HNO₃ concentrato','Autoclave per sintesi chimica','Ceramiche ZrO₂ per utensili e protesi dentali (zirconia)'],
+    creep:'Resistenza a creep del cladding critica per la sicurezza dei reattori. Irraggiamento neutronico causa crescita per radiazione (radiation growth) oltre al creep termico. T di servizio max ~350°C nei reattori.',
+    weldability:'Saldabile TIG/EBW in atmosfera Ar ultra-puro o vuoto. L\'ossigeno è immediatamente assorbito a T>300°C → fragilizzazione. Saldatura in camera di guanti o EBW in vuoto per componenti nucleari.'
+  }
+];
+
+const FAMILIES = {
+  'Ceramici/Abrasivi':  { color:'#c0eeff', desc:'Diamante, CBN, SiC, WC-Co — materiali utensile' },
+  'Superleghe Ni':      { color:'#f4a261', desc:'Inconel, Haynes, Hastelloy, Nimonic, MAR-M — alta T' },
+  'Titanio':            { color:'#7ec8e3', desc:'Ti-6Al-4V, cp-Ti — alta resistenza/peso' },
+  'Acciai':             { color:'#85929e', desc:'Utensile, legati, costruzione meccanica, maraging' },
+  'Acciai Inossidabili':{ color:'#bfc9ca', desc:'Austenitici, Duplex, PH — resistenza a corrosione' },
+  'Alluminio':          { color:'#f9e79f', desc:'Serie 2000, 6000, 7000 — leggerezza strutturale' },
+  'Ghise':              { color:'#717d7e', desc:'Grigie, nodulari — basi macchine, motoristica' },
+  'Rame e Leghe':       { color:'#e59866', desc:'Rame, ottone, bronzo — conduttività' },
+  'Polimeri Tecnici':   { color:'#82e0aa', desc:'PEEK, PTFE — sostituti metallo leggeri' },
+  'Magnesio':           { color:'#d5f5e3', desc:'AZ31, WE-series — i più leggeri' },
+  'Superleghe Co':      { color:'#bb8fce', desc:'Stellite — usura + corrosione + alta T' },
+  'Metalli Refrattari': { color:'#9e9e9e', desc:'W, Zr, Mo, Ta — T fusione estrema' },
+  'Leghe Speciali':     { color:'#7eb8c9', desc:'Invar, Kovar — proprietà fisiche speciali' },
+};
+
+// ─── STATE ──────────────────────────────────────────────────────────
+const sorted = [...MATERIALS].sort((a,b) => b.hv - a.hv);
+let currentMat = null;
+let activeFilter = 'tutti';
+let sidebarOpen = false;
+let quizMat = null, quizQs = [], quizIdx = 0, quizCorrect = 0;
+
+// ─── SIDEBAR MOBILE ──────────────────────────────────────────────────
+function toggleSidebar() {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('open', sidebarOpen);
+  document.getElementById('sidebar-overlay').classList.toggle('show', sidebarOpen);
+}
+function closeSidebar() {
+  sidebarOpen = false;
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('s-total').textContent = MATERIALS.length;
+  document.getElementById('s-fam').textContent = Object.keys(FAMILIES).length;
+  document.getElementById('s-cat').textContent = Object.keys(FAMILIES).length;
+  buildCategoryFilter();
+  buildSidebar(sorted);
+  buildHardnessRanking();
+  buildFamilyGrid();
+  buildQuizMatGrid();
+}
+
+function buildCategoryFilter() {
+  const el = document.getElementById('cat-filter');
+  const fams = ['tutti', ...Object.keys(FAMILIES)];
+  el.innerHTML = fams.map(f =>
+    `<button class="cat-btn${f==='tutti'?' active':''}" onclick="setFilter('${f}',this)">${f==='tutti'?'Tutti':f}</button>`
+  ).join('');
+}
+
+function setFilter(fam, btn) {
+  activeFilter = fam;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildSidebar(fam==='tutti' ? sorted : sorted.filter(m => m.family===fam));
+}
+
+function buildSidebar(list) {
+  document.getElementById('mat-list').innerHTML = list.map(m => `
+    <div class="mat-item${currentMat?.id===m.id?' active':''}" onclick="selectMat('${m.id}')">
+      <div class="mat-rank">${sorted.indexOf(m)+1}</div>
+      <div class="mat-dot" style="background:${m.color}"></div>
+      <div class="mat-info">
+        <div class="mat-name">${m.name}</div>
+        <div class="mat-family">${m.family}</div>
+      </div>
+      <div class="mat-hv">${m.hv>=1000?(m.hv/1000).toFixed(0)+'k':m.hv}</div>
+    </div>
+  `).join('');
+}
+
+function filterMaterials() {
+  const q = document.getElementById('mat-search').value.toLowerCase();
+  const base = activeFilter==='tutti' ? sorted : sorted.filter(m => m.family===activeFilter);
+  buildSidebar(q ? base.filter(m =>
+    m.name.toLowerCase().includes(q) || m.family.toLowerCase().includes(q) ||
+    m.tags.some(t => t.toLowerCase().includes(q))
+  ) : base);
+}
+
+function buildHardnessRanking() {
+  const maxHv = sorted[0].hv;
+  document.getElementById('hardness-ranking').innerHTML = sorted.map((m,i) => {
+    const pct = Math.min((m.hv/maxHv)*100, 100);
+    const col = FAMILIES[m.family]?.color || '#e8c84a';
+    return `<div class="hc-row" onclick="selectMat('${m.id}')">
+      <div class="hc-pos">${i+1}</div>
+      <div class="hc-name">${m.name}</div>
+      <div class="hc-bar-wrap">
+        <div class="hc-bar" style="width:${pct}%;background:${col}">${pct>12?m.family.split('/')[0]:''}</div>
+      </div>
+      <div class="hc-val">${m.hv>=1000?m.hv.toLocaleString()+' HV':m.hv+' HV'}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildFamilyGrid() {
+  document.getElementById('family-grid').innerHTML = Object.entries(FAMILIES).map(([name, info]) => {
+    const count = MATERIALS.filter(m => m.family===name).length;
+    const ex = MATERIALS.filter(m => m.family===name).slice(0,2).map(m => m.name).join(', ');
+    return `<div class="family-card" onclick="setFilterAndShow('${name}')">
+      <div class="fc-header">
+        <div class="fc-dot" style="background:${info.color}"></div>
+        <div class="fc-name">${name}</div>
+        <div class="fc-count">${count}</div>
+      </div>
+      <div class="fc-examples">${info.desc}<br><span style="color:var(--dim)">${ex}…</span></div>
+    </div>`;
+  }).join('');
+}
+
+function setFilterAndShow(fam) {
+  activeFilter = fam;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.textContent===fam));
+  buildSidebar(sorted.filter(m => m.family===fam));
+}
+
+// ─── SELECT MATERIAL ─────────────────────────────────────────────────
+function selectMat(id) {
+  currentMat = MATERIALS.find(m => m.id===id);
+  buildSidebar(activeFilter==='tutti' ? sorted : sorted.filter(m => m.family===activeFilter));
+  renderDetail();
+  switchView('material');
+  closeSidebar();
+  // Update bottom nav scheda button
+  updateBottomNav('material');
+}
+
+function renderDetail() {
+  const m = currentMat;
+  if (!m) return;
+  const rank = sorted.indexOf(m)+1;
+  const ratingHtml = (r, cls='filled') => Array.from({length:10},(_,i) =>
+    `<div class="rating-pip${i<r?' '+cls:''}"></div>`
+  ).join('');
+  const mCls = m.machinability.rating>=8?'filled-g':m.machinability.rating>=5?'filled-b':m.machinability.rating>=3?'filled':'filled-r';
+
+  document.getElementById('mat-detail-content').innerHTML = `
+    <div>
+      <div class="mat-hero">
+        <div class="mat-hero-dot" style="background:${m.color}"></div>
+        <div class="mat-hero-main">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:2px">#${rank} per durezza · ${m.family}</div>
+          <div class="mat-hero-name">${m.name}</div>
+          <div class="mat-hero-formula">${m.formula}</div>
+          <div class="mat-hero-tags">
+            <span class="tag tag-hv">${m.hv.toLocaleString()} HV</span>
+            <span class="tag tag-family">${m.family}</span>
+            ${m.tags.map(t=>`<span class="tag tag-use">${t}</span>`).join('')}
+          </div>
+        </div>
+        <div class="mat-hero-kpis">
+          <div class="kpi-box"><div class="kpi-val">${m.density}</div><div class="kpi-label">g/cm³</div></div>
+          ${m.UTS?`<div class="kpi-box"><div class="kpi-val">${m.UTS}</div><div class="kpi-label">MPa UTS</div></div>`:''}
+          <div class="kpi-box"><div class="kpi-val">${m.E}</div><div class="kpi-label">GPa E</div></div>
+        </div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-heading">ℹ Sommario</div>
+          <div class="info-banner"><strong>${m.name}</strong> — ${m.summary}</div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">⚗ Chimica e Struttura</div>
+          <div class="two-col">
+            <div class="content-card"><h4>Struttura Cristallina</h4><p>${m.chemistry.structure}</p></div>
+            <div class="content-card"><h4>Legami e Composizione</h4><p><strong>Legame:</strong> ${m.chemistry.bonding}</p><p><strong>Composizione:</strong> ${m.chemistry.composition}</p></div>
+          </div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">⚙ Proprietà Meccaniche</div>
+          <div class="prop-grid">${m.mechanical.map(p=>`<div class="prop-card"><div class="prop-label">${p.l}</div><div class="prop-value">${p.v}<span class="prop-unit">${p.u}</span></div>${p.n?`<div class="prop-note">${p.n}</div>`:''}</div>`).join('')}</div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">🌡 Proprietà Fisiche</div>
+          <div class="prop-grid">${m.physical.map(p=>`<div class="prop-card"><div class="prop-label">${p.l}</div><div class="prop-value">${p.v}<span class="prop-unit">${p.u||''}</span></div>${p.n?`<div class="prop-note">${p.n}</div>`:''}</div>`).join('')}</div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">🔧 Lavorabilità</div>
+          <div class="two-col">
+            <div class="content-card">
+              <h4>Indice Lavorabilità (1=difficile · 10=eccellente)</h4>
+              <div class="rating-bar" style="margin-bottom:8px">${ratingHtml(m.machinability.rating, mCls)}</div>
+              <p>${m.machinability.notes}</p>
+            </div>
+            <div class="content-card">
+              <h4>Parametri di Taglio</h4>
+              <div class="machin-table-wrap">
+                <table class="machin-table">
+                  <thead><tr><th>Operazione</th><th>Vc</th><th>fz/fn</th><th>Note</th></tr></thead>
+                  <tbody>${m.machinability.params.map(p=>`<tr><td>${p.op}</td><td class="hl">${p.vc}</td><td>${p.fz}</td><td style="color:var(--muted);font-size:10px">${p.note}</td></tr>`).join('')}</tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">♨ Scorrimento Viscoso (Creep)</div>
+          <div class="content-card"><h4>Comportamento a Creep</h4><p>${m.creep}</p></div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">🔥 Saldabilità e Giunzione</div>
+          <div class="content-card"><h4>Processi di Giunzione</h4><p>${m.weldability}</p></div>
+        </div>
+        <div class="section-block">
+          <div class="section-heading">🚀 Applicazioni</div>
+          <div class="content-card"><h4>Principali Applicazioni</h4>${m.applications.map(a=>`<li>${a}</li>`).join('')}</div>
+        </div>
+        <div style="padding-bottom:1rem">
+          <button onclick="quizForMat('${m.id}')" style="padding:11px 20px;background:var(--accent);color:var(--bg);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer;-webkit-appearance:none;touch-action:manipulation">
+            Quiz su ${m.name} →
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ─── VIEW SWITCHING ──────────────────────────────────────────────────
+function switchView(v) {
+  ['dashboard','material','quiz'].forEach(id => {
+    document.getElementById('view-'+id).style.display = (id===v) ? 'block' : 'none';
+  });
+  document.querySelectorAll('.topbar-tab').forEach((t,i) => {
+    t.classList.toggle('active', ['dashboard','material','quiz'][i]===v);
+  });
+  updateBottomNav(v);
+  if (v==='material' && !currentMat) switchView('dashboard');
+  // scroll to top
+  document.getElementById('main-content').scrollTop = 0;
+}
+
+function updateBottomNav(v) {
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  const map = {dashboard:'bnav-dashboard', material:'bnav-material', quiz:'bnav-quiz'};
+  if (map[v]) document.getElementById(map[v])?.classList.add('active');
+}
+
+// ─── QUIZ AI ─────────────────────────────────────────────────────────
+function buildQuizMatGrid() {
+  document.getElementById('quiz-mat-grid').innerHTML = sorted.map(m => `
+    <div class="mat-select-btn" id="qmbtn-${m.id}" onclick="selectQuizMat('${m.id}')">
+      <div class="msb-dot" style="background:${m.color}"></div>
+      <div class="msb-name">${m.name}</div>
+      <div class="msb-hv">${m.hv.toLocaleString()} HV</div>
+    </div>
+  `).join('');
+}
+
+function selectQuizMat(id) {
+  quizMat = MATERIALS.find(m => m.id===id);
+  document.querySelectorAll('.mat-select-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('qmbtn-'+id)?.classList.add('selected');
+  document.getElementById('start-quiz-btn').disabled = false;
+}
+
+function quizForMat(id) {
+  selectQuizMat(id);
+  switchView('quiz');
+}
+
+async function startAIQuiz() {
+  if (!quizMat) return;
+  quizQs=[]; quizIdx=0; quizCorrect=0;
+  document.getElementById('quiz-selector').classList.add('hidden');
+  document.getElementById('ai-loading').classList.add('show');
+  document.getElementById('quiz-playing').classList.remove('active');
+  document.getElementById('quiz-result').classList.remove('show');
+
+  const m = quizMat;
+  const prompt = `Sei un professore universitario di ingegneria dei materiali che forma ingegneri meccanici/aerospaziali.
+Genera 10 domande a scelta multipla sul materiale: "${m.name}" (${m.formula}, famiglia: ${m.family}).
+
+Argomenti: struttura cristallina, chimica/composizione, proprietà meccaniche (durezza ${m.hv} HV, densità ${m.density} g/cm³, E=${m.E} GPa, UTS=${m.UTS||'N/A'} MPa), proprietà fisiche, lavorabilità e parametri di processo, applicazioni industriali, saldabilità, trattamenti termici, creep/alta temperatura.
+
+Le domande devono essere tecniche e precise — livello ingegnere, non banali.
+
+Rispondi SOLO con JSON valido, zero testo extra, zero markdown:
+{"questions":[{"q":"domanda","opts":["A","B","C","D"],"ans":0,"exp":"spiegazione tecnica"}]}
+"ans" è l'indice 0-based della risposta corretta.`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await resp.json();
+    const txt = data.content.map(b=>b.text||'').join('');
+    quizQs = JSON.parse(txt.replace(/```json|```/g,'').trim()).questions;
+  } catch(e) {
+    quizQs = fallbackQuiz(m);
+  }
+
+  document.getElementById('ai-loading').classList.remove('show');
+  document.getElementById('quiz-playing').classList.add('active');
+  renderQ();
+}
+
+function fallbackQuiz(m) {
+  return [
+    {q:`Durezza Vickers di ${m.name}?`,opts:[`${m.hv} HV`,`${Math.round(m.hv*0.6)} HV`,`${Math.round(m.hv*1.5)} HV`,`${Math.round(m.hv*0.3)} HV`],ans:0,exp:`${m.name}: ${m.hv} HV`},
+    {q:`Densità di ${m.name}?`,opts:[`${m.density} g/cm³`,`${(m.density*1.5).toFixed(1)} g/cm³`,`${(m.density*0.5).toFixed(1)} g/cm³`,`${(m.density*2).toFixed(1)} g/cm³`],ans:0,exp:`Densità: ${m.density} g/cm³`},
+    {q:`Modulo di Young di ${m.name}?`,opts:[`${m.E} GPa`,`${Math.round(m.E*2)} GPa`,`${Math.round(m.E*0.4)} GPa`,`${Math.round(m.E*3)} GPa`],ans:0,exp:`E: ${m.E} GPa`},
+    {q:`Famiglia di ${m.name}?`,opts:[m.family,'Acciai','Ceramici','Alluminio'].filter((v,i,a)=>a.indexOf(v)===i).slice(0,4),ans:0,exp:`Famiglia: ${m.family}`},
+    {q:`Applicazione principale di ${m.name}?`,opts:[m.applications[0],'Calcestruzzo armato','Isolamento termico','Pneumatici'],ans:0,exp:m.applications[0]},
+  ];
+}
+
+function renderQ() {
+  const q = quizQs[quizIdx];
+  document.getElementById('qcounter').textContent = `${quizIdx+1} / ${quizQs.length}`;
+  document.getElementById('qscore').textContent = `⭐ ${quizCorrect}`;
+  document.getElementById('qpf').style.width = `${(quizIdx/quizQs.length)*100}%`;
+  document.getElementById('qmattag').textContent = `▸ ${quizMat.name.toUpperCase()}`;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('qexp').textContent = '';
+  document.getElementById('qexp').classList.remove('show');
+  document.getElementById('qnext').classList.remove('show');
+  document.getElementById('qoptions').innerHTML = q.opts.map((o,i) =>
+    `<button class="quiz-opt" onclick="answerQ(${i})">${o}</button>`
+  ).join('');
+}
+
+function answerQ(chosen) {
+  const q = quizQs[quizIdx];
+  document.querySelectorAll('.quiz-opt').forEach((b,i) => {
+    b.classList.add('disabled');
+    if(i===q.ans) b.classList.add('correct');
+    else if(i===chosen && chosen!==q.ans) b.classList.add('wrong');
+  });
+  if(chosen===q.ans) quizCorrect++;
+  document.getElementById('qscore').textContent = `⭐ ${quizCorrect}`;
+  const e = document.getElementById('qexp');
+  e.innerHTML = `<strong>Spiegazione:</strong> ${q.exp}`;
+  e.classList.add('show');
+  document.getElementById('qnext').classList.add('show');
+}
+
+function quizNext() {
+  if(++quizIdx >= quizQs.length) showQuizResult();
+  else renderQ();
+}
+
+function showQuizResult() {
+  document.getElementById('quiz-playing').classList.remove('active');
+  const pct = Math.round((quizCorrect/quizQs.length)*100);
+  document.getElementById('qr-score').textContent = `${quizCorrect}/${quizQs.length}`;
+  const msgs = ['Ripassare — torna alla scheda!','Sufficiente — qualche lacuna.','Buono! Conoscenza solida.','Ottimo — da ingegnere!','Eccellente — livello esperto!'];
+  document.getElementById('qr-msg').textContent = msgs[Math.min(Math.floor(pct/25),4)];
+  document.getElementById('qr-break').innerHTML = `
+    <div class="qr-stat">Corrette: <span class="ok">${quizCorrect}</span></div>
+    <div class="qr-stat">Errate: <span class="ko">${quizQs.length-quizCorrect}</span></div>
+    <div class="qr-stat" style="color:var(--accent)">${pct}%</div>`;
+  document.getElementById('quiz-result').classList.add('show');
+}
+
+function resetQuiz() {
+  quizMat=null; quizIdx=0; quizCorrect=0; quizQs=[];
+  document.getElementById('quiz-selector').classList.remove('hidden');
+  document.getElementById('quiz-result').classList.remove('show');
+  document.getElementById('quiz-playing').classList.remove('active');
+  document.querySelectorAll('.mat-select-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('start-quiz-btn').disabled = true;
+}
+
+// ─── START ───────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
