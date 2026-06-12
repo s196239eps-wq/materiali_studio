@@ -1712,6 +1712,138 @@ const MATERIALS = [
     applications:['Tubi condensatori navali (la principale applicazione)','Scambiatori di calore in acqua di mare','Tubi per impianti di desalinizzazione','Tubi raffreddamento centrali elettriche costiere','Tubi pesca cooler navi','Distillatori multi-stadio per acqua dolce','Scambiatori onshore in zone costiere'],
     creep:'Non rilevante — applicazioni a temperatura ambiente (acqua di raffreddamento). La performance critica è la resistenza erosione-corrosione in flusso turbolento, non il creep.',
     weldability:'Saldabile TIG con filo CuAl matching, ma normalmente i tubi vengono mandrinati nelle piastre tubiere (expanded joints), non saldati. Brasatura con argento BAg-1 per giunzioni di precisione. Saldatura preferibilmente per resistenza in ambiente Ar.'
+  },
+
+  // ═══ ACCIAI DA RECIPIENTI A PRESSIONE — FAMIGLIA P355 (EN 10028 / EN 10222) ═══
+  {
+    id:'p355nh',name:'Acciaio P355NH (EN 10028-3)',formula:'Fe-C-Mn-Nb-Al (normalizzato)',family:'Acciai',color:'#6b85a5',
+    hv:200,density:7.85,E:210,UTS:510,YS:355,elongation:22,melt:1450,
+    tags:['Recipienti pressione','Caldaie','Normalizzato','PED'],
+    summary:'Acciaio strutturale a grana fine normalizzato per recipienti a pressione e caldaie. Designazione EN 10028-3. La sigla: P=pressure, 355=YS minima in MPa, N=normalizzato, H=alta temperatura. Standard europeo per costruzione di serbatoi, autoclavi, scambiatori e caldaie a vapore certificate PED (97/23/CE).',
+    chemistry:{structure:'Microstruttura ferritico-perlitica a grana fine ottenuta per normalizzazione (austenitizzazione 880-940°C + raffreddamento in aria). Il Nb forma carbonitruri Nb(C,N) che bloccano la crescita del grano austenitico → grana fine ASTM 8-10.',bonding:'C 0.18% max + Mn per resistenza in soluzione solida. Nb e Al come elementi affinatori di grano. Al fissa N libero formando AlN.',composition:'C ≤0.20%, Mn 0.9-1.7%, Si ≤0.50%, P ≤0.025%, S ≤0.015%, Nb ≤0.05%, Al tot ≥0.020%, N ≤0.012%, Fe resto.'},
+    mechanical:[{l:'UTS',v:'510',u:'MPa'},{l:'YS min',v:'355',u:'MPa',n:'Garantito da norma EN 10028-3'},{l:'Allungamento',v:'22',u:'%'},{l:'Durezza',v:'~200',u:'HB'},{l:'Charpy (-40°C)',v:'≥27',u:'J',n:'Resistenza al freddo'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'Cond. termica',v:'45',u:'W/m·K'},{l:'T. servizio',v:'-40 a +400',u:'°C'}],
+    machinability:{rating:7,notes:'Buona lavorabilità — simile agli acciai da costruzione bonificati. Truciolo corto e ben gestibile. Standard carburo P-grade.',params:[{op:'Tornitura',vc:'180-280 m/min',fz:'0.2-0.5 mm/giro',note:'Carburo P20-P30'},{op:'Fresatura',vc:'120-200 m/min',fz:'0.05-0.2 mm/dente',note:'Standard'},{op:'Foratura',vc:'25-40 m/min',fz:'0.15-0.3 mm/giro',note:'HSS-Co o carburo'}]},
+    applications:['Recipienti a pressione PED categoria I-IV','Caldaie a vapore industriali','Autoclavi per sterilizzazione','Serbatoi gas compressi (escluso GPL)','Scambiatori a fascio tubiero (mantello)','Reattori per industria chimica','Componenti centrali termoelettriche'],
+    creep:'T servizio max +400°C per applicazioni in pressione. Sopra 400°C utilizzare 16Mo3 o 13CrMo4-5 con resistenza creep certificata.',
+    weldability:'Eccellente saldabilità — è la sua proprietà principale. CE ~0.40 → preriscaldo minimo (50-100°C per spessori >25mm). Filo matching SG3 o E7018-1. Saldatura certificata WPS/WPQR obbligatoria per recipienti PED.'
+  },
+  {
+    id:'p265nh',name:'Acciaio P265NH (EN 10028-3)',formula:'Fe-C-Mn-Al',family:'Acciai',color:'#7895b0',
+    hv:170,density:7.85,E:210,UTS:410,YS:265,elongation:25,melt:1455,
+    tags:['Recipienti pressione','Saldabile','Caldaie','Bassa T'],
+    summary:'Variante più tenace e saldabile del P355NH con YS inferiore. Eccellente saldabilità grazie al basso CE. Standard per recipienti a pressione meno sollecitati ma con elevate richieste di tenacità a bassa temperatura. Usato per parti soggette a vibrazioni o cicli di pressione frequenti.',
+    chemistry:{structure:'Ferritico-perlitica a grana fine normalizzata. Contenuto C più basso del P355 per maggiore saldabilità. Al per affinamento grano.',bonding:'Simile a P355NH ma con C ridotto e meno Mn per ottimizzare la duttilità e ridurre le tensioni di saldatura.',composition:'C ≤0.18%, Mn 0.5-1.4%, Si ≤0.40%, P ≤0.025%, S ≤0.015%, Al tot ≥0.020%, N ≤0.012%, Fe resto.'},
+    mechanical:[{l:'UTS',v:'410',u:'MPa'},{l:'YS min',v:'265',u:'MPa'},{l:'Allungamento',v:'25',u:'%'},{l:'Charpy (-40°C)',v:'≥27',u:'J'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1455',u:'°C'},{l:'Cond. termica',v:'48',u:'W/m·K'},{l:'T. servizio',v:'-40 a +400',u:'°C'}],
+    machinability:{rating:8,notes:'Più lavorabile del P355NH per durezza inferiore.',params:[{op:'Tornitura',vc:'200-320 m/min',fz:'0.2-0.5 mm/giro',note:'Carburo P-grade'},{op:'Fresatura',vc:'140-220 m/min',fz:'0.05-0.2 mm/dente',note:'Standard'}]},
+    applications:['Recipienti a pressione media','Tubazioni gas e fluidi','Serbatoi di stoccaggio','Componenti caldaie domestiche','Fondi pressotorniti','Scambiatori di calore'],
+    creep:'T servizio max +400°C.',
+    weldability:'Eccellente — la migliore della famiglia P. Nessun preriscaldo per spessori normali. Standard per fabbricazione di serbatoi senza WPQR complesse.'
+  },
+  {
+    id:'p460nh',name:'Acciaio P460NH (EN 10028-3)',formula:'Fe-C-Mn-Cr-Mo-Ni-V-Nb',family:'Acciai',color:'#5b7595',
+    hv:240,density:7.85,E:210,UTS:570,YS:460,elongation:17,melt:1450,
+    tags:['Alta resistenza','HSLA','Pressione','Aerospazio offshore'],
+    summary:'Acciaio alto-resistenziale della famiglia P normalizzato. YS minima 460 MPa — il più resistente della serie normalizzata EN 10028-3. Combina alta resistenza meccanica con buona tenacità a bassa temperatura. Usato dove il peso o lo spessore devono essere ridotti.',
+    chemistry:{structure:'Microstruttura ferritico-bainitica a grana finissima. Microalligazione con Nb, V, Ti per precipitazione di carbonitruri (Nb,V)C che bloccano la dislocazione e affinano il grano.',bonding:'Microalligati con Nb (0.05%), V (0.20%), Ti (0.03%) → precipitati nanometrici di carbonitruri. Cr+Mo+Ni in soluzione solida.',composition:'C ≤0.20%, Mn ≤1.7%, Si ≤0.60%, Cr ≤0.30%, Mo ≤0.10%, Ni ≤0.80%, V ≤0.20%, Nb ≤0.05%, Ti ≤0.03%, Al tot ≥0.020%.'},
+    mechanical:[{l:'UTS',v:'570',u:'MPa'},{l:'YS min',v:'460',u:'MPa'},{l:'Allungamento',v:'17',u:'%'},{l:'Charpy (-40°C)',v:'≥27',u:'J'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'Cond. termica',v:'42',u:'W/m·K'},{l:'T. servizio',v:'-40 a +400',u:'°C'}],
+    machinability:{rating:6,notes:'Discreta. Maggiore durezza richiede parametri più conservativi rispetto a P355NH.',params:[{op:'Tornitura',vc:'140-220 m/min',fz:'0.15-0.4 mm/giro',note:'Carburo P25 TiAlN'},{op:'Fresatura',vc:'100-180 m/min',fz:'0.05-0.15 mm/dente',note:'Climb milling'}]},
+    applications:['Recipienti a pressione HPHT','Strutture offshore (jacket platform)','Tubi sismici antisismici','Serbatoi di stoccaggio idrocarburi','Vessels reattori nucleari','Componenti aerospaziali strutturali'],
+    creep:'T servizio max +400°C. Sopra 400°C utilizzare versioni alto-legate (acciai 13CrMo4-5, 10CrMo9-10).',
+    weldability:'Saldabile con precauzioni. CE ~0.45 → preriscaldo 100-150°C per spessori >25mm. Filo a basso H₂ (H5). Post-saldatura: PWHT (Post Weld Heat Treatment) consigliato.'
+  },
+  {
+    id:'p355nl1',name:'Acciaio P355NL1 (EN 10028-3)',formula:'Fe-C-Mn-Nb-Al (low temp.)',family:'Acciai',color:'#6080a0',
+    hv:200,density:7.85,E:210,UTS:510,YS:355,elongation:22,melt:1450,
+    tags:['Bassa T','Criogenico','-50°C','Recipienti'],
+    summary:'Versione del P355 per servizio a basse temperature. La sigla NL1 indica resilienza Charpy minima 27J a -50°C. Standard per recipienti di stoccaggio gas liquefatti, applicazioni criogeniche e impianti in climi freddi. Composizione ottimizzata per resistenza al fragility transition.',
+    chemistry:{structure:'Come P355NH ma con composizione strettamente controllata: P, S e N più bassi per migliorare tenacità a basse T. Grana ASTM 9-11 per ridurre la DBTT (Ductile-Brittle Transition Temperature).',bonding:'C ridotto, Nb e Al per grano fine. Limiti severi P (≤0.020%), S (≤0.010%) per eliminare inclusioni MnS che diminuiscono Charpy.',composition:'C ≤0.18%, Mn 0.9-1.65%, Si ≤0.50%, P ≤0.020%, S ≤0.010%, Nb ≤0.05%, Al tot ≥0.020%, N ≤0.012%.'},
+    mechanical:[{l:'UTS',v:'510',u:'MPa'},{l:'YS min',v:'355',u:'MPa'},{l:'Allungamento',v:'22',u:'%'},{l:'Charpy (-50°C)',v:'≥27',u:'J',n:'Differenza chiave vs P355NH'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'T. servizio',v:'-50 a +400',u:'°C',n:'Estensione a freddo vs NH'}],
+    machinability:{rating:7,notes:'Identica al P355NH.',params:[{op:'Tornitura',vc:'180-280 m/min',fz:'0.2-0.5 mm/giro',note:'Carburo P-grade'},{op:'Fresatura',vc:'120-200 m/min',fz:'0.05-0.2 mm/dente',note:'Standard'}]},
+    applications:['Serbatoi stoccaggio gas liquefatti (GPL, NH₃)','Recipienti per impianti in Siberia/Artico','Strutture offshore Mare del Nord','Tubazioni gas in climi freddi','Impianti criogenici (LNG terminal)','Reattori chimici per processi a freddo'],
+    creep:'T servizio max +400°C.',
+    weldability:'Buona. Filo a basso H₂ obbligatorio. PWHT raccomandato per garantire tenacità a -50°C dopo saldatura.'
+  },
+  {
+    id:'p355nl2',name:'Acciaio P355NL2 (EN 10028-3)',formula:'Fe-C-Mn-Nb-Al (extra low T)',family:'Acciai',color:'#587898',
+    hv:200,density:7.85,E:210,UTS:510,YS:355,elongation:22,melt:1450,
+    tags:['Criogenico','-60°C','Premium','Offshore Arctic'],
+    summary:'La versione più severa del P355 per applicazioni in zone artiche. Charpy 27J a -60°C garantita. Standard premium per offshore Mare del Nord, gasdotti artici, infrastrutture norvegesi e canadesi. Differisce dal NL1 solo per la T di garanzia di tenacità ancora più bassa.',
+    chemistry:{structure:'Identica al P355NL1 ma con controllo ancora più severo della grana cristallina (ASTM 10-12) e degli inclusioni non metalliche. Spesso prodotto per colata continua con degasaggio sotto vuoto (VD).',bonding:'Limiti P, S ulteriormente abbassati. Eventuale aggiunta di Ti per pinning del grano.',composition:'C ≤0.18%, Mn 0.9-1.65%, P ≤0.020%, S ≤0.005%, Al ≥0.020%. Ca-trattamento per inclusioni globulizzate.'},
+    mechanical:[{l:'UTS',v:'510',u:'MPa'},{l:'YS min',v:'355',u:'MPa'},{l:'Allungamento',v:'22',u:'%'},{l:'Charpy (-60°C)',v:'≥27',u:'J',n:'Il più severo della serie EN 10028-3'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'T. servizio',v:'-60 a +400',u:'°C'}],
+    machinability:{rating:7,notes:'Identica al P355NH.',params:[{op:'Tornitura',vc:'180-280 m/min',fz:'0.2-0.5 mm/giro',note:'Carburo P-grade'}]},
+    applications:['Piattaforme offshore Mare del Nord','Strutture FPSO artiche','Gasdotti transbaltici','Vessels GNL marini','Strutture metalliche artiche (Russia, Canada)','Impianti criogenici LNG'],
+    creep:'T servizio max +400°C.',
+    weldability:'Saldabile con WPS qualificato per servizio -60°C. PWHT obbligatorio. Charpy del giunto saldato testata a -60°C per certificazione.'
+  },
+  {
+    id:'p355qh',name:'Acciaio P355QH (EN 10028-6)',formula:'Fe-C-Mn-Cr-Mo-Ni-Nb (bonificato)',family:'Acciai',color:'#506d8d',
+    hv:280,density:7.85,E:210,UTS:580,YS:355,elongation:18,melt:1450,
+    tags:['Bonificato','Q&T','Pressione','Sezioni spesse'],
+    summary:'Versione bonificata del P355. La sigla Q (quenched) + H (high temperature) indica tempra in acqua + rinvenimento per applicazioni in pressione fino a +400°C. Combina YS garantita con tenacità superiore in sezioni spesse rispetto al P355NH normalizzato. Standard EN 10028-6.',
+    chemistry:{structure:'Martensite rinvenuta o bainite a grana fine. Tempra in acqua o olio da 880-920°C + rinvenimento 600-680°C → struttura sorbitica omogenea. Mo riduce la fragilità da rinvenimento.',bonding:'C 0.18% max per saldabilità. Cr+Mo+Ni per temprabilità in sezioni spesse fino a 150mm. Nb per affinamento grano residuo.',composition:'C ≤0.18%, Mn 0.9-1.6%, Si ≤0.50%, Cr ≤0.30%, Mo 0.08-0.25%, Ni ≤0.80%, Nb ≤0.05%, Al tot ≥0.020%.'},
+    mechanical:[{l:'UTS',v:'580',u:'MPa'},{l:'YS min',v:'355',u:'MPa'},{l:'Allungamento',v:'18',u:'%'},{l:'Charpy (-40°C)',v:'≥40',u:'J',n:'Migliore del NH per la microstruttura Q&T'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'T. servizio',v:'-40 a +400',u:'°C'}],
+    machinability:{rating:6,notes:'Più difficile del NH per durezza maggiore (~280 HB). Carburo TiAlN.',params:[{op:'Tornitura',vc:'120-200 m/min',fz:'0.15-0.4 mm/giro',note:'Carburo P25 TiAlN'},{op:'Fresatura',vc:'90-150 m/min',fz:'0.04-0.15 mm/dente',note:'Climb milling'}]},
+    applications:['Recipienti a pressione di grandi dimensioni (>100mm)','Reattori nucleari (vessels)','Serbatoi GPL di grande capacità','Componenti per impianti chimici alta pressione','Cilindri idraulici di grande diametro'],
+    creep:'T servizio max +400°C. Le caratteristiche bonificate offrono superiore uniformità di proprietà in sezioni spesse.',
+    weldability:'Saldabile con preriscaldo 150-200°C per spessori >40mm. Filo a basso H₂. PWHT obbligatorio: rinvenimento 550-620°C per ripristino proprietà in HAZ.'
+  },
+  {
+    id:'p275nh',name:'Acciaio P275NH (EN 10028-3)',formula:'Fe-C-Mn-Al',family:'Acciai',color:'#7090a8',
+    hv:175,density:7.85,E:210,UTS:430,YS:275,elongation:23,melt:1455,
+    tags:['Recipienti','Pressione','Saldabile','EN 10028'],
+    summary:'Acciaio normalizzato a grana fine per recipienti a pressione. YS 275 MPa — intermedio tra P265NH e P355NH. Ottima combinazione resistenza/saldabilità/costo. Largamente usato in caldaie industriali di media taglia, autoclavi e scambiatori.',
+    chemistry:{structure:'Ferritico-perlitica a grana fine. Normalizzazione 880-940°C + raffreddamento aria. Grana ASTM 8-10.',bonding:'C 0.18% max + Mn in soluzione solida. Al per affinamento grano.',composition:'C ≤0.18%, Mn 0.5-1.5%, Si ≤0.40%, P ≤0.025%, S ≤0.015%, Al tot ≥0.020%, N ≤0.012%.'},
+    mechanical:[{l:'UTS',v:'430',u:'MPa'},{l:'YS min',v:'275',u:'MPa'},{l:'Allungamento',v:'23',u:'%'},{l:'Charpy (-40°C)',v:'≥27',u:'J'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1455',u:'°C'},{l:'T. servizio',v:'-40 a +400',u:'°C'}],
+    machinability:{rating:8,notes:'Ottima lavorabilità.',params:[{op:'Tornitura',vc:'200-300 m/min',fz:'0.2-0.5 mm/giro',note:'Carburo P-grade'}]},
+    applications:['Caldaie a vapore industriali medie','Autoclavi alimentari e farmaceutiche','Recipienti a pressione PED III','Scambiatori a fascio tubiero','Tubazioni gas industriali'],
+    creep:'T servizio max +400°C.',
+    weldability:'Eccellente. Nessun preriscaldo per spessori normali.'
+  },
+  {
+    id:'16mo3',name:'Acciaio 16Mo3 (EN 10028-2)',formula:'Fe-0.16C-Mn-Mo',family:'Acciai',color:'#5d7593',
+    hv:170,density:7.85,E:210,UTS:480,YS:275,elongation:24,melt:1450,
+    tags:['Caldaie','Alta T','+530°C','Mo'],
+    summary:'Acciaio bassolegato al Mo per recipienti a pressione e tubi caldaia ad alta temperatura. T servizio fino a 530°C grazie al Mo che aumenta la resistenza a creep. Standard EN 10028-2 per impianti termoelettrici, raffinerie e impianti petrolchimici.',
+    chemistry:{structure:'Ferritico-perlitica a grana fine. Mo in soluzione solida + carburi Mo₂C che precipitano in servizio prolungato ad alta T migliorando la resistenza a creep.',bonding:'Mo (0.30%) è l\'elemento chiave: forma Mo₂C stabile fino a 500-550°C che blocca le dislocazioni e ritarda lo scorrimento viscoso.',composition:'C 0.12-0.20%, Mn 0.40-0.90%, Si ≤0.35%, Mo 0.25-0.35%, P ≤0.025%, S ≤0.010%, Al tot ≥0.020%.'},
+    mechanical:[{l:'UTS',v:'480',u:'MPa'},{l:'YS min (20°C)',v:'275',u:'MPa'},{l:'YS a 450°C',v:'~180',u:'MPa'},{l:'Allungamento',v:'24',u:'%'},{l:'Charpy (20°C)',v:'≥40',u:'J'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'Cond. termica',v:'42',u:'W/m·K'},{l:'T. servizio max',v:'530',u:'°C',n:'Differenza chiave vs P355NH'}],
+    machinability:{rating:7,notes:'Buona lavorabilità.',params:[{op:'Tornitura',vc:'170-260 m/min',fz:'0.15-0.4 mm/giro',note:'Carburo P-grade'},{op:'Fresatura',vc:'110-180 m/min',fz:'0.05-0.15 mm/dente',note:'Standard'}]},
+    applications:['Tubi vapore surriscaldato centrali termoelettriche','Caldaie ad alta pressione','Scambiatori di calore in petrolchimica','Vessels per cracking catalitico','Tubazioni vapore raffinerie','Componenti per impianti waste-to-energy'],
+    creep:'Progettato per servizio prolungato a creep fino a 530°C. Resistenza a 100000h: 60 MPa a 500°C, 30 MPa a 530°C. Parametro Larson-Miller documentato per dimensionamento PED/ASME.',
+    weldability:'Buona saldabilità. Preriscaldo 100-150°C. PWHT obbligatorio (620-680°C) per ripristino carburi Mo₂C in HAZ.'
+  },
+  {
+    id:'13crmo4-5',name:'Acciaio 13CrMo4-5 (1.7335)',formula:'Fe-0.13C-Cr-Mo',family:'Acciai',color:'#506d8a',
+    hv:175,density:7.85,E:210,UTS:480,YS:295,elongation:22,melt:1450,
+    tags:['Alta T','Creep','+570°C','Petrolchimico'],
+    summary:'Acciaio Cr-Mo bassolegato per servizio creep prolungato fino a 570°C. Aggiunta di Cr (1%) migliora resistenza all\'ossidazione e al graphitization (decomposizione perlite ad alta T). Standard per centrali termoelettriche, raffinerie, impianti idrogeno HPHT.',
+    chemistry:{structure:'Ferritico-bainitica a grana fine. Cr migliora la stabilità della perlite e forma carburi Cr₇C₃ resistenti al coalescing. Mo come 16Mo3 per resistenza a creep.',bonding:'Cr (1%) previene grafitizzazione (decomposizione Fe₃C → Fe + grafite) che limita 16Mo3 sopra 500°C. Mo per creep.',composition:'C 0.10-0.18%, Mn 0.40-1.00%, Si ≤0.35%, Cr 0.70-1.15%, Mo 0.40-0.55%, P ≤0.025%, S ≤0.010%.'},
+    mechanical:[{l:'UTS',v:'480',u:'MPa'},{l:'YS min',v:'295',u:'MPa'},{l:'Allungamento',v:'22',u:'%'},{l:'YS a 500°C',v:'~200',u:'MPa'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1450',u:'°C'},{l:'T. servizio max',v:'570',u:'°C'}],
+    machinability:{rating:7,notes:'Simile a 16Mo3.',params:[{op:'Tornitura',vc:'160-250 m/min',fz:'0.15-0.4 mm/giro',note:'Carburo P-grade'},{op:'Fresatura',vc:'100-170 m/min',fz:'0.05-0.15 mm/dente',note:'Standard'}]},
+    applications:['Tubazioni vapore principale centrali termoelettriche','Tubi reformer per produzione H₂ in raffineria','Surriscaldatori e risurriscaldatori caldaie','Vessels per processi petrolchimici','Forni di pirolisi','Scambiatori reformer NH₃'],
+    creep:'Progettato per creep fino a 570°C. Resistenza 100000h: 100 MPa a 500°C, 50 MPa a 570°C. Curve Larson-Miller estese per applicazioni 30+ anni.',
+    weldability:'Saldabile con cura. Preriscaldo 200°C. PWHT obbligatorio 670-720°C — critico per ripristino carburi Cr-Mo e prevenire reheat cracking.'
+  },
+  {
+    id:'p235gh',name:'Acciaio P235GH (EN 10028-2)',formula:'Fe-C-Mn (caldaie)',family:'Acciai',color:'#7c97b0',
+    hv:150,density:7.85,E:210,UTS:360,YS:235,elongation:25,melt:1455,
+    tags:['Caldaie','Economico','Bassa pressione','Saldabile'],
+    summary:'L\'acciaio per caldaie più economico e diffuso. P=pressure, 235=YS minima, GH=glüh-warm (alta temperatura). Standard per recipienti a pressione e tubi caldaia di applicazioni meno critiche. Estrema saldabilità, ampia disponibilità commerciale.',
+    chemistry:{structure:'Ferritico-perlitica grana media. Spesso fornito allo stato laminato o normalizzato. Composizione semplice = costo basso.',bonding:'Solo C-Mn + tracce di altri elementi. Senza microalligati o elementi nobili.',composition:'C ≤0.16%, Mn 0.40-1.20%, Si ≤0.35%, P ≤0.025%, S ≤0.015%.'},
+    mechanical:[{l:'UTS',v:'360',u:'MPa'},{l:'YS min',v:'235',u:'MPa'},{l:'Allungamento',v:'25',u:'%'},{l:'Charpy (20°C)',v:'≥27',u:'J'}],
+    physical:[{l:'Densità',v:'7.85',u:'g/cm³'},{l:'T. Fusione',v:'~1455',u:'°C'},{l:'T. servizio max',v:'+400',u:'°C'}],
+    machinability:{rating:9,notes:'Eccellente.',params:[{op:'Tornitura',vc:'220-350 m/min',fz:'0.2-0.6 mm/giro',note:'Carburo P05-P20'},{op:'Fresatura',vc:'150-250 m/min',fz:'0.05-0.25 mm/dente',note:'HSS o carburo'}]},
+    applications:['Caldaie domestiche e piccole industriali','Tubazioni vapore bassa pressione','Serbatoi di stoccaggio acqua','Recipienti a pressione PED I-II','Boilers per riscaldamento','Componenti generali idraulica'],
+    creep:'T servizio max +400°C.',
+    weldability:'Eccellente — uno dei più saldabili tra gli acciai pressione. Nessun preriscaldo per spessori standard. Filo SG2 (E70S-6).'
   }
 ];
 
